@@ -1,0 +1,59 @@
+"""Global variables."""
+
+__author__ = "Jesse Wei <jesse@cs.unc.edu>"
+
+RAM = {}
+"""`dict[int, int]` mapping `PC`:`byte`, where `byte` can be instruction or data (indistinguishable)"""
+PC: int = 0
+"""Program counter that indexes into `RAM`, default value 0"""
+A: int = 0
+"""Register A, default value 0"""
+B: int = 0
+"""Register B, default value 0"""
+FLAG_C: bool = False
+"""Carry-out bit, modified by `add()` and `sub()`"""
+FLAG_Z: bool = False
+# Number of bits in registers
+# Same as number of full adders
+# This affects how FLAG_C, FLAG_Z, and result register work
+# Should be configurable via JSON
+NUM_BITS_IN_REGISTERS: int = 8
+"""Defaults to 8, IMPORTANT NOTE: If changing this value, then also change `MAX_UNSIGNED_VAL_IN_REGISTERS`!!! This variable is the #bits in registers and affects how FLAG_C, FLAG_Z and registers and exceptions work. Should be configurable via JSON."""
+MAX_UNSIGNED_VAL_IN_REGISTERS = 2 ** NUM_BITS_IN_REGISTERS - 1
+"""This value is based on `NUM_BITS_IN_REGISTERS` but needs to be changed whenever NUM_BITS_IN_REGISTERS is changed."""
+EXECUTING: bool = True
+"""Is the program executing? Set to `False` by `hlt()`"""
+
+MNEMONIC_TO_OPCODE = {
+    "NOP": 0,
+    "LDA": 1,
+    "ADD": 2,
+    "SUB": 3,
+    "STA": 4,
+    "LDI": 5,
+    "JMP": 6,
+    "JC": 7,
+    "JZ": 8,
+    "OUT": 14,
+    "HLT": 15,
+}
+"""Maps `str mnemonic : int opcode`"""
+
+OPCODE_TO_MNEMONIC = {
+    0: "NOP",
+    1: "LDA",
+    2: "ADD",
+    3: "SUB",
+    4: "STA",
+    5: "LDI",
+    6: "JMP",
+    7: "JC",
+    8: "JZ",
+    14: "OUT",
+    15: "HLT"
+}
+"""Maps `int opcode : str mnemonic`"""
+
+table_fmt: str = "simple_outline"
+"""Tabulate `table_fmt` arg to customize pretty-printing. Defaults to `simple_outline`, see all options: https://github.com/astanin/python-tabulate#table-
+                        format"""

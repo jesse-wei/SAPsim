@@ -1,0 +1,87 @@
+"""Parses a SAP program in the CSV format given in `template.csv` into `globs.RAM`."""
+
+__author__ = "Jesse Wei <jesse@cs.unc.edu>"
+
+import argparse
+from src.utils.helpers import *
+from csv import DictReader
+import src.utils.exceptions as exceptions
+
+
+def parse_cli():
+    """Parse cli args using argparse, return parser.parse_args() to main()"""
+    parser = argparse.ArgumentParser(usage='python -m src.main [-h] [-d] [-b BITS] [-f FORMAT] prog')
+    parser.add_argument('prog', help='path to SAP program in the format given in template.csv')
+    parser.add_argument('-d', '--debug',
+                        help='debug/step mode',
+                        action="store_true")
+    parser.add_argument('-b', '--bits',
+                        help='number of bits in the ***unsigned*** registers (default is 8)')
+    parser.add_argument('-f', '--format',
+                        help="print format, options: https://github.com/astanin/python-tabulate#table-format, modify default value in src/utils/globs.py")
+    args = parser.parse_args()
+    return args
+
+
+def parse_csv(file_path):
+    """Takes a `.csv` file path in `template.csv` format and parses it into `RAM`."""
+    prog = DictReader(open(file_path))
+    num_rows = 1
+    addresses = set()
+
+    for row in prog:
+        if not row["Address"]:
+            raise exceptions.RowWithNoAddress(num_rows)
+        elif int(row["Address"]) < 0:
+            raise exceptions.NegativeAddress(num_rows)
+        num_rows += 1
+        address = int(row['Address'])
+
+        if address in addresses:
+            raise exceptions.DuplicateAddress(address)
+        else:
+            addresses.add(address)
+
+        # If there's an Address and no Mnemonic and no Arg in a row, insert a NOP 0 and continue parsing
+        if not row['Mnemonic'] and not row['Arg']:
+            globs.RAM[address] = 0x00
+            continue
+        # But if there's an Address and either only an Mnemonic or only an Arg, the program exits
+        elif row['Mnemonic'] and not row['Arg']:
+            raise exceptions.MnemonicButNoArg(address)
+        elif not row['Mnemonic'] and row['Arg']:
+            raise exceptions.ArgButNoMnemonic(address)
+
+        first_hexit = 0
+        try:
+            # int() strips the str
+            first_hexit = int(row['Mnemonic'])
+        # Must be a mnemonic
+        except ValueError:
+            # Use strip() and upper() for some safety
+            mnemonic = row['Mnemonic'].strip().upper()
+            if mnemonic in globs.MNEMONIC_TO_OPCODE:
+                first_hexit = globs.MNEMONIC_TO_OPCODE[mnemonic]
+            else:
+                raise exceptions.InvalidMnemonic(address)
+        if first_hexit < 0:
+            raise exceptions.FirstHexitNegative(address)
+        elif first_hexit > 0xf:
+            raise exceptions.FirstHexitGreaterThan15(address)
+
+        second_hexit = 0
+        try:
+            second_hexit = int(row['Arg'])
+        except ValueError:
+            raise exceptions.InvalidArg(address)
+
+        if second_hexit < 0:
+            raise exceptions.SecondHexitNegative(address)
+        elif second_hexit > 0xf:
+            raise exceptions.SecondHexitGreaterThan15(address)
+
+        byte = first_hexit << 4 | second_hexit
+        globs.RAM[address] = byte
+
+    if len(globs.RAM) > 16:
+        raise exceptions.MoreThan16MappedAddresses

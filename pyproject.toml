@@ -1,0 +1,41 @@
+[project]
+name = "SAPsim"
+version = "1.0.0"
+authors = [
+    { name="Jesse Wei", email="jesse@cs.unc.edu" },
+]
+description = "Simulation of SAP (Simple As Possible) computer programs from COMP311 @ UNC"
+readme = "README.md"
+requires-python = ">=3.7"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/jesse-wei/SAPsim"
+"Bug Tracker" = "https://github.com/jesse-wei/SAPsim/issues"
+
+[build-system]
+requires = ["setuptools>=65.5.1", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.pytest.ini_options]
+testpaths = [
+    "tests",
+]
+
+[tool.mypy]
+mypy_path = "src"
+check_untyped_defs = true
+disallow_any_generics = true
+ignore_missing_imports = true
+no_implicit_optional = true
+show_error_codes = true
+strict_equality = true
+warn_redundant_casts = true
+warn_return_any = true
+warn_unreachable = true
+warn_unused_configs = true
+no_implicit_reexport = true

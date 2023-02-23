@@ -1,0 +1,12 @@
+# Always keep this gitignored in public repo. They're not stored locally, but just in case...
+tests/prog
+tests/prog/
+tests/prog/*
+.idea/
+.pytest_cache/
+.mypy_cache/
+.tox/
+dist/
+build/
+src/SAPsim.egg-info/
+.pypirc
