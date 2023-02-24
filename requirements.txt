@@ -1,2 +1,7 @@
+setuptools>=65.5.1
+pytest
+pytest-reportlog
+mypy
+flake8
 tabulate
 argparse

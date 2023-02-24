@@ -1,4 +1,4 @@
-"""Entrypoint of program. Usage: `python -m src.main [-h] [-d] [-b BITS] [-f FORMAT] prog.csv`"""
+"""Entrypoint of program. Usage: `python -m main [-h] [-d] [-b BITS] [-f FORMAT] prog.csv`"""
 
 __author__ = "Jesse Wei <jesse@cs.unc.edu>"
 
