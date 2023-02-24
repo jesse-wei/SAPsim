@@ -11,7 +11,7 @@ import src.utils.exceptions as exceptions
 def parse_cli():
     """Parse cli args using argparse, return parser.parse_args() to main()"""
     parser = argparse.ArgumentParser(usage='python -m main [-h] [-d] [-b BITS] [-f FORMAT] prog')
-    parser.add_argument('prog', help='path to SAP program in the format given in template files')
+    parser.add_argument('prog', help='path to SAP program in the format given in template.csv')
     parser.add_argument('-d', '--debug',
                         help='debug/step mode',
                         action="store_true")

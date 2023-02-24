@@ -10,11 +10,13 @@ import src.utils.exceptions as exceptions
 
 def execute_full_speed():
     """Execute instructions in `RAM` at full speed until `EXECUTING` is `False` or `PC > max addr`."""
+    max_addr: int = 0
+    if globs.RAM.keys():
+        max_addr = max(globs.RAM.keys())
     while globs.EXECUTING:
         # Check that RAM is non-empty.
         # There's a weird bug where I know RAM should be non-empty after parsing in main.py but DroppedOffBottom still occurs
-        # Also makes program safe since max(empty) errors
-        if globs.RAM.keys() and globs.PC > max(globs.RAM.keys()):
+        if globs.RAM.keys() and globs.PC > max_addr:
             globs.EXECUTING = False
             raise exceptions.DroppedOffBottom
 

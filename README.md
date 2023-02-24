@@ -4,9 +4,13 @@
 
 ![Tests](https://github.com/jesse-wei/SAPsim/actions/workflows/tests.yml/badge.svg)
 
-Write a SAP program in the format given in [`template.csv`](template.csv). Also see [`example.csv`](tests/public_prog/example.csv) ([output](tests/data/public_prog/example_expected.txt)). You may edit the `.csv` files in Microsoft Excel. Pass the path to your program as a CLI arg. It'll then be [parsed](#parsing-rules) and run at full speed (default), with only final program state displayed, or in debug mode, where program state will be shown after each instruction.
+Write a SAP program in the format given in [`template.csv`](template.csv). Also see [`example.csv`](tests/public_prog/example.csv) ([output](tests/data/public_prog/example_expected.txt)).
 
-First run `python -m pip install -r requirements.txt`.
+You may edit the `.csv` files in Microsoft Excel. Pass the path to your program as a CLI arg. It'll then be [parsed](#parsing-rules) and run at full speed (default), with only final program state displayed, or in debug mode, where program state will be shown after each instruction.
+
+First, make sure you're running Python 3.7+ with `python --version`. If not, try `python3 --version` and replace every `python` with `python3` from now on.
+
+Then, run `python -m pip install -r requirements.txt`.
 
 ```
 usage: python -m main [-h] [-d] [-b BITS] [-f FORMAT] prog
@@ -23,7 +27,7 @@ options:
                         src/utils/globs.py
 ```
 
-This program requires Python 3.7+. It passes all my unit tests (many omitted here) on `[3.7, 3.8, 3.9, 3.10]` $\times$ `[ubuntu-latest, windows-latest]`.
+This program passes all my unit tests (many omitted here) on `[3.7, 3.8, 3.9, 3.10]` $\times$ `[ubuntu-latest, windows-latest]`.
 
 ![SAP instruction set](img/SAP_instruction_set.png)
 

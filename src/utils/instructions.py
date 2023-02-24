@@ -1,8 +1,8 @@
-"""Procedures that represent the SAP instructions in img/SAP_instructions.png.
+"""If you have questions about the pseudocode from the SAP instruction set, this is source code. Specifically, I suggest looking at how overflow and flags in add() (and sub, which uses add) are handled. Ignore exception handling since it's probably not relevant to you.
 All function docstrings are ripped straight from there, with only slight modifications.
-Note `add(arg)` and `sub(arg)` have optional kwargs direct_add= and direct_sub= that will cause A = A + arg, A = A - arg instead of A = A + Mem(arg), A = A - Mem(arg).
-INSTRUCTIONS dict for using an opcode to call a specific function is defined at the bottom.
-Instructions that don't need an arg (i.e. NOP, OUT, HLT) get a default parameter so that they can still be called with an argument."""
+This DOES NOT exist in actual SAP but for the purposes of simulation and testing, `add(arg)` and `sub(arg)` have optional kwargs direct_add= and direct_sub= that will cause A = A + arg, A = A - arg instead of A = A + Mem(arg), A = A - Mem(arg).
+This DOES NOT exist in actual SAP but for implementation purposes, instructions that don't need an arg (i.e. NOP, OUT, HLT) get a default parameter so that they can still be called with an argument. In actual SAP, all instructions (byte) have a required Arg, not a default or optional arg.
+INSTRUCTIONS dict for using an opcode to call a specific function is defined at the bottom."""
 
 __author__ = "Jesse Wei <jesse@cs.unc.edu>"
 
@@ -109,6 +109,7 @@ def sub(arg: int, **kwargs) -> None:
     # add() modified globs.B, so reset it
     globs.B = B_clone
 
+    # FLAG_Z is correct at this point.
     # FLAG_C is not correct so is explicitly handled.
     # This uses the unsigned comparison table FlagC = A >= B (compare their values before A changed)
     globs.FLAG_C = A_clone >= B_clone
