@@ -10,3 +10,6 @@ dist/
 build/
 src/SAPsim.egg-info/
 .pypirc
+bin/
+lib/
+pyvenv.cfg

@@ -142,6 +142,7 @@ class InvalidArg(Exception):
         self.message = f"The arg at address {address} is invalid. It must be an integer from 0 to 15, not a string or integer with spaces in between."
         super().__init__(self.message)
 
+
 class MoreThan16MappedAddresses(Exception):
     def __init__(self):
         self.message = f"A SAP program can have at most 16 addresses! In this simulation, a skipped address doesn't count toward that count. Excluding skipped addresses, you have {len(globs.RAM)} mapped addresses."

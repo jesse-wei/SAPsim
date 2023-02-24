@@ -14,14 +14,14 @@ from tabulate import tabulate
 
 def nop(arg: int = 0) -> None:
     """Nop
-    
+
     Opcode 0"""
     globs.PC += 1
 
 
 def lda(arg: int) -> None:
     """`A = Mem(arg)`
-    
+
     Opcode 1"""
     if arg not in globs.RAM:
         raise exceptions.LoadFromUnmappedAddress
@@ -31,8 +31,6 @@ def lda(arg: int) -> None:
     if globs.A < 0:
         raise exceptions.ARegisterNegativeInt
     globs.PC += 1
-
-# TODO: Test how the exceptions work, are they called and handled correctly
 
 
 def add(arg: int, **kwargs) -> None:
@@ -47,7 +45,7 @@ def add(arg: int, **kwargs) -> None:
     kwarg
         `direct_add`: bool
             Set to `True` to directly add `arg` (i.e. `A = A + arg` instead of `A = A + Mem(arg)`), for testing purposes and use in `sub`.
-            
+
             This behavior does not exist in actual SAP."""
     if 'direct_add' in kwargs and kwargs['direct_add']:
         globs.B = arg
@@ -66,19 +64,16 @@ def add(arg: int, **kwargs) -> None:
     if globs.A > globs.MAX_UNSIGNED_VAL_IN_REGISTERS:
         globs.FLAG_C = 1
         globs.A -= (2 ** globs.NUM_BITS_IN_REGISTERS)
-        globs.FLAG_Z = globs.A == 0
     else:
         globs.FLAG_C = 0
-        globs.FLAG_Z = globs.A == 0
+    globs.FLAG_Z = globs.A == 0
 
     globs.PC += 1
-
-# TODO: Test how the Exceptions work, are they called correctly
 
 
 def sub(arg: int, **kwargs) -> None:
     """`A = A - Mem(arg)`. Accounts for `NUM_BITS_IN_REGISTERS` to set `FLAG_C` and `FLAG_Z`. Calls `add()` twice to perform 2's complement subtraction.
-    
+
     Opcode 3
 
     Parameters
@@ -102,23 +97,19 @@ def sub(arg: int, **kwargs) -> None:
     if globs.B < 0:
         raise exceptions.BRegisterNegativeInt
 
-    # Clone A and B for use later in setting FlagC. Recall after unsigned subtraction A-B, FlagC = A >= B (original value of A)
+    # Clone A and B for use later in setting FlagC.
     A_clone = globs.A
     B_clone = globs.B
 
     inverse_B = B_clone ^ (int('1' * globs.NUM_BITS_IN_REGISTERS, 2))
 
-    # 2's complement: add ~B, then add 1
-    # The adds will set globs.A to the correct value
-    # add() also modify globs.B, so reset it later
     add(inverse_B, direct_add=True)
     add(1, direct_add=True)
 
-    # Set globs.B to original B value
+    # add() modified globs.B, so reset it
     globs.B = B_clone
 
-    # FLAG_Z is correct at this point. Don't need to handle.
-    # However, FLAG_C is not correct so is explicitly handled.
+    # FLAG_C is not correct so is explicitly handled.
     # This uses the unsigned comparison table FlagC = A >= B (compare their values before A changed)
     globs.FLAG_C = A_clone >= B_clone
 
@@ -129,7 +120,7 @@ def sub(arg: int, **kwargs) -> None:
 
 def sta(arg: int) -> None:
     """`Mem(Arg) = A`. CAN store to unmapped addr, which will simply map the addr in RAM.
-    
+
     Opcode 4"""
     globs.RAM[arg] = globs.A
     globs.PC += 1
@@ -137,7 +128,7 @@ def sta(arg: int) -> None:
 
 def ldi(arg: int) -> None:
     """`A = arg`
-    
+
     Opcode 5"""
     globs.A = arg
     if arg > globs.MAX_UNSIGNED_VAL_IN_REGISTERS:
@@ -149,7 +140,7 @@ def ldi(arg: int) -> None:
 
 def jmp(arg: int) -> None:
     """`PC = arg`
-    
+
     Opcode 6"""
     if arg < 0:
         raise exceptions.JumpToNegativeAddress
@@ -158,7 +149,7 @@ def jmp(arg: int) -> None:
 
 def jc(arg: int) -> None:
     """If `FC=1` then `PC=arg`; else go on
-    
+
     Opcode 7"""
     if globs.FLAG_C:
         if arg < 0:
@@ -170,7 +161,7 @@ def jc(arg: int) -> None:
 
 def jz(arg: int) -> None:
     """If `FZ=1` then `PC=arg`; else go on
-    
+
     Opcode 8"""
     if globs.FLAG_Z:
         if arg < 0:
@@ -182,7 +173,7 @@ def jz(arg: int) -> None:
 
 def out(arg: int = 0) -> None:
     """`Display = OUT = A`. Prints | PC | A (dec) | A (hex) |
-    
+
     Opcode 14"""
     arg = helpers.parse_arg(globs.RAM[globs.PC])
     table = [[globs.PC, globs.A, helpers.pad_hex(hex(globs.A), 2)]]
@@ -192,7 +183,7 @@ def out(arg: int = 0) -> None:
 
 def hlt(arg: int = 0) -> None:
     """Halt
-    
+
     Opcode 15"""
     globs.EXECUTING = False
 
