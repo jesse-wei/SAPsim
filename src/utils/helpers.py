@@ -33,7 +33,10 @@ def print_RAM(**kwargs):
         table_row = []
         if "dispPC" in kwargs and kwargs["dispPC"]:
             table_row.append(">" if globs.PC == addr else "")
-        table_row.extend([addr, globs.OPCODE_TO_MNEMONIC[opcode] + " " + str(arg), byte, pad_hex(hex(byte), 2)])
+        if opcode in globs.OPCODE_TO_MNEMONIC:
+            table_row.extend([addr, globs.OPCODE_TO_MNEMONIC[opcode] + " " + str(arg), byte, pad_hex(hex(byte), 2)])
+        else:
+            table_row.extend([addr, "Invalid Opcode", byte, pad_hex(hex(byte), 2)])
         table.append(table_row)
     headers = []
     if "dispPC" in kwargs and kwargs["dispPC"]:
