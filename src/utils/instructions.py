@@ -63,7 +63,7 @@ def add(arg: int, **kwargs) -> None:
 
     if globs.A > globs.MAX_UNSIGNED_VAL_IN_REGISTERS:
         globs.FLAG_C = 1
-        globs.A -= (2 ** globs.NUM_BITS_IN_REGISTERS)
+        globs.A -= 2 ** globs.NUM_BITS_IN_REGISTERS
     else:
         globs.FLAG_C = 0
     globs.FLAG_Z = globs.A == 0
@@ -101,12 +101,12 @@ def sub(arg: int, **kwargs) -> None:
     A_clone = globs.A
     B_clone = globs.B
 
-    inverse_B = B_clone ^ (int('1' * globs.NUM_BITS_IN_REGISTERS, 2))
+    inverse_B = B_clone ^ globs.MAX_UNSIGNED_VAL_IN_REGISTERS
 
     add(inverse_B, direct_add=True)
     add(1, direct_add=True)
 
-    # add() modified globs.B, so reset it
+    # add() modified globs.B, reset it
     globs.B = B_clone
 
     # FLAG_Z is correct at this point.

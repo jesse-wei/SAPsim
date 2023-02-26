@@ -18,8 +18,8 @@ def print_debug_info() -> None:
 class ARegisterNotEnoughBits(Exception):
     """The unsigned value in register A can't be stored in NUM_BITS_IN_REGISTERS bits."""
 
-    def __init__(self, message=f"The unsigned value in register A can't be stored in {globs.NUM_BITS_IN_REGISTERS} bits."):
-        self.message = message
+    def __init__(self):
+        self.message = f"The unsigned value in register A can't be stored in {globs.NUM_BITS_IN_REGISTERS} bits."
         print_debug_info()
         super().__init__(self.message)
 
@@ -27,8 +27,8 @@ class ARegisterNotEnoughBits(Exception):
 class BRegisterNotEnoughBits(Exception):
     """"The unsigned value in register B can't be stored in NUM_BITS_IN_REGISTERS bits."""
 
-    def __init__(self, message=f"The unsigned value in register B can't be stored in {globs.NUM_BITS_IN_REGISTERS} bits."):
-        self.message = message
+    def __init__(self):
+        self.message = f"The unsigned value in register B can't be stored in {globs.NUM_BITS_IN_REGISTERS} bits."
         print_debug_info()
         super().__init__(self.message)
 
@@ -36,17 +36,17 @@ class BRegisterNotEnoughBits(Exception):
 class ARegisterNegativeInt(Exception):
     """There's somehow a negative number in unsigned register A."""
 
-    def __init__(self, message=f"There's somehow a negative number {globs.A} in unsigned register A."):
-        self.message = message
+    def __init__(self):
+        self.message = f"There's somehow a negative number {globs.A} in unsigned register A."
         print_debug_info()
         super().__init__(self.message)
 
 
 class BRegisterNegativeInt(Exception):
-    """There's somehow a negative number in unsigned register A."""
+    """There's somehow a negative number in unsigned register B."""
 
-    def __init__(self, message=f"There's somehow a negative number {globs.B} in unsigned register B."):
-        self.message = message
+    def __init__(self):
+        self.message = f"There's somehow a negative number {globs.B} in unsigned register B."
         print_debug_info()
         super().__init__(self.message)
 
@@ -64,8 +64,8 @@ class DroppedOffBottom(Exception):
 class LoadFromUnmappedAddress(Exception):
     """Raised if attempting to Mem(addr), but Addr is not mapped."""
 
-    def __init__(self, message=f"Attempted to load from unmapped address {globs.PC}."):
-        self.message = message
+    def __init__(self):
+        self.message = f"Attempted to load from unmapped address {globs.PC}."
         print_debug_info()
         super().__init__(self.message)
 
@@ -74,6 +74,12 @@ class JumpToNegativeAddress(Exception):
     def __init__(self, message=f"Attempted to jump to a negative address."):
         self.message = message
         print_debug_info()
+        super().__init__(self.message)
+
+
+class InvalidFileExtension(Exception):
+    def __init__(self, path, message=f"Invalid file extension for prog positional argument. Must be .csv"):
+        self.message = message
         super().__init__(self.message)
 
 
@@ -86,6 +92,12 @@ class RowWithNoAddress(Exception):
 class NegativeAddress(Exception):
     def __init__(self, row):
         self.message = f"There's a negative address in row {row} of your program!"
+        super().__init__(self.message)
+
+
+class NonNumericalAddress(Exception):
+    def __init__(self, row):
+        self.message = f"There's an invalid address (int(address) causes ValueError) in row {row} of your program!"
         super().__init__(self.message)
 
 
@@ -146,4 +158,16 @@ class InvalidArg(Exception):
 class MoreThan16MappedAddresses(Exception):
     def __init__(self):
         self.message = f"A SAP program can have at most 16 addresses! In this simulation, a skipped address doesn't count toward that count. Excluding skipped addresses, you have {len(globs.RAM)} mapped addresses."
+        super().__init__(self.message)
+
+
+class InstructionRequiresArg(Exception):
+    def __init__(self, instruction: str):
+        self.message = f"You typed: {instruction}. Only NOP, OUT, and HLT strings have an unnecessary Arg (but there's still a hexit for the arg)."
+        super().__init__(self.message)
+
+
+class InvalidInstructionString(Exception):
+    def __init__(self, instruction: str):
+        self.message = f"Invalid instruction string: {instruction}, correct format is <Mnemonic> <Arg>. NOP, OUT, and HLT strings can have no arg (but there's still a hexit for the arg in the byte representation). Arg must be less than 16."
         super().__init__(self.message)

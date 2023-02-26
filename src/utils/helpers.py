@@ -4,6 +4,7 @@ __author__ = "Jesse Wei <jesse@cs.unc.edu>"
 
 import src.utils.globs as globs
 from tabulate import tabulate
+import src.utils.exceptions as exceptions
 
 
 def parse_byte(byte: int):
@@ -23,6 +24,23 @@ def parse_arg(byte: int) -> int:
     return byte & 0xF
 
 
+def instruction_to_byte(instruction: str) -> int:
+    """Given an instruction in the form <Mnemonic> <Arg>, with a space, return the byte representation.
+    
+    For NOP, OUT, and HLT, if an Arg is not given, then the right hexit will just be 0.
+    Haven't yet tested exception handling."""
+    if " " not in instruction:
+        if len(instruction) != 3 or instruction.upper() not in {"NOP", "OUT", "HLT"}:
+            raise exceptions.InstructionRequiresArg(instruction)
+        return globs.MNEMONIC_TO_OPCODE[instruction.upper()] << 4
+    space_position = instruction.find(" ")
+    if len(instruction) != (space_position + 2) and len(instruction) != (space_position + 3):
+        raise exceptions.InvalidInstructionString(instruction)
+    if int(instruction[space_position+1:]) < 0 or int(instruction[space_position+1:]) >= 16:
+        raise exceptions.InvalidInstructionString(instruction)
+    return (globs.MNEMONIC_TO_OPCODE[instruction[:space_position].upper()] << 4) | int(instruction[space_position+1:])
+
+
 def print_RAM(**kwargs):
     """Pretty print the contents of RAM, sorted by address. | <PC (optional)> | Addr | Instruction | Dec | Hex | (since we can't distinguish instructions from data). Display arrow on current PC value if `dispPC=True` in kwargs. Set `format=` to set tabulate pretty-print format."""
     table = []
@@ -30,13 +48,11 @@ def print_RAM(**kwargs):
         byte = globs.RAM[addr]
         opcode = parse_opcode(byte)
         arg = parse_arg(byte)
+        instruction_str = (globs.OPCODE_TO_MNEMONIC[opcode] + " " + str(arg)) if opcode in globs.OPCODE_TO_MNEMONIC else "Invalid Opcode"
         table_row = []
         if "dispPC" in kwargs and kwargs["dispPC"]:
             table_row.append(">" if globs.PC == addr else "")
-        if opcode in globs.OPCODE_TO_MNEMONIC:
-            table_row.extend([addr, globs.OPCODE_TO_MNEMONIC[opcode] + " " + str(arg), byte, pad_hex(hex(byte), 2)])
-        else:
-            table_row.extend([addr, "Invalid Opcode", byte, pad_hex(hex(byte), 2)])
+        table_row.extend([addr, instruction_str, byte, pad_hex(hex(byte), 2)])
         table.append(table_row)
     headers = []
     if "dispPC" in kwargs and kwargs["dispPC"]:

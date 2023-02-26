@@ -2,8 +2,6 @@
 
 __author__ = "Jesse Wei <jesse@cs.unc.edu>"
 
-import sys
-import os
 import src.utils.globs as globs
 from src.utils.execute import execute_full_speed, execute_next
 from src.utils.helpers import check_state, check_state_all, print_RAM, print_info

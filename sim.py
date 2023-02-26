@@ -1,4 +1,4 @@
-"""Entrypoint of program. Usage: `python -m main [-h] [-d] [-b BITS] [-f FORMAT] prog.csv`"""
+"""Entrypoint of program. Usage: python -m sim [-h] [-s] [-c CHANGE] [-f FORMAT] [-b BITS] prog"""
 
 __author__ = "Jesse Wei <jesse@cs.unc.edu>"
 
@@ -12,25 +12,35 @@ def main():
     args = parse_cli()
     parse_csv(args.prog)
 
+    # Set up global variables based on CLI args
     if args.bits:
-        if int(args.bits) <= 1:
-            print(f"-b, --bits argument must be greater than 1!\nExiting.")
-            exit(1)
         globs.NUM_BITS_IN_REGISTERS = int(args.bits)
         globs.MAX_UNSIGNED_VAL_IN_REGISTERS = 2 ** int(args.bits) - 1
-
+    if args.change:
+        changes = args.change.split(',')
+        for change in changes:
+            if change.count(':') != 1:
+                print("Invalid syntax for --c option, correct format is <addr>:<base-10 value>,<addr>:<base-10 value>, ...")
+                exit(1)
+            colon_position = change.find(':')
+            addr = int(change[:colon_position])
+            if addr not in globs.RAM:
+                print(f"You can apply a change only to an address that's already mapped (not skipped). Address {addr} is not mapped.")
+                exit(1)
+            value = int(change[colon_position+1:])
+            if value < 0 or value > globs.MAX_UNSIGNED_VAL_IN_REGISTERS:
+                print(f"Invalid base-10 value for change: {value}. Negative or overflows registers.")
+                exit(1)
+            globs.RAM[addr] = value
     if args.format:
         globs.table_fmt = args.format
 
-    # Run program
-    globs.PC = 0
-    globs.EXECUTING = True
-    # Debug mode
-    if args.debug:
+    # Debug mode (default)
+    if not args.speed:
         print("Initial state of simulation.")
         helpers.print_RAM(dispPC=True)
         helpers.print_info()
-        print("Debug mode: press Enter to execute next instruction ( > ) and display info.")
+        print("Debug mode (default): press Enter to execute next instruction ( > ).")
         input()
         while globs.EXECUTING:
             # Special case so that you don't have to press Enter twice to halt on a HLT instruction
@@ -42,7 +52,7 @@ def main():
             helpers.print_info()
             input()
         print("Program halted.")
-    # Run to completion or to Exception
+    # Full speed
     else:
         execute.execute_full_speed()
         helpers.print_RAM()

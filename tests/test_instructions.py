@@ -1,11 +1,7 @@
-"""Test instructions.
-Tested 7 SAP programs from COMP311 FA22 and the lab programs from SP23 and they all work.
-No JC and JZ tests but not needed."""
+"""Test instructions."""
 
 __author__ = "Jesse Wei <jesse@cs.unc.edu>"
 
-import sys
-import os
 import src.utils.globs as globs
 from src.utils.execute import execute_full_speed, execute_next
 from src.utils.helpers import check_state, check_state_all, print_RAM, print_info

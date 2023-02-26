@@ -13,3 +13,8 @@ src/SAPsim.egg-info/
 bin/
 lib/
 pyvenv.cfg
+include/
+tests/public_prog/ex1.csv
+tests/public_prog/ex2.csv
+tests/public_prog/README.md
+tests/test_example_progs.py

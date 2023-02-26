@@ -10,16 +10,28 @@ import src.utils.exceptions as exceptions
 
 def parse_cli():
     """Parse cli args using argparse, return parser.parse_args() to main()"""
-    parser = argparse.ArgumentParser(usage='python -m main [-h] [-d] [-b BITS] [-f FORMAT] prog')
+    parser = argparse.ArgumentParser(usage='python -m sim [-h] [-s] [-c CHANGE] [-f FORMAT] [-b BITS] prog')
     parser.add_argument('prog', help='path to SAP program in the format given in template.csv')
-    parser.add_argument('-d', '--debug',
-                        help='debug/step mode',
+    parser.add_argument('-s', '--speed',
+                        help='run at full speed',
                         action="store_true")
-    parser.add_argument('-b', '--bits',
-                        help='number of bits in the ***unsigned*** registers (default is 8)')
+    parser.add_argument('-c', '--change',
+                        help='before execution, overwrite data at mapped address(es) to base-10 value(s), format is <addr>:<base-10 value>,<addr>:<base-10 value>,...')
     parser.add_argument('-f', '--format',
                         help="print format, options: https://github.com/astanin/python-tabulate#table-format, modify default value in src/utils/globs.py")
+    parser.add_argument('-b', '--bits',
+                        help='number of bits in the unsigned registers (default is 8)')
     args = parser.parse_args()
+
+    final_dot_position = args.prog.rfind('.')
+    if final_dot_position == -1 or args.prog[final_dot_position+1:] != 'csv':
+        raise exceptions.InvalidFileExtension(args.prog)
+
+    if args.bits:
+        if int(args.bits) <= 1:
+            print(f"-b, --bits argument must be greater than 1!\nExiting.")
+            exit(1)
+
     return args
 
 
@@ -34,19 +46,22 @@ def parse_csv(file_path):
             raise exceptions.RowWithNoAddress(num_rows)
         elif int(row["Address"]) < 0:
             raise exceptions.NegativeAddress(num_rows)
+        address = 0
+        try:
+            address = int(row['Address'])
+        except ValueError:
+            raise exceptions.NonNumericalAddress(num_rows)
         num_rows += 1
-        address = int(row['Address'])
 
         if address in addresses:
             raise exceptions.DuplicateAddress(address)
-        else:
-            addresses.add(address)
+        addresses.add(address)
 
         # If there's an Address and no Mnemonic and no Arg in a row, insert a NOP 0 and continue parsing
         if not row['Mnemonic'] and not row['Arg']:
             globs.RAM[address] = 0x00
             continue
-        # But if there's an Address and either only an Mnemonic or only an Arg, the program exits
+        # But if there's an Address and either only an Mnemonic or only an Arg, exception
         elif row['Mnemonic'] and not row['Arg']:
             raise exceptions.MnemonicButNoArg(address)
         elif not row['Mnemonic'] and row['Arg']:
@@ -60,10 +75,9 @@ def parse_csv(file_path):
         except ValueError:
             # Use strip() and upper() for some safety
             mnemonic = row['Mnemonic'].strip().upper()
-            if mnemonic in globs.MNEMONIC_TO_OPCODE:
-                first_hexit = globs.MNEMONIC_TO_OPCODE[mnemonic]
-            else:
+            if mnemonic not in globs.MNEMONIC_TO_OPCODE:
                 raise exceptions.InvalidMnemonic(address)
+            first_hexit = globs.MNEMONIC_TO_OPCODE[mnemonic]
         if first_hexit < 0:
             raise exceptions.FirstHexitNegative(address)
         elif first_hexit > 0xf:
