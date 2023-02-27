@@ -89,9 +89,9 @@ def parse_csv(file_path):
                     raise exceptions.InvalidFirstHexit(address)
             # Otherwise must be Mnemonic
             else:
-                if mnemonic not in globs.MNEMONIC_TO_OPCODE:
+                if mnemonic.upper() not in globs.MNEMONIC_TO_OPCODE:
                     raise exceptions.InvalidMnemonic(address)
-                first_hexit = globs.MNEMONIC_TO_OPCODE[mnemonic]
+                first_hexit = globs.MNEMONIC_TO_OPCODE[mnemonic.upper()]
 
         second_hexit = 0
         try:

@@ -54,11 +54,16 @@ If you run into `ModuleNotFoundError: No module named 'src'`, make sure your cur
 
 ## Parsing rules
 
-### How to avoid parsing issues
+### Allowed syntax
 
-- See [`example.csv`](tests/public_prog/example.csv) ([output full speed](tests/data/public_prog/example_full_speed.txt)).
-  - It's fine to have an `Address` with no `Mnemonic` **and** no `Arg`, which is pretty much a blank row
-  - It's fine to skip `Address`es
+- In the Mnemonic column, these are allowed:
+  - two or three letter Mnemonic (for an instruction)
+  - single-digit hexit `0` to `f` (for data)
+  - double-digit base-10 integer `10` to `15` (for data)
+
+- In the Arg column, these are allowed:
+  - single-digit hexit `0` to `f` (for instruction or data)
+  ` double-digit base-10 integer `10` to `15` (for instruction or data)
 
 ### How to get a parsing `Exception`
 
@@ -67,7 +72,7 @@ If you run into `ModuleNotFoundError: No module named 'src'`, make sure your cur
 - An `Address` in a row with a `Mnemonic` XOR `Arg` (i.e., missing just one)
 - Duplicate `Address`es
 - 4-bit Opcode in a `Mnemonic` field
-- Mnemonic (if numerical) or Arg doesn't fit in a hexit
+- Mnemonic (if field is numerical) or Arg doesn't fit in a hexit
 
 ## [Exceptions](src/utils/exceptions.py)
 
