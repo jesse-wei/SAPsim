@@ -142,6 +142,12 @@ class SecondHexitGreaterThan15(Exception):
         self.message = f"The second hexit at address {address} of your program must be less than 16!"
         super().__init__(self.message)
 
+    
+class InvalidFirstHexit(Exception):
+    def __init__(self, address):
+        self.message = f"The first hexit at address {address} is not valid! Must be a hexit 0 to f or a base-10 integer 0 to 15 representing a hexit. You typed one letter in this field, so I assume you meant to put a hexit here, not a Mnemonic."
+        super().__init__(self.message)
+
 
 class InvalidMnemonic(Exception):
     def __init__(self, address):
@@ -151,7 +157,7 @@ class InvalidMnemonic(Exception):
 
 class InvalidArg(Exception):
     def __init__(self, address):
-        self.message = f"The arg at address {address} is invalid. It must be an integer from 0 to 15, not a string or integer with spaces in between."
+        self.message = f"The arg at address {address} is invalid. It must be a hexit 0 to f or a base-10 integer 0 to 15 representing a hexit."
         super().__init__(self.message)
 
 

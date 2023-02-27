@@ -67,31 +67,50 @@ def parse_csv(file_path):
             raise exceptions.ArgButNoMnemonic(address)
 
         first_hexit = 0
+        # Need to determine if the field is a base-10 int or one-letter hexit str or Mnemonic str.
+        # int() will cause a ValueError if it's a one-letter hexit str or Mnemonic str.
         try:
             # int() strips the str
             first_hexit = int(row['Mnemonic'])
-        # Must be a mnemonic
+            # Must be a valid base-10 integer here
+            if first_hexit < 0:
+                raise exceptions.FirstHexitNegative(address)
+            elif first_hexit > 0xf:
+                raise exceptions.FirstHexitGreaterThan15(address)
         except ValueError:
+            # Must be a string, mnemonic or hexit
             # Use strip() and upper() for some safety
             mnemonic = row['Mnemonic'].strip().upper()
-            if mnemonic not in globs.MNEMONIC_TO_OPCODE:
-                raise exceptions.InvalidMnemonic(address)
-            first_hexit = globs.MNEMONIC_TO_OPCODE[mnemonic]
-        if first_hexit < 0:
-            raise exceptions.FirstHexitNegative(address)
-        elif first_hexit > 0xf:
-            raise exceptions.FirstHexitGreaterThan15(address)
+            # Must be a hex value if length is 1
+            if len(mnemonic) == 1:
+                try:
+                    first_hexit = int(mnemonic, 16)
+                except ValueError:
+                    raise exceptions.InvalidFirstHexit(address)
+            # Otherwise must be Mnemonic
+            else:
+                if mnemonic not in globs.MNEMONIC_TO_OPCODE:
+                    raise exceptions.InvalidMnemonic(address)
+                first_hexit = globs.MNEMONIC_TO_OPCODE[mnemonic]
 
         second_hexit = 0
         try:
             second_hexit = int(row['Arg'])
+            # Must be a base-10 integer here
+            if second_hexit < 0:
+                raise exceptions.SecondHexitNegative(address)
+            elif second_hexit > 0xf:
+                raise exceptions.SecondHexitGreaterThan15(address)
         except ValueError:
-            raise exceptions.InvalidArg(address)
-
-        if second_hexit < 0:
-            raise exceptions.SecondHexitNegative(address)
-        elif second_hexit > 0xf:
-            raise exceptions.SecondHexitGreaterThan15(address)
+            # Must be a hex str here
+            # Use strip() and upper() for some safety for a string field
+            arg = row['Arg'].strip().upper()
+            if len(arg) != 1:
+                raise exceptions.InvalidArg(address)
+            try:
+                second_hexit = int(arg, 16)
+            except ValueError:
+                raise exceptions.InvalidArg(address)
 
         byte = first_hexit << 4 | second_hexit
         globs.RAM[address] = byte
