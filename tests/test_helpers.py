@@ -19,7 +19,7 @@ def test_instruction_to_byte_returns_correct_byte():
 
 
 def test_instruction_to_byte_NOP_OUT_HLT():
-    """Test that instruction to byte returns Opcode 0 for NOP, OUT, HLT without an arg."""
+    """Test that instruction to byte returns correct opcode and Arg 0 for NOP, OUT, HLT without an arg."""
     assert 0 == instruction_to_byte("NOP")
     assert 0xe << 4 == instruction_to_byte("OUT")
     assert 0xf << 4 == instruction_to_byte("HLT")

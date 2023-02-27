@@ -10,7 +10,7 @@ import src.utils.exceptions as exceptions
 
 def parse_cli():
     """Parse cli args using argparse, return parser.parse_args() to main()"""
-    parser = argparse.ArgumentParser(usage='python -m sim [-h] [-s] [-c CHANGE] [-f FORMAT] [-b BITS] prog')
+    parser = argparse.ArgumentParser(usage='python3 -m sim [-h] [-s] [-c CHANGE] [-f FORMAT] [-b BITS] prog')
     parser.add_argument('prog', help='path to SAP program in the format given in template.csv')
     parser.add_argument('-s', '--speed',
                         help='run at full speed',
@@ -27,10 +27,9 @@ def parse_cli():
     if final_dot_position == -1 or args.prog[final_dot_position+1:] != 'csv':
         raise exceptions.InvalidFileExtension(args.prog)
 
-    if args.bits:
-        if int(args.bits) <= 1:
-            print(f"-b, --bits argument must be greater than 1!\nExiting.")
-            exit(1)
+    if args.bits and int(args.bits) <= 1:
+        print(f"-b, --bits argument must be greater than 1!\nExiting.")
+        exit(1)
 
     return args
 

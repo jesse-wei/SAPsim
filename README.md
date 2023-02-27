@@ -6,14 +6,16 @@
 
 Write a SAP program in the format given in [`template.csv`](template.csv). Also see [`example.csv`](tests/public_prog/example.csv) ([output full speed](tests/data/public_prog/example_full_speed.txt)) ([output debug mode](tests/data/public_prog/example_debug.txt)).
 
-You may edit the `.csv` files in Microsoft Excel. Pass the path to your SAP program as a CLI argument. It'll then be parsed and run in debug mode (default). Alternatively, apply the `-s` flag to run at full <ins>s</ins>peed.
+You may edit the `.csv` files in Microsoft Excel. Pass the path to your SAP program as a CLI argument. It'll then be run in debug mode (default). Alternatively, apply the `-s` option to run at full <ins>s</ins>peed.
 
-First, make sure you're running Python 3.7+ with `python3 --version`.
+First, make sure your terminal says you're in the `SAPsim/` directory. The current working directory needs to be `.../SAPsim`.
 
-Then, run `python3 -m pip install -r requirements.txt`. Use a [virtual environment](https://packaging.python.org/en/latest/tutorials/installing-packages/#creating-and-using-virtual-environments) if you're cool.
+Make sure you're running Python 3.7+ with `python3 --version`.
+
+Then, type `python3 -m pip install -r requirements.txt`.
 
 ```
-usage: python -m sim [-h] [-s] [-c CHANGE] [-f FORMAT] [-b BITS] prog
+usage: python3 -m sim [-h] [-s] [-c CHANGE] [-f FORMAT] [-b BITS] prog
 
 positional arguments:
   prog                  path to SAP program in the format given in template.csv
@@ -30,9 +32,9 @@ options:
   -b BITS, --bits BITS  number of bits in the unsigned registers (default is 8)
 ```
 
-**Note**: Make sure you're in the `SAPsim/` directory (i.e., `pwd` command results in `.../SAPsim`) or you'll get an `ImportError`.
+This program passes all my unit tests (many omitted here) on `[3.7, 3.8, 3.9, 3.10]` X `[ubuntu-latest, windows-latest]`. I test locally on macOS (M1) with Python 3.10, so that works too.
 
-This program passes all my unit tests (many omitted here) on `[3.7, 3.8, 3.9, 3.10]` X `[ubuntu-latest, windows-latest]`. I test locally on macOS, so that works too.
+If you run into `ModuleNotFoundError: No module named 'src'`, make sure your current working directory is `.../SAPsim`!
 
 ![SAP instruction set](img/SAP_instruction_set.png)
 
@@ -55,8 +57,7 @@ This program passes all my unit tests (many omitted here) on `[3.7, 3.8, 3.9, 3.
 ### How to avoid parsing issues
 
 - See [`example.csv`](tests/public_prog/example.csv) ([output full speed](tests/data/public_prog/example_full_speed.txt)).
-  - **No blank rows**
-  - But it's fine to have an `Address` with no `Mnemonic` **and** no `Arg`, which is pretty much a blank row
+  - It's fine to have an `Address` with no `Mnemonic` **and** no `Arg`, which is pretty much a blank row
   - It's fine to skip `Address`es
 
 ### How to get a parsing `Exception`
