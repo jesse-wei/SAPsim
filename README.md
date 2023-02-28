@@ -51,7 +51,6 @@ If you run into `ModuleNotFoundError: No module named 'src'`, make sure your cur
     - For example, 254 = `0xFE` is Mnemonic `F`, Arg `E`.
     - 10 = `0x0A` is Mnemonic `0`, Arg `A`. You may not omit the leading 0.
 - Programs run until they `HLT` or until an [Exception](src/utils/exceptions.py) is raised. Infinite loops are possible, of course.
-- Real SAP programs don't have comments, but comments are allowed and encouraged in the `Comments` column of the `.csv` programs!
 - These are the same rules a SAP computer implemented by hardware has to follow.
   - > "This is a feature, not a bug"
 
@@ -59,13 +58,13 @@ If you run into `ModuleNotFoundError: No module named 'src'`, make sure your cur
 
 ### Allowed syntax
 
-- In the Mnemonic column, these are allowed:
+- In the Mnemonic column, these are allowed
   - two or three letter Mnemonic (for an instruction)
   - single-digit hexit `0` to `F` (for data)
 
-- In the Arg column, these are allowed:
+- In the Arg column, these are allowed
   - single-digit hexit `0` to `F` (for instruction or data)
-  - double-digit base-10 integer `10` to `15` representing a hexit.
+  - double-digit base-10 integer `10` to `15` representing a hexit
     - i.e. `JC 15` and `JC F` are both legal and represent the same instruction
 
 ### How to get a parsing `Exception`
