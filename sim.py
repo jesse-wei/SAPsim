@@ -55,7 +55,7 @@ def main():
     # Full speed
     else:
         execute.execute_full_speed()
-        helpers.print_RAM()
+        helpers.print_RAM(dispPC=True)
         helpers.print_info()
         print("Program halted.")
 

@@ -50,7 +50,7 @@ If you run into `ModuleNotFoundError: No module named 'src'`, make sure your cur
   - All data must fit in a byte. Specifically, the Mnemonic is a hexit, and the Arg is a hexit.
     - For example, 254 = `0xFE` is Mnemonic `F`, Arg `E`.
     - 10 = `0x0A` is Mnemonic `0`, Arg `A`. You may not omit the leading 0.
-- Programs run until they `HLT` or until an [Exception](src/utils/exceptions.py) is raised. Infinite loops are possible, of course.
+- Programs run until they `HLT` or until an [`Exception`](src/utils/exceptions.py) is raised. Infinite loops are possible, of course.
 - These are the same rules a SAP computer implemented by hardware has to follow.
   - > "This is a feature, not a bug"
 
@@ -58,14 +58,16 @@ If you run into `ModuleNotFoundError: No module named 'src'`, make sure your cur
 
 ### Allowed syntax
 
-- In the Mnemonic column, these are allowed
-  - two or three letter Mnemonic (for an instruction)
-  - single-digit hexit `0` to `F` (for data)
+In the Mnemonic column, these are allowed
 
-- In the Arg column, these are allowed
-  - single-digit hexit `0` to `F` (for instruction or data)
-  - double-digit base-10 integer `10` to `15` representing a hexit
-    - i.e. `JC 15` and `JC F` are both legal and represent the same instruction
+- two or three letter Mnemonic (for an instruction)
+- single-digit hexit `0` to `F` (for data)
+
+In the Arg column, these are allowed
+
+- single-digit hexit `0` to `F` (for instruction or data)
+- double-digit base-10 integer `10` to `15` representing a hexit
+  - e.g. `JC 15` and `JC F` are both legal and represent the same instruction
 
 ### How to get a parsing `Exception`
 
@@ -76,6 +78,7 @@ If you run into `ModuleNotFoundError: No module named 'src'`, make sure your cur
 - 4-bit Opcode in a `Mnemonic` field
 - Mnemonic (if field is numerical) or Arg doesn't fit in a hexit
 
-## [Exceptions](src/utils/exceptions.py)
+## [`Exceptions`](src/utils/exceptions.py)
 
-- See the link in the heading for a list of custom Exceptions. The names and messages are self-explanatory.
+- See the link in the heading for a list of custom `Exceptions`. The names are self-explanatory.
+- Each Exception also prints a descriptive error message.
