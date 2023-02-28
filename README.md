@@ -45,8 +45,11 @@ If you run into `ModuleNotFoundError: No module named 'src'`, make sure your cur
 - `A` and `B` registers are unsigned and 8-bit by default. Number of bits is configurable via the `-b BITS` CLI option.
 - Any value at a memory address is a byte.
   - An instruction is a Mnemonic representing an Opcode (4-bit) and an Arg (4-bit).
-  - All data must fit in a byte. Specifically, the Mnemonic is a base-10 integer representing the first hexit, and the Arg is a base-10 integer representing the second hexit.
-    - For example, 255 = `0xFF` is Mnemonic 15, Arg 15.
+    - For an instruction, the Arg can be represented in base-10 or base-16.
+      - For example, `JC 15` can be written as Mnemonic `JC`, Arg `15` or Mnemonic `JC`, Arg `F`.
+  - All data must fit in a byte. Specifically, the Mnemonic is a hexit, and the Arg is a hexit.
+    - For example, 254 = `0xFE` is Mnemonic `F`, Arg `E`.
+    - 10 = `0x0A` is Mnemonic `0`, Arg `A`. You may not omit the leading 0.
 - Programs run until they `HLT` or until an [Exception](src/utils/exceptions.py) is raised. Infinite loops are possible, of course.
 - Real SAP programs don't have comments, but comments are allowed and encouraged in the `Comments` column of the `.csv` programs!
 - These are the same rules a SAP computer implemented by hardware has to follow.
@@ -58,12 +61,12 @@ If you run into `ModuleNotFoundError: No module named 'src'`, make sure your cur
 
 - In the Mnemonic column, these are allowed:
   - two or three letter Mnemonic (for an instruction)
-  - single-digit hexit `0` to `f` (for data)
-  - double-digit base-10 integer `10` to `15` (for data)
+  - single-digit hexit `0` to `F` (for data)
 
 - In the Arg column, these are allowed:
-  - single-digit hexit `0` to `f` (for instruction or data)
-  ` double-digit base-10 integer `10` to `15` (for instruction or data)
+  - single-digit hexit `0` to `F` (for instruction or data)
+  - double-digit base-10 integer `10` to `15` representing a hexit.
+    - i.e. `JC 15` and `JC F` are both legal and represent the same instruction
 
 ### How to get a parsing `Exception`
 

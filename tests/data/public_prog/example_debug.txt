@@ -15,7 +15,7 @@ Initial state of simulation.
 │    │     12 │ HLT 0         │   240 │ 0xf0  │
 │    │     13 │ NOP 3         │     3 │ 0x03  │
 │    │     14 │ NOP 4         │     4 │ 0x04  │
-│    │     15 │ LDA 0         │    16 │ 0x10  │
+│    │     15 │ HLT 14        │   254 │ 0xfe  │
 └────┴────────┴───────────────┴───────┴───────┘
 ┌───────┬───┐
 │ PC    │ 0 │
@@ -24,7 +24,7 @@ Initial state of simulation.
 │ FlagC │ 0 │
 │ FlagZ │ 0 │
 └───────┴───┘
-Debug mode: press Enter to execute next instruction ( > ) and display info.
+Debug mode (default): press Enter to execute next instruction ( > ).
 ┌────┬────────┬───────────────┬───────┬───────┐
 │    │   Addr │ Instruction   │   Dec │ Hex   │
 ├────┼────────┼───────────────┼───────┼───────┤
@@ -41,7 +41,7 @@ Debug mode: press Enter to execute next instruction ( > ) and display info.
 │    │     12 │ HLT 0         │   240 │ 0xf0  │
 │    │     13 │ NOP 3         │     3 │ 0x03  │
 │    │     14 │ NOP 4         │     4 │ 0x04  │
-│    │     15 │ LDA 0         │    16 │ 0x10  │
+│    │     15 │ HLT 14        │   254 │ 0xfe  │
 └────┴────────┴───────────────┴───────┴───────┘
 ┌───────┬───┐
 │ PC    │ 1 │
@@ -71,7 +71,7 @@ Debug mode: press Enter to execute next instruction ( > ) and display info.
 │    │     12 │ HLT 0         │   240 │ 0xf0  │
 │    │     13 │ NOP 3         │     3 │ 0x03  │
 │    │     14 │ NOP 4         │     4 │ 0x04  │
-│    │     15 │ LDA 0         │    16 │ 0x10  │
+│    │     15 │ HLT 14        │   254 │ 0xfe  │
 └────┴────────┴───────────────┴───────┴───────┘
 ┌───────┬───┐
 │ PC    │ 2 │
@@ -96,7 +96,7 @@ Debug mode: press Enter to execute next instruction ( > ) and display info.
 │    │     12 │ HLT 0         │   240 │ 0xf0  │
 │    │     13 │ NOP 3         │     3 │ 0x03  │
 │    │     14 │ NOP 4         │     4 │ 0x04  │
-│    │     15 │ LDA 0         │    16 │ 0x10  │
+│    │     15 │ HLT 14        │   254 │ 0xfe  │
 └────┴────────┴───────────────┴───────┴───────┘
 ┌───────┬───┐
 │ PC    │ 3 │
@@ -126,7 +126,7 @@ Debug mode: press Enter to execute next instruction ( > ) and display info.
 │    │     12 │ HLT 0         │   240 │ 0xf0  │
 │    │     13 │ NOP 3         │     3 │ 0x03  │
 │    │     14 │ NOP 4         │     4 │ 0x04  │
-│    │     15 │ LDA 0         │    16 │ 0x10  │
+│    │     15 │ HLT 14        │   254 │ 0xfe  │
 └────┴────────┴───────────────┴───────┴───────┘
 ┌───────┬───┐
 │ PC    │ 4 │
@@ -151,7 +151,7 @@ Debug mode: press Enter to execute next instruction ( > ) and display info.
 │    │     12 │ HLT 0         │   240 │ 0xf0  │
 │    │     13 │ NOP 3         │     3 │ 0x03  │
 │    │     14 │ NOP 4         │     4 │ 0x04  │
-│    │     15 │ LDA 0         │    16 │ 0x10  │
+│    │     15 │ HLT 14        │   254 │ 0xfe  │
 └────┴────────┴───────────────┴───────┴───────┘
 ┌───────┬───┐
 │ PC    │ 5 │
@@ -181,7 +181,7 @@ Debug mode: press Enter to execute next instruction ( > ) and display info.
 │    │     12 │ HLT 0         │   240 │ 0xf0  │
 │    │     13 │ NOP 3         │     3 │ 0x03  │
 │    │     14 │ NOP 4         │     4 │ 0x04  │
-│    │     15 │ LDA 0         │    16 │ 0x10  │
+│    │     15 │ HLT 14        │   254 │ 0xfe  │
 └────┴────────┴───────────────┴───────┴───────┘
 ┌───────┬───┐
 │ PC    │ 6 │
@@ -206,19 +206,19 @@ Debug mode: press Enter to execute next instruction ( > ) and display info.
 │    │     12 │ HLT 0         │   240 │ 0xf0  │
 │    │     13 │ NOP 3         │     3 │ 0x03  │
 │    │     14 │ NOP 4         │     4 │ 0x04  │
-│    │     15 │ LDA 0         │    16 │ 0x10  │
+│    │     15 │ HLT 14        │   254 │ 0xfe  │
 └────┴────────┴───────────────┴───────┴───────┘
-┌───────┬────┐
-│ PC    │  7 │
-│ Reg A │ 16 │
-│ Reg B │  0 │
-│ FlagC │  0 │
-│ FlagZ │  0 │
-└───────┴────┘
+┌───────┬─────┐
+│ PC    │   7 │
+│ Reg A │ 254 │
+│ Reg B │   0 │
+│ FlagC │   0 │
+│ FlagZ │   0 │
+└───────┴─────┘
 ┌──────┬───────┬───────┐
 │   PC │   Dec │ Hex   │
 ├──────┼───────┼───────┤
-│    7 │    16 │ 0x10  │
+│    7 │   254 │ 0xfe  │
 └──────┴───────┴───────┘
 ┌────┬────────┬───────────────┬───────┬───────┐
 │    │   Addr │ Instruction   │   Dec │ Hex   │
@@ -236,15 +236,15 @@ Debug mode: press Enter to execute next instruction ( > ) and display info.
 │    │     12 │ HLT 0         │   240 │ 0xf0  │
 │    │     13 │ NOP 3         │     3 │ 0x03  │
 │    │     14 │ NOP 4         │     4 │ 0x04  │
-│    │     15 │ LDA 0         │    16 │ 0x10  │
+│    │     15 │ HLT 14        │   254 │ 0xfe  │
 └────┴────────┴───────────────┴───────┴───────┘
-┌───────┬────┐
-│ PC    │  8 │
-│ Reg A │ 16 │
-│ Reg B │  0 │
-│ FlagC │  0 │
-│ FlagZ │  0 │
-└───────┴────┘
+┌───────┬─────┐
+│ PC    │   8 │
+│ Reg A │ 254 │
+│ Reg B │   0 │
+│ FlagC │   0 │
+│ FlagZ │   0 │
+└───────┴─────┘
 ┌────┬────────┬───────────────┬───────┬───────┐
 │    │   Addr │ Instruction   │   Dec │ Hex   │
 ├────┼────────┼───────────────┼───────┼───────┤
@@ -261,15 +261,15 @@ Debug mode: press Enter to execute next instruction ( > ) and display info.
 │    │     12 │ HLT 0         │   240 │ 0xf0  │
 │    │     13 │ NOP 3         │     3 │ 0x03  │
 │    │     14 │ NOP 4         │     4 │ 0x04  │
-│    │     15 │ LDA 0         │    16 │ 0x10  │
+│    │     15 │ HLT 14        │   254 │ 0xfe  │
 └────┴────────┴───────────────┴───────┴───────┘
-┌───────┬────┐
-│ PC    │  9 │
-│ Reg A │ 16 │
-│ Reg B │  0 │
-│ FlagC │  0 │
-│ FlagZ │  0 │
-└───────┴────┘
+┌───────┬─────┐
+│ PC    │   9 │
+│ Reg A │ 254 │
+│ Reg B │   0 │
+│ FlagC │   0 │
+│ FlagZ │   0 │
+└───────┴─────┘
 ┌────┬────────┬───────────────┬───────┬───────┐
 │    │   Addr │ Instruction   │   Dec │ Hex   │
 ├────┼────────┼───────────────┼───────┼───────┤
@@ -286,15 +286,15 @@ Debug mode: press Enter to execute next instruction ( > ) and display info.
 │    │     12 │ HLT 0         │   240 │ 0xf0  │
 │    │     13 │ NOP 3         │     3 │ 0x03  │
 │    │     14 │ NOP 4         │     4 │ 0x04  │
-│    │     15 │ LDA 0         │    16 │ 0x10  │
+│    │     15 │ HLT 14        │   254 │ 0xfe  │
 └────┴────────┴───────────────┴───────┴───────┘
-┌───────┬────┐
-│ PC    │ 10 │
-│ Reg A │ 16 │
-│ Reg B │  0 │
-│ FlagC │  0 │
-│ FlagZ │  0 │
-└───────┴────┘
+┌───────┬─────┐
+│ PC    │  10 │
+│ Reg A │ 254 │
+│ Reg B │   0 │
+│ FlagC │   0 │
+│ FlagZ │   0 │
+└───────┴─────┘
 ┌────┬────────┬───────────────┬───────┬───────┐
 │    │   Addr │ Instruction   │   Dec │ Hex   │
 ├────┼────────┼───────────────┼───────┼───────┤
@@ -311,15 +311,15 @@ Debug mode: press Enter to execute next instruction ( > ) and display info.
 │    │     12 │ HLT 0         │   240 │ 0xf0  │
 │    │     13 │ NOP 3         │     3 │ 0x03  │
 │    │     14 │ NOP 4         │     4 │ 0x04  │
-│    │     15 │ LDA 0         │    16 │ 0x10  │
+│    │     15 │ HLT 14        │   254 │ 0xfe  │
 └────┴────────┴───────────────┴───────┴───────┘
-┌───────┬────┐
-│ PC    │ 11 │
-│ Reg A │ 16 │
-│ Reg B │  0 │
-│ FlagC │  0 │
-│ FlagZ │  0 │
-└───────┴────┘
+┌───────┬─────┐
+│ PC    │  11 │
+│ Reg A │ 254 │
+│ Reg B │   0 │
+│ FlagC │   0 │
+│ FlagZ │   0 │
+└───────┴─────┘
 ┌────┬────────┬───────────────┬───────┬───────┐
 │    │   Addr │ Instruction   │   Dec │ Hex   │
 ├────┼────────┼───────────────┼───────┼───────┤
@@ -336,13 +336,13 @@ Debug mode: press Enter to execute next instruction ( > ) and display info.
 │ >  │     12 │ HLT 0         │   240 │ 0xf0  │
 │    │     13 │ NOP 3         │     3 │ 0x03  │
 │    │     14 │ NOP 4         │     4 │ 0x04  │
-│    │     15 │ LDA 0         │    16 │ 0x10  │
+│    │     15 │ HLT 14        │   254 │ 0xfe  │
 └────┴────────┴───────────────┴───────┴───────┘
-┌───────┬────┐
-│ PC    │ 12 │
-│ Reg A │ 16 │
-│ Reg B │  0 │
-│ FlagC │  0 │
-│ FlagZ │  0 │
-└───────┴────┘
+┌───────┬─────┐
+│ PC    │  12 │
+│ Reg A │ 254 │
+│ Reg B │   0 │
+│ FlagC │   0 │
+│ FlagZ │   0 │
+└───────┴─────┘
 Program halted.

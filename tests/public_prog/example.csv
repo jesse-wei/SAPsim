@@ -3,13 +3,13 @@ Address,Mnemonic,Arg,Comments
 1,OUT,2,
 2,LDA,13,
 3,OUT,1,
-4,LDA,14,
+4,LDA,E,Same as LDA 14
 5,OUT,2,
-6,LDA,15,
+6,LDA,F,Same as LDA 15
 7,OUT,15,
 10,,,
 11,,,
 12,HLT,0,
 13,0,3,
 14,0,4,
-15,1,0,
+15,F,E,254==0xFE

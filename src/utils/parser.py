@@ -43,13 +43,17 @@ def parse_csv(file_path):
     for row in prog:
         if not row["Address"]:
             raise exceptions.RowWithNoAddress(num_rows)
-        elif int(row["Address"]) < 0:
-            raise exceptions.NegativeAddress(num_rows)
         address = 0
         try:
             address = int(row['Address'])
         except ValueError:
-            raise exceptions.NonNumericalAddress(num_rows)
+            # Must be hex string here
+            try:
+                address = int(row['Address'], 16)
+            except ValueError:
+                raise exceptions.InvalidAddress(num_rows)
+        if address < 0:
+            raise exceptions.NegativeAddress(num_rows)
         num_rows += 1
 
         if address in addresses:
@@ -89,9 +93,9 @@ def parse_csv(file_path):
                     raise exceptions.InvalidFirstHexit(address)
             # Otherwise must be Mnemonic
             else:
-                if mnemonic.upper() not in globs.MNEMONIC_TO_OPCODE:
+                if mnemonic not in globs.MNEMONIC_TO_OPCODE:
                     raise exceptions.InvalidMnemonic(address)
-                first_hexit = globs.MNEMONIC_TO_OPCODE[mnemonic.upper()]
+                first_hexit = globs.MNEMONIC_TO_OPCODE[mnemonic]
 
         second_hexit = 0
         try:
@@ -102,7 +106,7 @@ def parse_csv(file_path):
             elif second_hexit > 0xf:
                 raise exceptions.SecondHexitGreaterThan15(address)
         except ValueError:
-            # Must be a hex str here
+            # Must be a str here
             # Use strip() and upper() for some safety for a string field
             arg = row['Arg'].strip().upper()
             if len(arg) != 1:

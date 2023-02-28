@@ -101,6 +101,12 @@ class NonNumericalAddress(Exception):
         super().__init__(self.message)
 
 
+class InvalidAddress(Exception):
+    def __init__(self, row):
+        self.message = f"There's an invalid address in row {row} of your program. Address must be a base-10 integer or base-16 hex string."
+        super().__init__(self.message)
+
+
 class DuplicateAddress(Exception):
     def __init__(self, address):
         self.message = f"Address {address} is duplicated in your program!"
@@ -151,7 +157,7 @@ class InvalidFirstHexit(Exception):
 
 class InvalidMnemonic(Exception):
     def __init__(self, address):
-        self.message = f"The mnemonic given at address {address} is invalid. See SAP instruction set for list of supported mnemonics."
+        self.message = f"The mnemonic given at address {address} is invalid. See SAP instruction set for list of supported mnemonics. The mnemonic field can also be a hexit 0 to f if representing data."
         super().__init__(self.message)
 
 
