@@ -1,4 +1,4 @@
-"""Entrypoint of program. Usage: python3 -m sim [-h] [-s] [-c CHANGE] [-f FORMAT] [-b BITS] prog"""
+"""Entrypoint of program. Usage: python -m sim [-h] [-s] [-c CHANGE] [-f FORMAT] [-b BITS] prog"""
 
 __author__ = "Jesse Wei <jesse@cs.unc.edu>"
 

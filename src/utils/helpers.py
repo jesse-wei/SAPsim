@@ -41,6 +41,11 @@ def instruction_to_byte(instruction: str) -> int:
     return (globs.MNEMONIC_TO_OPCODE[instruction[:space_position].upper()] << 4) | int(instruction[space_position+1:])
 
 
+def i2b(instruction: str) -> int:
+    """Alias for `instruction_to_byte()`."""
+    return instruction_to_byte(instruction)
+
+
 def print_RAM(**kwargs):
     """Pretty print the contents of RAM, sorted by address. | <PC (optional)> | Addr | Instruction | Dec | Hex | (since we can't distinguish instructions from data). Display arrow on current PC value if `dispPC=True` in kwargs. Set `format=` to set tabulate pretty-print format."""
     table = []

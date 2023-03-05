@@ -10,7 +10,7 @@ import src.utils.exceptions as exceptions
 
 def parse_cli():
     """Parse cli args using argparse, return parser.parse_args() to main()"""
-    parser = argparse.ArgumentParser(usage='python3 -m sim [-h] [-s] [-c CHANGE] [-f FORMAT] [-b BITS] prog')
+    parser = argparse.ArgumentParser(usage='python -m sim [-h] [-s] [-c CHANGE] [-f FORMAT] [-b BITS] prog')
     parser.add_argument('prog', help='path to SAP program in the format given in template.csv')
     parser.add_argument('-s', '--speed',
                         help='run at full speed',

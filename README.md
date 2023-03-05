@@ -8,14 +8,14 @@ Write a SAP program in the format given in [`template.csv`](template.csv). Also 
 
 You may edit the `.csv` files in Microsoft Excel. Pass the path to your SAP program as a CLI argument. It'll then be run in debug mode (default). Alternatively, apply the `-s` option to run at full <ins>s</ins>peed.
 
-First, make sure your terminal says you're in the `SAPsim/` directory. The current working directory needs to be `.../SAPsim`.
+First, make sure your terminal says you're in the `SAPsim/` directory.
 
-Make sure you're running Python 3.7+ with `python3 --version`.
+Make sure you're running Python 3.7+ with `python --version`. If not, install Python 3.7+, and make sure `python --version` outputs Python >= 3.7.
 
-Then, type `python3 -m pip install -r requirements.txt`.
+Then, type `python -m pip install -r requirements.txt`.
 
 ```
-usage: python3 -m sim [-h] [-s] [-c CHANGE] [-f FORMAT] [-b BITS] prog
+usage: python -m sim [-h] [-s] [-c CHANGE] [-f FORMAT] [-b BITS] prog
 
 positional arguments:
   prog                  path to SAP program in the format given in template.csv
@@ -81,4 +81,4 @@ In the Arg column, these are allowed
 ## [`Exceptions`](src/utils/exceptions.py)
 
 - See the link in the heading for a list of custom `Exceptions`. The names are self-explanatory.
-- Each Exception also prints a descriptive error message.
+- Each `Exception` also prints a descriptive error message.
