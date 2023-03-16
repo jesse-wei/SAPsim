@@ -18,7 +18,7 @@ classifiers = [
 "Bug Tracker" = "https://github.com/jesse-wei/SAPsim/issues"
 
 [build-system]
-requires = ["setuptools>=65.5.1", "wheel"]
+requires = ["setuptools>=67.6.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [tool.pytest.ini_options]

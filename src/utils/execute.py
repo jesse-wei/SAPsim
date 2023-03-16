@@ -8,7 +8,7 @@ import src.utils.helpers as helpers
 import src.utils.exceptions as exceptions
 
 
-def execute_full_speed():
+def execute_full_speed() -> None:
     """Execute instructions in `RAM` at full speed until `EXECUTING` is `False` or `PC > max addr`."""
     max_addr: int = 0
     if globs.RAM.keys():
@@ -27,7 +27,7 @@ def execute_full_speed():
         instructions.OPCODE_TO_INSTR_PROCEDURE[helpers.parse_opcode(globs.RAM[globs.PC])](helpers.parse_arg(globs.RAM[globs.PC]))
 
 
-def execute_next():
+def execute_next() -> None:
     """Execute a single instruction at the current `PC` value if `EXECUTING`. If attempting to execute an empty address, `PC += 1` (i.e., doesn't skip to next filled address)."""
     if globs.EXECUTING:
         if globs.RAM.keys() and globs.PC > max(globs.RAM.keys()):

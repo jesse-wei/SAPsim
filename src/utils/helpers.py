@@ -8,19 +8,34 @@ import src.utils.exceptions as exceptions
 
 
 def parse_byte(byte: int):
-    """Given a byte (2 hexits), return the opcode (1 hexit) and arg (1 hexit). Return as dict for readability."""
+    """Given a byte (2 hexits), return the opcode (1 hexit) and arg (1 hexit). Return as dict for readability.
+    
+    :param byte:
+    :type byte: int
+    :return: {'opcode': opcode, 'arg': arg}
+    :rtype: dict[str, int]"""
     opcode: int = (byte & 0xF0) >> 4
     arg: int = byte & 0xF
     return {"opcode": opcode, "arg": arg}
 
 
-def parse_opcode(byte: int) -> int:
-    """Given a byte, return the 4-bit opcode, just the top 4 bits."""
+def parse_opcode(byte: int):
+    """Given a byte, return the 4-bit opcode, just the top 4 bits.
+    
+    :param byte:
+    :type byte: int
+    :return: 4-bit opcode
+    :rtype: int"""
     return (byte & 0xF0) >> 4
 
 
 def parse_arg(byte: int) -> int:
-    """Given a byte, return the 4-bit arg, just the bottom 4 bits."""
+    """Given a byte, return the 4-bit arg, just the bottom 4 bits.
+    
+    :param byte:
+    :type byte: int
+    :return: 4-bit arg
+    :rtype: int"""
     return byte & 0xF
 
 
@@ -28,6 +43,7 @@ def instruction_to_byte(instruction: str) -> int:
     """Given an instruction in the form <Mnemonic> <Arg>, with a space, return the byte representation.
     
     For NOP, OUT, and HLT, if an Arg is not given, then the right hexit will just be 0.
+
     Haven't yet tested exception handling."""
     if " " not in instruction:
         if len(instruction) != 3 or instruction.upper() not in {"NOP", "OUT", "HLT"}:
@@ -141,6 +157,7 @@ def check_state_all(RAM, PC: int, A: int, B: int, FLAG_C: bool, FLAG_Z: bool, EX
 
 def check_state(**kwargs):
     """Compare the current state to expected values. Mostly used in testing functions.
+
     Optional parameters RAM=, PC=, A=, B=, FLAG_C=, FLAG_Z=, EXECUTING="""
     if 'RAM' in kwargs:
         assert kwargs['RAM'] == globs.RAM

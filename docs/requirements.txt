@@ -1,0 +1,4 @@
+setuptools>=67.6.0
+tabulate
+argparse
+python-docs-theme
