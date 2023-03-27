@@ -49,7 +49,7 @@ def add(arg: int, **kwargs) -> None:
             Set to `True` to directly add `arg` (i.e. `A = A + arg` instead of `A = A + Mem(arg)`), for testing purposes and use in `sub`.
 
             This behavior does not exist in actual SAP."""
-    if 'direct_add' in kwargs and kwargs['direct_add']:
+    if "direct_add" in kwargs and kwargs["direct_add"]:
         globs.B = arg
     else:
         if arg not in globs.RAM:
@@ -65,7 +65,7 @@ def add(arg: int, **kwargs) -> None:
 
     if globs.A > globs.MAX_UNSIGNED_VAL_IN_REGISTERS:
         globs.FLAG_C = 1
-        globs.A -= 2 ** globs.NUM_BITS_IN_REGISTERS
+        globs.A -= 2**globs.NUM_BITS_IN_REGISTERS
     else:
         globs.FLAG_C = 0
     globs.FLAG_Z = globs.A == 0
@@ -87,7 +87,7 @@ def sub(arg: int, **kwargs) -> None:
             set to `True` to directly sub `arg` (i.e. `A = A - arg` instead of `A = A - Mem(arg)`), for testing purposes.
 
             This behavior does not exist in actual SAP."""
-    if 'direct_sub' in kwargs and kwargs['direct_sub']:
+    if "direct_sub" in kwargs and kwargs["direct_sub"]:
         globs.B = arg
     else:
         if arg not in globs.RAM:
@@ -202,7 +202,7 @@ OPCODE_TO_INSTR_PROCEDURE = {
     7: jc,
     8: jz,
     14: out,
-    15: hlt
+    15: hlt,
 }
 """This `dict` maps opcodes to the procedures defined in this file.
 

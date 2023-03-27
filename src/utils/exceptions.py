@@ -10,7 +10,8 @@ def print_debug_info() -> None:
     """When most Exceptions (not DroppedOffBottom) occur, this function is called to print the instruction that caused the Exception and program state (RAM and registers and flags)"""
     curr_instruction = globs.RAM[globs.PC]
     print(
-        f"Exception raised during execution of {globs.OPCODE_TO_MNEMONIC[helpers.parse_opcode(curr_instruction)]} {helpers.parse_arg(curr_instruction)} at address {globs.PC}")
+        f"Exception raised during execution of {globs.OPCODE_TO_MNEMONIC[helpers.parse_opcode(curr_instruction)]} {helpers.parse_arg(curr_instruction)} at address {globs.PC}"
+    )
     helpers.print_RAM(dispPC=True)
     helpers.print_info()
 
@@ -25,7 +26,7 @@ class ARegisterNotEnoughBits(Exception):
 
 
 class BRegisterNotEnoughBits(Exception):
-    """"The unsigned value in register B can't be stored in NUM_BITS_IN_REGISTERS bits."""
+    """The unsigned value in register B can't be stored in NUM_BITS_IN_REGISTERS bits."""
 
     def __init__(self):
         self.message = f"The unsigned value in register B can't be stored in {globs.NUM_BITS_IN_REGISTERS} bits."
@@ -37,7 +38,9 @@ class ARegisterNegativeInt(Exception):
     """There's somehow a negative number in unsigned register A."""
 
     def __init__(self):
-        self.message = f"There's somehow a negative number {globs.A} in unsigned register A."
+        self.message = (
+            f"There's somehow a negative number {globs.A} in unsigned register A."
+        )
         print_debug_info()
         super().__init__(self.message)
 
@@ -46,7 +49,9 @@ class BRegisterNegativeInt(Exception):
     """There's somehow a negative number in unsigned register B."""
 
     def __init__(self):
-        self.message = f"There's somehow a negative number {globs.B} in unsigned register B."
+        self.message = (
+            f"There's somehow a negative number {globs.B} in unsigned register B."
+        )
         print_debug_info()
         super().__init__(self.message)
 
@@ -54,7 +59,10 @@ class BRegisterNegativeInt(Exception):
 class DroppedOffBottom(Exception):
     """Raised if `PC` > max address in `RAM`."""
 
-    def __init__(self, message=f"PC is greater than max address in RAM. Your program does not always HLT."):
+    def __init__(
+        self,
+        message=f"PC is greater than max address in RAM. Your program does not always HLT.",
+    ):
         self.message = message
         helpers.print_RAM(dispPC=True)
         helpers.print_info()
@@ -78,7 +86,11 @@ class JumpToNegativeAddress(Exception):
 
 
 class InvalidFileExtension(Exception):
-    def __init__(self, path, message=f"Invalid file extension for prog positional argument. Must be .csv"):
+    def __init__(
+        self,
+        path,
+        message=f"Invalid file extension for prog positional argument. Must be .csv",
+    ):
         self.message = message
         super().__init__(self.message)
 
@@ -127,7 +139,9 @@ class ArgButNoMnemonic(Exception):
 
 class FirstHexitNegative(Exception):
     def __init__(self, address):
-        self.message = f"The first hexit at address {address} of your program must be positive!"
+        self.message = (
+            f"The first hexit at address {address} of your program must be positive!"
+        )
         super().__init__(self.message)
 
 
@@ -139,7 +153,9 @@ class FirstHexitGreaterThan15(Exception):
 
 class SecondHexitNegative(Exception):
     def __init__(self, address):
-        self.message = f"The second hexit at address {address} of your program must be positive!"
+        self.message = (
+            f"The second hexit at address {address} of your program must be positive!"
+        )
         super().__init__(self.message)
 
 
@@ -148,7 +164,7 @@ class SecondHexitGreaterThan15(Exception):
         self.message = f"The second hexit at address {address} of your program must be less than 16!"
         super().__init__(self.message)
 
-    
+
 class InvalidFirstHexit(Exception):
     def __init__(self, address):
         self.message = f"The first hexit at address {address} is not valid! Must be a hexit 0 to f or a base-10 integer 0 to 15 representing a hexit. You typed one letter in this field, so I assume you meant to put a hexit here, not a Mnemonic."

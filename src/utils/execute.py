@@ -24,7 +24,9 @@ def execute_full_speed() -> None:
             globs.PC += 1
             continue
 
-        instructions.OPCODE_TO_INSTR_PROCEDURE[helpers.parse_opcode(globs.RAM[globs.PC])](helpers.parse_arg(globs.RAM[globs.PC]))
+        instructions.OPCODE_TO_INSTR_PROCEDURE[
+            helpers.parse_opcode(globs.RAM[globs.PC])
+        ](helpers.parse_arg(globs.RAM[globs.PC]))
 
 
 def execute_next() -> None:
@@ -38,4 +40,6 @@ def execute_next() -> None:
         if globs.PC not in globs.RAM:
             globs.PC += 1
         else:
-            instructions.OPCODE_TO_INSTR_PROCEDURE[helpers.parse_opcode(globs.RAM[globs.PC])](helpers.parse_arg(globs.RAM[globs.PC]))
+            instructions.OPCODE_TO_INSTR_PROCEDURE[
+                helpers.parse_opcode(globs.RAM[globs.PC])
+            ](helpers.parse_arg(globs.RAM[globs.PC]))

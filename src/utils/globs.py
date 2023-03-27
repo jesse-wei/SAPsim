@@ -23,7 +23,7 @@ However, it makes more sense in the simulation to set it to False by default."""
 # This affects how FLAG_C, FLAG_Z, and result register work
 NUM_BITS_IN_REGISTERS: int = 8
 """IMPORTANT NOTE: If changing this value, then also change `MAX_UNSIGNED_VAL_IN_REGISTERS`!!! This variable is the #bits in registers and affects how everything works. Default is 8."""
-MAX_UNSIGNED_VAL_IN_REGISTERS = 2 ** NUM_BITS_IN_REGISTERS - 1
+MAX_UNSIGNED_VAL_IN_REGISTERS = 2**NUM_BITS_IN_REGISTERS - 1
 """This value needs to be changed whenever NUM_BITS_IN_REGISTERS is changed!"""
 EXECUTING: bool = True
 """Is the program executing? Set to `False` by `hlt()`"""
@@ -54,7 +54,7 @@ OPCODE_TO_MNEMONIC = {
     7: "JC",
     8: "JZ",
     14: "OUT",
-    15: "HLT"
+    15: "HLT",
 }
 """Maps `int opcode : str mnemonic`"""
 
