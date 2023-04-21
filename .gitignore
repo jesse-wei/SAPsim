@@ -20,3 +20,4 @@ tests/public_prog/README.md
 tests/test_example_progs.py
 sim.spec
 docs/_build
+scripts/
