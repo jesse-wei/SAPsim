@@ -1,5 +1,5 @@
-src package
-===========
+SAPsim package
+==============
 
 Subpackages
 -----------
@@ -7,12 +7,12 @@ Subpackages
 .. toctree::
    :maxdepth: 4
 
-   src.utils
+   SAPsim.utils
 
 Module contents
 ---------------
 
-.. automodule:: src
+.. automodule:: SAPsim
    :members:
    :undoc-members:
    :show-inheritance:

@@ -2,8 +2,8 @@
 
 __author__ = "Jesse Wei <jesse@cs.unc.edu>"
 
-import src.utils.helpers as helpers
-import src.utils.globs as globs
+import SAPsim.utils.helpers as helpers
+import SAPsim.utils.globs as globs
 
 
 def print_debug_info() -> None:
@@ -57,7 +57,7 @@ class BRegisterNegativeInt(Exception):
 
 
 class DroppedOffBottom(Exception):
-    """Raised if `PC` > max address in `RAM`."""
+    """Raised if ``PC`` > max address in ``RAM``."""
 
     def __init__(
         self,

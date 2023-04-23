@@ -1,0 +1,13 @@
+Address,Mnemonic,Arg,Comments
+0,LDA,14,Load input to work with it.
+1,SUB,13,Compare X to 3. See How to evaluate flags in a SAP program in README.
+2,JZ,6,If FZ=1 then take the EQ branch and jump to address 6
+3,LDI,0,NEQ don't take the branch
+4,STA,15,
+5,HLT,0,
+6,LDI,1,EQ branch
+7,STA,15,
+8,HLT,0,
+13,0,3,Three
+14,0,3,RESERVED: X (Input 0 to 255); you are free to modify for testing.
+15,,,RETURN VALUE: 1 if X == 3; else 0.

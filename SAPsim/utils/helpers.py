@@ -2,9 +2,11 @@
 
 __author__ = "Jesse Wei <jesse@cs.unc.edu>"
 
-import src.utils.globs as globs
+
 from tabulate import tabulate
-import src.utils.exceptions as exceptions
+from typing import Any
+import SAPsim.utils.globs as globs
+import SAPsim.utils.exceptions as exceptions
 
 
 def parse_byte(byte: int):
@@ -65,12 +67,12 @@ def instruction_to_byte(instruction: str) -> int:
 
 
 def i2b(instruction: str) -> int:
-    """Alias for `instruction_to_byte()`."""
+    """Alias for ``instruction_to_byte()``."""
     return instruction_to_byte(instruction)
 
 
 def print_RAM(**kwargs):
-    """Pretty print the contents of RAM, sorted by address. | <PC (optional)> | Addr | Instruction | Dec | Hex | (since we can't distinguish instructions from data). Display arrow on current PC value if `dispPC=True` in kwargs. Set `format=` to set tabulate pretty-print format."""
+    """Pretty print the contents of RAM, sorted by address. | <PC (optional)> | Addr | Instruction | Dec | Hex | (since we can't distinguish instructions from data). Display arrow on current PC value if ``dispPC=True`` in kwargs. Set ``format=`` to set tabulate pretty-print format."""
     table = []
     for addr in sorted(globs.RAM.keys()):
         byte = globs.RAM[addr]
@@ -94,7 +96,7 @@ def print_RAM(**kwargs):
 
 
 def print_info(**kwargs):
-    """Print the values of everything in global_vars.py except RAM. Set optional parameter `bool=True` to print flags as `bool` instead of `int`. Set `format=` for tabulate pretty-print format."""
+    """Print the values of everything in global_vars.py except RAM. Set optional parameter ``bool=True`` to print flags as ``bool`` instead of ``int``. Set ``format=`` for tabulate pretty-print format."""
     table = [
         ["PC", globs.PC],
         ["Reg A", globs.A],
@@ -121,7 +123,7 @@ def pad_hex(hex: str, width: int):
 
 
 def clone_dict(dict):
-    """Returns a deep clone of `dict`. Used to clone `RAM`."""
+    """Returns a deep clone of ``dict``. Used to clone ``RAM``."""
     rv = {}
     for key in dict:
         rv[key] = dict[key]
@@ -151,7 +153,7 @@ def setup_n_bit(n: int):
 
 
 def reset_globals():
-    """Reset global variables (not `NUM_BITS_IN_REGISTERS` and `MAX_UNSIGNED_VAL_IN_REGISTERS` to default values."""
+    """Reset global variables (not ``NUM_BITS_IN_REGISTERS`` and ``MAX_UNSIGNED_VAL_IN_REGISTERS`` to default values."""
     globs.RAM = {}
     globs.PC = 0
     globs.A = 0
@@ -159,6 +161,20 @@ def reset_globals():
     globs.FLAG_C = False
     globs.FLAG_Z = False
     globs.EXECUTING = True
+
+
+def get_state() -> dict[str, Any]:
+    """Return a dict of global variables and their values.
+    Mostly used in testing functions."""
+    return {
+        "RAM": globs.RAM,
+        "PC": globs.PC,
+        "A": globs.A,
+        "B": globs.B,
+        "FLAG_C": globs.FLAG_C,
+        "FLAG_Z": globs.FLAG_Z,
+        "EXECUTING": globs.EXECUTING,
+    }
 
 
 def check_state_all(

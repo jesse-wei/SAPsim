@@ -1,2 +1,10 @@
-tabulate
-argparse
+# Source: https://stackoverflow.com/a/49684835
+-e .
+
+sphinx
+sphinx_rtd_theme
+black
+pre-commit
+build
+twine
+bump

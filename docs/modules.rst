@@ -1,7 +1,7 @@
-src
-===
+SAPsim
+======
 
 .. toctree::
    :maxdepth: 4
 
-   src
+   SAPsim

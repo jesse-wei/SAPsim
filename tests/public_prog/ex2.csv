@@ -1,0 +1,12 @@
+Address,Mnemonic,Arg,Comments
+0,LDA,15,Load input to work with it.
+1,SUB,14,Compare X to 31. See How to evaluate flags in a SAP program in README.
+2,LDA,15,
+3,JC,5,If FC=1 then take the >=31 branch and jump to address 5
+4,HLT,0,<31 don't branch
+5,SUB,13,>=31 branch
+6,STA,15,
+7,JMP,1,
+13,0,3,Three
+14,1,F,31==0x1F
+15,2,5,RESERVED: X (Input 0 to 255); you are free to modify for testing. RETURN VALUE: See ex2 pseudocode in README.md for details.

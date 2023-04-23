@@ -2,14 +2,14 @@
 
 __author__ = "Jesse Wei <jesse@cs.unc.edu>"
 
-import src.utils.globs as globs
-import src.utils.instructions as instructions
-import src.utils.helpers as helpers
-import src.utils.exceptions as exceptions
+import SAPsim.utils.globs as globs
+import SAPsim.utils.instructions as instructions
+import SAPsim.utils.helpers as helpers
+import SAPsim.utils.exceptions as exceptions
 
 
 def execute_full_speed() -> None:
-    """Execute instructions in `RAM` at full speed until `EXECUTING` is `False` or `PC > max addr`."""
+    """Execute instructions in ``RAM`` at full speed until ``EXECUTING`` is ``False`` or ``PC > max addr``."""
     max_addr: int = 0
     if globs.RAM.keys():
         max_addr = max(globs.RAM.keys())
@@ -30,7 +30,7 @@ def execute_full_speed() -> None:
 
 
 def execute_next() -> None:
-    """Execute a single instruction at the current `PC` value if `EXECUTING`. If attempting to execute an empty address, `PC += 1` (i.e., doesn't skip to next filled address)."""
+    """Execute a single instruction at the current ``PC`` value if ``EXECUTING``. If attempting to execute an empty address, ``PC += 1`` (i.e., doesn't skip to next filled address)."""
     if globs.EXECUTING:
         if globs.RAM.keys() and globs.PC > max(globs.RAM.keys()):
             globs.EXECUTING = False
