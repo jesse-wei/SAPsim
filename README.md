@@ -1,6 +1,6 @@
 # SAPsim
 
-![Tests](https://github.com/jesse-wei/SAPsim/actions/workflows/tests.yml/badge.svg)
+![Test badge](https://github.com/jesse-wei/SAPsim/actions/workflows/test.yml/badge.svg)
 ![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)
 ![Python](https://img.shields.io/badge/python-3670A0?style=plastic&logo=python&logoColor=ffdd54)
 
