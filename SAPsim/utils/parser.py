@@ -3,11 +3,12 @@
 __author__ = "Jesse Wei <jesse@cs.unc.edu>"
 
 from csv import DictReader
+from pathlib import Path
 import SAPsim.utils.exceptions as exceptions
 import SAPsim.utils.globs as globs
 
 
-def parse_csv(file_path):
+def parse_csv(file_path: Path):
     """Takes a ``.csv`` file path in ``template.csv`` format and parses it into ``RAM``."""
     prog = DictReader(open(file_path))
     num_rows = 1

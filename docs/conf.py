@@ -27,10 +27,13 @@ extensions = [
     "sphinx.ext.viewcode",
     "sphinx.ext.autodoc",
     "sphinx_rtd_theme",
+    # For parsing Markdown
+    "m2r2",
 ]
 
 templates_path = ["_templates"]
 exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
+source_suffix = [".rst", ".md"]
 
 
 # -- Options for HTML output -------------------------------------------------

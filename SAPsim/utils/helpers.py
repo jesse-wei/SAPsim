@@ -90,7 +90,7 @@ def print_RAM(**kwargs):
         table.append(table_row)
     headers = []
     if "dispPC" in kwargs and kwargs["dispPC"]:
-        headers.append("")
+        headers.append("PC")
     headers.extend(["Addr", "Instruction", "Dec", "Hex"])
     print(tabulate(table, headers=headers, tablefmt=globs.table_fmt))
 
@@ -208,3 +208,24 @@ def check_state(**kwargs):
         assert kwargs["FLAG_Z"] == globs.FLAG_Z
     if "EXECUTING" in kwargs:
         assert kwargs["EXECUTING"] == globs.EXECUTING
+
+
+def is_documented_by(original, lines_to_remove: int = 0, append: str = ""):
+    r"""Use for wrapper functions that should have the original function's docstring.
+
+    :param original: The original function
+    :param lines_to_remove: How many lines to remove from the end of the docstring (i.e., to remove old return)
+    :type lines_to_remove: ``int``
+    :param append: What to append to docstring. Pass in a docstring (i.e., triple quotation marks), and there should be a leading newline
+    :type append: ``str``"""
+
+    def wrapper(target):
+        original_doc = original.__doc__.rstrip("\n")
+        target.__doc__ = "\n".join(original_doc.split("\n")[:-lines_to_remove])
+        # append_with_newline = append
+        # if append_with_newline and append_with_newline[0] != "\n":
+        #     append_with_newline = "\n" + append_with_newline
+        target.__doc__ += f"{append}"
+        return target
+
+    return wrapper

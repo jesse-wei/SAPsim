@@ -3,6 +3,7 @@
 
 sphinx
 sphinx_rtd_theme
+m2r2
 black
 pre-commit
 build
