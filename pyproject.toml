@@ -4,7 +4,7 @@ authors = [
     { name="Jesse Wei", email="jesse@cs.unc.edu" },
 ]
 description = "Simulation of SAP (Simple As Possible) computer programs from COMP311 (Computer Organization) @ UNC"
-readme = "README_PyPI.md"
+readme = "README.md"
 requires-python = ">=3.7"
 classifiers = [
     "Programming Language :: Python :: 3",

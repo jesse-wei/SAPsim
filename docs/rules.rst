@@ -11,12 +11,18 @@ Rules
 .. contents::
     :depth: 3
 
+Specifications
+##############
+
+- All SAP programs fit in 16 addresses (0 to 15) because the program counter (``PC``) is 4-bit.
+- Initial values are ``{PC: 0, Register A: 0, Register B: 0, FlagC: 0, FlagZ: 0, Executing: 1}``. [#technicality]_
+- ``A`` and ``B`` registers are unsigned and 8-bit by default.
+
+  - With 8-bit unsigned registers, what would 0-1 be? What about 255+1? See this footnote for the answer. [#answer]_
+
 General
 #######
 
-- All SAP programs fit in 16 addresses (0 to 15) because the program counter (``PC``) is 4-bit.
-- Initial values are ``{PC: 0, Register A: 0, Register B: 0, FlagC: 0, FlagZ: 0, Executing: 1}``.
-- ``A`` and ``B`` registers are unsigned and 8-bit by default. Number of bits is configurable.
 - Instructions and data are all bytes. [#bytes]_
 
   - An instruction is a Mnemonic representing an Opcode (4-bit) and an Arg (4-bit).
@@ -66,4 +72,8 @@ The full list of Exceptions is in `exceptions.py <SAPsim.utils.html#module-SAPsi
 
 .. rubric:: Footnotes
 
-.. [#bytes] In SAPsim, every value in RAM is a byte. See the `definition of RAM <SAPsim.utils.html#src.utils.globs.RAM>`_.
+.. [#technicality] In the ALU lab, the initial value of FlagZ was 1, but it's initialized to 0 here.
+
+.. [#answer] With 8-bit unsigned registers, 0-1=255, and 255+1=0. In both cases, the numbers "wrap around". If this doesn't quite click, play with the ALU with **4-bit** registers that you implemented! It follows all the same rules; just think of its registers as unsigned for these examples.
+
+.. [#bytes] In SAPsim, every value in RAM is a byte. See the `definition of RAM <SAPsim.utils.html#SAPsim.utils.globs.RAM>`_.

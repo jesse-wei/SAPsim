@@ -1,19 +1,14 @@
-######
-SAPsim
-######
-
-.. topic:: Overview
-
-   Simulation of `SAP (Simple As Possible) computer <https://jessewei.dev/img/sap.jpg>`_ programs from COMP311 (Computer Organization) @ `UNC <https://unc.edu>`_
+.. role:: raw-html(raw)
+    :format: html
 
 .. note::
 
    The theme I'm using for this site has ads 😔. Use adblock.
 
-Installation and usage
-######################
+   The top half of this page is just the README from GitHub.
+   Content unique to this site starts at the Settings heading.
 
-See the `GitHub README <https://github.com/jesse-wei/SAPsim#install>`_.
+.. mdinclude:: ../README.md
 
 Settings
 ########
