@@ -6,6 +6,10 @@
 
 > Simulation of [SAP (Simple As Possible) computer](https://jessewei.dev/img/sap.jpg) programs from COMP311 (Computer Organization) @ [UNC](https://unc.edu).
 
+<p align="center">
+    <img src="https://raw.githubusercontent.com/jesse-wei/SAPsim/doc/docs/_static/SAPsim_demo.gif" alt="SAPsim demo">
+</p>
+
 ## Install
 
 Your Python version needs to be 3.9+. Check with `python --version` or `python3 --version`, if `python` doesn't work.
@@ -22,7 +26,7 @@ If `pip` doesn't work, try `pip3`.
 
 Write a SAP program in the format shown in [ex2.csv](https://github.com/jesse-wei/SAPsim/blob/main/tests/public_prog/ex2.csv). See [template.csv](https://github.com/jesse-wei/SAPsim/blob/main/template.csv) for a blank template. You may edit the `.csv` files in Microsoft Excel.
 
-Open a Python terminal or file. You'll pass the path to your SAP program as an argument.
+Open a Python terminal. You'll pass the path to your SAP program as an argument.
 
 ```py
 from SAPsim import run
@@ -31,12 +35,12 @@ run("path/to/your/SAP/program.csv")                 # run at full speed (default
 run("path/to/your/SAP/program.csv", debug=True)     # run in debug (step) mode
 ```
 
-Additional settings (e.g., table format) are described [here](https://SAPsim.readthedocs.io/en/latest/#settings).
+Here's a list of [additional settings](https://SAPsim.readthedocs.io/en/latest/#settings) (e.g., table format).
 
 ## Rules
 
 It's easy to just mimic the example programs [above](#usage).
-But if you need it, the list of rules for SAPsim programs is [here](https://SAPsim.readthedocs.io/en/latest/rules.html).
+But if you need it, here's the list of [rules for SAPsim programs](https://SAPsim.readthedocs.io/en/latest/rules.html).
 
 ## SAP instruction set
 
