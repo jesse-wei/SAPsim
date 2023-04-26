@@ -1,4 +1,6 @@
-"""Test the run function in SAPsim.__init__.py
+"""Test the run function in SAPsim.__init__.py.
+
+Ideally, would like to test run(..., debug=True) but can't really send keyboard input, might require threading.
 
 Remove the TEMP_FILE_PATH in the final test."""
 

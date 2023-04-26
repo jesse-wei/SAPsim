@@ -13,9 +13,8 @@ Non-functional (e.g., formatting, documentation) dependencies listed in requirem
 
 setup(
     name="SAPsim",
-    # Version number that appears on PyPI and Test PyPI
     version="1.0.1",
-    description="Simulation of SAP (Simple As Possible) computer programs from COMP311 (Computer Organization) @ UNC",
+    description="Simulation of SAP (Simple As Possible) computer programs from COMP311 (Computer Organization) @ UNC.",
     author="Jesse Wei",
     author_email="jesse@cs.unc.edu",
     url="https://github.com/jesse-wei/SAPsim",

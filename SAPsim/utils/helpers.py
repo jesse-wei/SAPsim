@@ -9,6 +9,32 @@ import SAPsim.utils.globs as globs
 import SAPsim.utils.exceptions as exceptions
 
 
+def is_documented_by(
+    original, lines_to_remove: int = 0, prepend: str = "", append: str = ""
+):
+    r"""Use for wrapper functions that should have the original function's docstring.
+
+    :param original: The original function
+    :param lines_to_remove: How many lines to remove from the end of the docstring (i.e., to remove old return)
+    :type lines_to_remove: ``int``
+    :param preprend: What to prepend to docstring. Pass in a docstring (i.e., triple quotation marks), and there should be a trailing newline
+    :type prepend: ``str``
+    :param append: What to append to docstring. Pass in a docstring (i.e., triple quotation marks), and there should be a leading newline
+    :type append: ``str``"""
+
+    def wrapper(target):
+        original_doc = original.__doc__.rstrip("\n")
+        target.__doc__ = "\n".join(original_doc.split("\n")[:-lines_to_remove])
+        # append_with_newline = append
+        # if append_with_newline and append_with_newline[0] != "\n":
+        #     append_with_newline = "\n" + append_with_newline
+        target.__doc__ = f"{prepend}{target.__doc__}"
+        target.__doc__ += f"{append}"
+        return target
+
+    return wrapper
+
+
 def parse_byte(byte: int):
     """Given a byte (2 hexits), return the opcode (1 hexit) and arg (1 hexit). Return as dict for readability.
 
@@ -66,8 +92,15 @@ def instruction_to_byte(instruction: str) -> int:
     )
 
 
+@is_documented_by(
+    instruction_to_byte,
+    0,
+    ""
+    r"""
+                  Alias for ``instruction_to_byte()``.
+                  """,
+)
 def i2b(instruction: str) -> int:
-    """Alias for ``instruction_to_byte()``."""
     return instruction_to_byte(instruction)
 
 
@@ -208,24 +241,3 @@ def check_state(**kwargs):
         assert kwargs["FLAG_Z"] == globs.FLAG_Z
     if "EXECUTING" in kwargs:
         assert kwargs["EXECUTING"] == globs.EXECUTING
-
-
-def is_documented_by(original, lines_to_remove: int = 0, append: str = ""):
-    r"""Use for wrapper functions that should have the original function's docstring.
-
-    :param original: The original function
-    :param lines_to_remove: How many lines to remove from the end of the docstring (i.e., to remove old return)
-    :type lines_to_remove: ``int``
-    :param append: What to append to docstring. Pass in a docstring (i.e., triple quotation marks), and there should be a leading newline
-    :type append: ``str``"""
-
-    def wrapper(target):
-        original_doc = original.__doc__.rstrip("\n")
-        target.__doc__ = "\n".join(original_doc.split("\n")[:-lines_to_remove])
-        # append_with_newline = append
-        # if append_with_newline and append_with_newline[0] != "\n":
-        #     append_with_newline = "\n" + append_with_newline
-        target.__doc__ += f"{append}"
-        return target
-
-    return wrapper
