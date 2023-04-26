@@ -139,6 +139,7 @@ def run(prog_path: str, **kwargs) -> None:
 @is_documented_by(
     run,
     2,
+    "",
     r"""
     :return: ``dict`` containing program state (see ``helpers.get_state``)
     :rtype: ``dict[str, Any]``
