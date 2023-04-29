@@ -1,6 +1,6 @@
 Address,First Hexit,Second Hexit,Comments
 0,LDA,15,Load input to work with it.
-1,SUB,14,Compare X to 31. See How to evaluate flags in a SAP program in README.
+1,SUB,14,Compare X to 31.
 2,LDA,15,
 3,JC,5,If FC=1 then take the >=31 branch and jump to address 5
 4,HLT,0,<31 don't branch

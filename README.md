@@ -14,34 +14,44 @@
 
 `pip install SAPsim`
 
-Your Python version needs to be 3.9+. Check with `python --version`. If `python` doesn't work, try `python3`.
+Your Python version needs to be 3.9+. Check with `python --version`.
 
-If `pip` doesn't work, try `pip3`.
+If `python` doesn't work, try `python3`. If `pip` doesn't work, try `pip3`.
 
 ## Usage
 
-Write a SAP program in the format shown in [ex2.csv](https://github.com/jesse-wei/SAPsim/blob/main/tests/public_prog/ex2.csv). See [template.csv](https://github.com/jesse-wei/SAPsim/blob/main/template.csv) for a blank template. You may edit the `.csv` files in Microsoft Excel.
+Write a SAP program in the CSV file format shown below.
 
-Open a Python terminal. You'll pass the path to your SAP program as an argument.
+<p align="center">
+    <img src="docs/_static/ex1.jpg" alt="Screenshot of ex1.csv in Excel">
+</p>
+<p align="center"><a href="https://github.com/jesse-wei/SAPsim/blob/main/tests/public_prog/ex1.csv">ex1.csv</a></p>
+
+You may edit the `.csv` file with any program (Microsoft Excel, Google Sheets, etc.), as long as you preserve the `.csv` extension.
+
+Open a Python terminal. Import SAPsim's `run()` function, and pass the path to your SAP program as an argument.
 
 ```py
 >>> from SAPsim import run
->>> run("path/to/your/SAP/program.csv")                 # run at full speed (default)
+>>> run("ex1.csv")                 # run ex1.csv at full speed (default)
 ...
->>> run("path/to/your/SAP/program.csv", debug=True)     # run in debug (step) mode
+>>> run("ex1.csv", debug=True)     # run ex1.csv in debug (step) mode
 ...
 ```
+
+**Note**: There is a debug (step) mode, as shown above.
 
 Here's a list of [additional settings](https://SAPsim.readthedocs.io/en/latest/#settings) (e.g., table format).
 
 ## Rules
 
-It's easy to just mimic the [example programs](https://github.com/jesse-wei/SAPsim/tree/main/tests/public_prog).
-But if you need it, here's the list of [rules for SAPsim programs](https://SAPsim.readthedocs.io/en/latest/rules.html).
+It's easy to just mimic the [example programs](https://github.com/jesse-wei/SAPsim/tree/main/tests/public_prog), but if you need it, here's the list of [rules for SAPsim programs](https://SAPsim.readthedocs.io/en/latest/rules.html).
 
 ## SAP instruction set
 
-![SAP instruction set](https://user-images.githubusercontent.com/55986131/220041985-da3060d2-18c3-4158-8d30-a5d88e08acc4.png)
+<p align="center">
+    <img src="https://user-images.githubusercontent.com/55986131/220041985-da3060d2-18c3-4158-8d30-a5d88e08acc4.png" alt="SAP instruction set">
+</p>
 
 ## Documentation
 
