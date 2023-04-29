@@ -7,7 +7,7 @@
 > Simulation of [SAP (Simple As Possible) computer](https://jessewei.dev/img/sap.jpg) programs from COMP311 (Computer Organization) @ [UNC](https://unc.edu).
 
 <p align="center">
-    <img src="https://jessewei.dev/img/SAPsim_demo.gif" alt="SAPsim demo">
+    <img src="https://github.com/jesse-wei/SAPsim/blob/main/docs/_static/SAPsim_demo.gif" alt="SAPsim demo">
 </p>
 
 ## Install
