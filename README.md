@@ -7,7 +7,7 @@
 > Simulation of [SAP (Simple As Possible) computer](https://jessewei.dev/img/sap.jpg) programs from COMP311 (Computer Organization) @ [UNC](https://unc.edu).
 
 <p align="center">
-    <img src="https://github.com/jesse-wei/SAPsim/blob/main/docs/_static/SAPsim_demo.gif" alt="SAPsim demo">
+    <img src="https://raw.githubusercontent.com/jesse-wei/SAPsim/main/docs/_static/SAPsim_demo.gif" alt="SAPsim demo">
 </p>
 
 ## Install
@@ -23,7 +23,7 @@ If `python` doesn't work, try `python3`. If `pip` doesn't work, try `pip3`.
 Write a SAP program in the CSV file format shown below.
 
 <p align="center">
-    <img src="docs/_static/ex1.jpg" alt="Screenshot of ex1.csv in Excel">
+    <img src="https://raw.githubusercontent.com/jesse-wei/SAPsim/main/docs/_static/ex1.jpg" alt="Screenshot of ex1.csv in Excel">
 </p>
 <p align="center"><a href="https://github.com/jesse-wei/SAPsim/blob/main/tests/public_prog/ex1.csv">ex1.csv</a></p>
 
@@ -50,7 +50,7 @@ It's easy to just mimic the [example programs](https://github.com/jesse-wei/SAPs
 ## SAP instruction set
 
 <p align="center">
-    <img src="https://user-images.githubusercontent.com/55986131/220041985-da3060d2-18c3-4158-8d30-a5d88e08acc4.png" alt="SAP instruction set">
+    <img src="https://raw.githubusercontent.com/jesse-wei/SAPsim/main/docs/_static/sap_instruction_set.jpg" alt="SAP instruction set">
 </p>
 
 ## Documentation
