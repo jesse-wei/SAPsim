@@ -13,7 +13,7 @@ def print_debug_info() -> None:
     print(
         f"Exception raised during execution of {global_vars.MNEMONIC_TO_OPCODE.inverse[helpers.parse_opcode(curr_instruction)]} {helpers.parse_arg(curr_instruction)} at address {global_vars.PC}"
     )
-    helpers.print_RAM(dispPC=True)
+    helpers.print_RAM()
     helpers.print_info()
 
 
@@ -65,7 +65,7 @@ class DroppedOffBottom(Exception):
         message=f"PC is greater than max address in RAM. Your program does not always HLT.",
     ):
         self.message = message
-        helpers.print_RAM(dispPC=True)
+        helpers.print_RAM()
         helpers.print_info()
         super().__init__(self.message)
 

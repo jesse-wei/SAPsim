@@ -71,10 +71,15 @@ def run(prog_path: str, **kwargs) -> None:
         * *table_format* (``str``) --
             * Table format
             * Options: https://github.com/astanin/python-tabulate#table-format
-            * Default value is "simple_outline"
+            * Default value in ``global_vars`` is ``"simple_outline"``
         * *bits* (``int``) --
             * Number of bits in unsigned registers
-            * Default 8
+            * Default value in ``global_vars`` is 8
+        * *non_blocking* (``bool``) --
+            * If ``True``, then ``run()`` won't block on input
+            * ``input()`` won't be called in debug mode (i.e., don't have to press enter to continue execution)
+            * If this is ``True``, then debug mode will be on even if ``debug`` isn't in kwargs
+            * This is used to unit test debug mode of ``run()``
     :return: ``None``
     """
     if not isinstance(prog_path, str):
@@ -87,6 +92,8 @@ def run(prog_path: str, **kwargs) -> None:
         raise TypeError("Keyword argument table_format must be a str.")
     if "bits" in kwargs and not isinstance(kwargs["bits"], int):
         raise TypeError("Keyword argument bits must be an int.")
+    if "non_blocking" in kwargs and not isinstance(kwargs["non_blocking"], bool):
+        raise TypeError("Keyword argument non_blocking must be a bool.")
 
     path: Path = Path(prog_path)
     if not path.suffix == ".csv":
@@ -121,12 +128,13 @@ def run(prog_path: str, **kwargs) -> None:
             global_vars.RAM[addr] = value
     if "table_format" in kwargs:
         global_vars.table_format = kwargs["table_format"]
-    if "debug" in kwargs and kwargs["debug"]:
+    if kwargs.get("debug") or kwargs.get("non_blocking"):
         print(f"Initial state of simulation of {prog_path}")
-        helpers.print_RAM(dispPC=True)
+        helpers.print_RAM()
         helpers.print_info()
         print("Debug mode: press Enter to execute next instruction ( > ).")
-        input()
+        if not kwargs.get("non_blocking"):
+            input()
         while global_vars.EXECUTING:
             # Special case so that you don't have to press Enter twice to halt on a HLT instruction
             if (
@@ -136,13 +144,14 @@ def run(prog_path: str, **kwargs) -> None:
                 execute_next()
                 break
             execute_next()
-            helpers.print_RAM(dispPC=True)
+            helpers.print_RAM()
             helpers.print_info()
-            input()
+            if not kwargs.get("non_blocking"):
+                input()
         print("Program halted.")
     else:
         execute_full_speed()
-        helpers.print_RAM(dispPC=True)
+        helpers.print_RAM()
         helpers.print_info()
         print("Program halted.")
 

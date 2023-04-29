@@ -104,8 +104,16 @@ def i2b(instruction: str) -> int:
     return instruction_to_byte(instruction)
 
 
-def print_RAM(**kwargs):
-    """Pretty print the contents of RAM, sorted by address. | <PC (optional)> | Addr | Instruction | Dec | Hex | (since we can't distinguish instructions from data). Display arrow on current PC value if ``dispPC=True`` in kwargs. Set ``format=`` to set tabulate pretty-print format."""
+def print_RAM():
+    """Pretty print the contents of RAM, sorted by address.
+
+    | PC | Addr | Instruction | Dec | Hex |
+    Display byte in dec and hex format and attempt to display as instruction (except when opcode invalid)
+    for all bytes since we can't distinguish instructions from data.
+
+    Display arrow on current PC value.
+
+    Uses ``global_vars.table_format`` for table format passed to ``tabulate()``."""
     table = []
     for addr in sorted(global_vars.RAM.keys()):
         byte = global_vars.RAM[addr]
@@ -116,36 +124,26 @@ def print_RAM(**kwargs):
             if opcode in global_vars.MNEMONIC_TO_OPCODE.inverse
             else "Invalid Opcode"
         )
-        table_row = []
-        if "dispPC" in kwargs and kwargs["dispPC"]:
-            table_row.append(">" if global_vars.PC == addr else "")
-        table_row.extend([addr, instruction_str, byte, pad_hex(hex(byte), 2)])
+        table_row = [
+            ">" if global_vars.PC == addr else "",
+            addr,
+            instruction_str,
+            byte,
+            pad_hex(hex(byte), 2),
+        ]
         table.append(table_row)
-    headers = []
-    if "dispPC" in kwargs and kwargs["dispPC"]:
-        headers.append("PC")
-    headers.extend(["Addr", "Instruction", "Dec", "Hex"])
+    headers = ["PC", "Addr", "Instruction", "Dec", "Hex"]
     print(tabulate(table, headers=headers, tablefmt=global_vars.table_format))
 
 
-def print_info(**kwargs):
-    """Print the values of everything in global_vars.py except RAM. Set optional parameter ``bool=True`` to print flags as ``bool`` instead of ``int``. Set ``format=`` for tabulate pretty-print format."""
+def print_info():
+    """Print the values of everything in ``global_vars.py`` except RAM."""
     table = [
         ["PC", global_vars.PC],
         ["Reg A", global_vars.A],
         ["Reg B", global_vars.B],
-        [
-            "FlagC",
-            global_vars.FLAG_C
-            if ("bool" in kwargs and kwargs["bool"])
-            else int(global_vars.FLAG_C),
-        ],
-        [
-            "FlagZ",
-            global_vars.FLAG_Z
-            if ("bool" in kwargs and kwargs["bool"])
-            else int(global_vars.FLAG_Z),
-        ],
+        ["FlagC", int(global_vars.FLAG_C)],
+        ["FlagZ", int(global_vars.FLAG_Z)],
     ]
     print(tabulate(table, tablefmt=global_vars.table_format))
 

@@ -1,6 +1,6 @@
 """Global variables.
 
-If changing anything in this file, also modify SAPsim/__init__.py."""
+If changing anything in this file, also modify ``SAPsim/__init__.py`` and ``helpers.print_info``."""
 
 __author__ = "Jesse Wei <jesse@cs.unc.edu>"
 
@@ -22,6 +22,7 @@ FLAG_Z: bool = False
 Lab 3's ALU has default value True (1) for FlagZ because the results register is initially 0.
 
 However, it makes more sense in the simulation to set it to False by default."""
+
 # Number of bits in registers
 # Same as number of full adders
 # This affects how FLAG_C, FLAG_Z, and result register work
