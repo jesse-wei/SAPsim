@@ -61,14 +61,6 @@ In the Second Hexit column, these are allowed
 
   * e.g. ``JC 15`` and ``JC F`` are both legal and represent the same instruction
 
-Errors
-######
-
-If you mimic the example programs and follow these rules, you won't run into any problems.
-But if something goes wrong, an Exception will occur, and you'll see a descriptive error message.
-
-The full list of Exceptions is in `exceptions.py <SAPsim.utils.html#module-SAPsim.utils.exceptions>`_.
-
 .. rubric:: Footnotes
 
 .. [#technicality_pc] Admittedly, this limitation doesn't have to exist in software. However, suppose there were an address 16 and you do ``LDA 16``. This instruction doesn't fit in a single byte, which would be an implementation issue.
