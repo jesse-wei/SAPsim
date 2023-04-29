@@ -19,6 +19,7 @@ copyright = "2023, Jesse Wei"
 author = "Jesse Wei"
 release = ""
 
+# Parse release version from setup.py to avoid maintaining two variables
 with open("../setup.py", "r") as f:
     for line in f:
         if line.strip().startswith("version"):
@@ -45,7 +46,7 @@ source_suffix = [".rst", ".md", ".markdown"]
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
-# Good themes: python_docs_theme and sphinx_rtd_theme (looks amazing but has ads)
+# Good themes: sphinx_rtd_theme (has ads), python_docs_theme, alabaster
 html_theme = "sphinx_rtd_theme"
 
 # Source: https://stackoverflow.com/questions/59215996/how-to-add-a-logo-to-my-readthedocs-logo-rendering-at-0px-wide
@@ -56,7 +57,6 @@ html_theme_options = {
     "logo_only": True,
     "display_version": False,
 }
-
 
 # Prevents __init__ from being ignored
 # Source: https://stackoverflow.com/questions/5599254/how-to-use-sphinxs-autodoc-to-document-a-classs-init-self-method

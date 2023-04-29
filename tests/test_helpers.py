@@ -4,7 +4,7 @@ __author__ = "Jesse Wei <jesse@cs.unc.edu>"
 
 import pytest
 from SAPsim.utils.helpers import *
-from SAPsim.utils.globs import *
+from SAPsim.utils.global_vars import *
 import SAPsim.utils.exceptions as exceptions
 
 
@@ -13,12 +13,12 @@ def test_instruction_to_byte_returns_correct_byte():
     # Instructions 0x00 to 0x8f (inclusive)
     for i in range(0x90):
         assert i == instruction_to_byte(
-            f"{OPCODE_TO_MNEMONIC[(i & 0xF0) >> 4]} {i & 0xF}"
+            f"{MNEMONIC_TO_OPCODE.inverse[(i & 0xF0) >> 4]} {i & 0xF}"
         )
     # Instructions 0xe0 to 0xff (inclusive)
     for i in range(0xE0, 0xFF):
         assert i == instruction_to_byte(
-            f"{OPCODE_TO_MNEMONIC[(i & 0xF0) >> 4]} {i & 0xF}"
+            f"{MNEMONIC_TO_OPCODE.inverse[(i & 0xF0) >> 4]} {i & 0xF}"
         )
 
 

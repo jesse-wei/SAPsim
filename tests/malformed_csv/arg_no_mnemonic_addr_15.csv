@@ -1,4 +1,4 @@
-Address,Mnemonic,Arg
+Address,First Hexit,Second Hexit
 0,HLT,3
 1,JZ,3
 2,JC,2

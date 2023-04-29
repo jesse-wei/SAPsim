@@ -5,7 +5,7 @@ __author__ = "Jesse Wei <jesse@cs.unc.edu>"
 from csv import DictReader
 from pathlib import Path
 import SAPsim.utils.exceptions as exceptions
-import SAPsim.utils.globs as globs
+import SAPsim.utils.global_vars as global_vars
 
 
 def parse_csv(file_path: Path):
@@ -34,46 +34,46 @@ def parse_csv(file_path: Path):
             raise exceptions.DuplicateAddress(address)
         addresses.add(address)
 
-        # If there's an Address and no Mnemonic and no Arg in a row, insert a NOP 0 and continue parsing
-        if not row["Mnemonic"] and not row["Arg"]:
-            globs.RAM[address] = 0x00
+        # If there's an Address and no First Hexit and no Second Hexit in a row, insert a NOP 0 and continue parsing
+        if not row["First Hexit"] and not row["Second Hexit"]:
+            global_vars.RAM[address] = 0x00
             continue
-        # But if there's an Address and either only an Mnemonic or only an Arg, exception
-        elif row["Mnemonic"] and not row["Arg"]:
-            raise exceptions.MnemonicButNoArg(address)
-        elif not row["Mnemonic"] and row["Arg"]:
-            raise exceptions.ArgButNoMnemonic(address)
+        # But if there's an Address and either only an First Hexit or only an Second Hexit, exception
+        elif row["First Hexit"] and not row["Second Hexit"]:
+            raise exceptions.NoSecondHexit(address)
+        elif not row["First Hexit"] and row["Second Hexit"]:
+            raise exceptions.NoFirstHexit(address)
 
         first_hexit = 0
-        # Need to determine if the field is a base-10 int or one-letter hexit str or Mnemonic str.
-        # int() will cause a ValueError if it's a one-letter hexit str or Mnemonic str.
+        # Need to determine if the field is a base-10 int or one-letter hexit str or First Hexit str.
+        # int() will cause a ValueError if it's a one-letter hexit str or First Hexit str.
         try:
             # int() strips the str
-            first_hexit = int(row["Mnemonic"])
+            first_hexit = int(row["First Hexit"])
             # Must be a valid base-10 integer here
             if first_hexit < 0:
                 raise exceptions.FirstHexitNegative(address)
             elif first_hexit > 0xF:
                 raise exceptions.FirstHexitGreaterThan15(address)
         except ValueError:
-            # Must be a string, mnemonic or hexit
+            # Must be a string, First Hexit or hexit
             # Use strip() and upper() for some safety
-            mnemonic = row["Mnemonic"].strip().upper()
+            first_hexit = row["First Hexit"].strip().upper()
             # Must be a hex value if length is 1
-            if len(mnemonic) == 1:
+            if len(first_hexit) == 1:
                 try:
-                    first_hexit = int(mnemonic, 16)
+                    first_hexit = int(first_hexit, 16)
                 except ValueError:
                     raise exceptions.InvalidFirstHexit(address)
-            # Otherwise must be Mnemonic
+            # Otherwise must be First Hexit
             else:
-                if mnemonic not in globs.MNEMONIC_TO_OPCODE:
-                    raise exceptions.InvalidMnemonic(address)
-                first_hexit = globs.MNEMONIC_TO_OPCODE[mnemonic]
+                if first_hexit not in global_vars.MNEMONIC_TO_OPCODE:
+                    raise exceptions.InvalidFirstHexit(address)
+                first_hexit = global_vars.MNEMONIC_TO_OPCODE[first_hexit]
 
         second_hexit = 0
         try:
-            second_hexit = int(row["Arg"])
+            second_hexit = int(row["Second Hexit"])
             # Must be a base-10 integer here
             if second_hexit < 0:
                 raise exceptions.SecondHexitNegative(address)
@@ -82,16 +82,16 @@ def parse_csv(file_path: Path):
         except ValueError:
             # Must be a str here
             # Use strip() and upper() for some safety for a string field
-            arg = row["Arg"].strip().upper()
+            arg = row["Second Hexit"].strip().upper()
             if len(arg) != 1:
-                raise exceptions.InvalidArg(address)
+                raise exceptions.InvalidSecondHexit(address)
             try:
                 second_hexit = int(arg, 16)
             except ValueError:
-                raise exceptions.InvalidArg(address)
+                raise exceptions.InvalidSecondHexit(address)
 
         byte = first_hexit << 4 | second_hexit
-        globs.RAM[address] = byte
+        global_vars.RAM[address] = byte
 
-    if len(globs.RAM) > 16:
+    if len(global_vars.RAM) > 16:
         raise exceptions.MoreThan16MappedAddresses

@@ -9,7 +9,7 @@ INSTRUCTIONS dict for using an opcode to call a specific function is defined at 
 __author__ = "Jesse Wei <jesse@cs.unc.edu>"
 
 from tabulate import tabulate
-import SAPsim.utils.globs as globs
+import SAPsim.utils.global_vars as global_vars
 import SAPsim.utils.exceptions as exceptions
 import SAPsim.utils.helpers as helpers
 
@@ -18,21 +18,21 @@ def nop(arg: int = 0) -> None:
     """Nop
 
     Opcode 0"""
-    globs.PC += 1
+    global_vars.PC += 1
 
 
 def lda(arg: int) -> None:
     """``A = Mem(arg)``
 
     Opcode 1"""
-    if arg not in globs.RAM:
+    if arg not in global_vars.RAM:
         raise exceptions.LoadFromUnmappedAddress
-    globs.A = globs.RAM[arg]
-    if globs.A > globs.MAX_UNSIGNED_VAL_IN_REGISTERS:
+    global_vars.A = global_vars.RAM[arg]
+    if global_vars.A > (2**global_vars.NUM_BITS_IN_REGISTERS - 1):
         raise exceptions.ARegisterNotEnoughBits
-    if globs.A < 0:
+    if global_vars.A < 0:
         raise exceptions.ARegisterNegativeInt
-    globs.PC += 1
+    global_vars.PC += 1
 
 
 def add(arg: int, **kwargs) -> None:
@@ -50,27 +50,27 @@ def add(arg: int, **kwargs) -> None:
 
             This behavior does not exist in actual SAP."""
     if "direct_add" in kwargs and kwargs["direct_add"]:
-        globs.B = arg
+        global_vars.B = arg
     else:
-        if arg not in globs.RAM:
+        if arg not in global_vars.RAM:
             raise exceptions.LoadFromUnmappedAddress
-        globs.B = globs.RAM[arg]
+        global_vars.B = global_vars.RAM[arg]
 
-    if globs.B > globs.MAX_UNSIGNED_VAL_IN_REGISTERS:
+    if global_vars.B > (2**global_vars.NUM_BITS_IN_REGISTERS - 1):
         raise exceptions.BRegisterNotEnoughBits
-    if globs.B < 0:
+    if global_vars.B < 0:
         raise exceptions.BRegisterNegativeInt
 
-    globs.A += globs.B
+    global_vars.A += global_vars.B
 
-    if globs.A > globs.MAX_UNSIGNED_VAL_IN_REGISTERS:
-        globs.FLAG_C = 1
-        globs.A -= 2**globs.NUM_BITS_IN_REGISTERS
+    if global_vars.A > (2**global_vars.NUM_BITS_IN_REGISTERS - 1):
+        global_vars.FLAG_C = 1
+        global_vars.A -= 2**global_vars.NUM_BITS_IN_REGISTERS
     else:
-        globs.FLAG_C = 0
-    globs.FLAG_Z = globs.A == 0
+        global_vars.FLAG_C = 0
+    global_vars.FLAG_Z = global_vars.A == 0
 
-    globs.PC += 1
+    global_vars.PC += 1
 
 
 def sub(arg: int, **kwargs) -> None:
@@ -88,57 +88,57 @@ def sub(arg: int, **kwargs) -> None:
 
             This behavior does not exist in actual SAP."""
     if "direct_sub" in kwargs and kwargs["direct_sub"]:
-        globs.B = arg
+        global_vars.B = arg
     else:
-        if arg not in globs.RAM:
+        if arg not in global_vars.RAM:
             raise exceptions.LoadFromUnmappedAddress
-        globs.B = globs.RAM[arg]
+        global_vars.B = global_vars.RAM[arg]
 
-    if globs.B > globs.MAX_UNSIGNED_VAL_IN_REGISTERS:
+    if global_vars.B > (2**global_vars.NUM_BITS_IN_REGISTERS - 1):
         raise exceptions.BRegisterNotEnoughBits
-    if globs.B < 0:
+    if global_vars.B < 0:
         raise exceptions.BRegisterNegativeInt
 
     # Clone A and B for use later in setting FlagC.
-    A_clone = globs.A
-    B_clone = globs.B
+    A_clone = global_vars.A
+    B_clone = global_vars.B
 
-    inverse_B = B_clone ^ globs.MAX_UNSIGNED_VAL_IN_REGISTERS
+    inverse_B = B_clone ^ (2**global_vars.NUM_BITS_IN_REGISTERS - 1)
 
     add(inverse_B, direct_add=True)
     add(1, direct_add=True)
 
     # add() modified globs.B, reset it
-    globs.B = B_clone
+    global_vars.B = B_clone
 
     # FLAG_Z is correct at this point.
     # FLAG_C is not correct so is explicitly handled.
     # This uses the unsigned comparison table FlagC = A >= B (compare their values before A changed)
-    globs.FLAG_C = A_clone >= B_clone
+    global_vars.FLAG_C = A_clone >= B_clone
 
     # Subtract 1 from PC since there were 2 adds that each did PC += 1
     # Net effect is globs.PC += 1
-    globs.PC -= 1
+    global_vars.PC -= 1
 
 
 def sta(arg: int) -> None:
     """``Mem(Arg) = A``. CAN store to unmapped addr, which will simply map the addr in RAM.
 
     Opcode 4"""
-    globs.RAM[arg] = globs.A
-    globs.PC += 1
+    global_vars.RAM[arg] = global_vars.A
+    global_vars.PC += 1
 
 
 def ldi(arg: int) -> None:
     """``A = arg``
 
     Opcode 5"""
-    globs.A = arg
-    if arg > globs.MAX_UNSIGNED_VAL_IN_REGISTERS:
+    global_vars.A = arg
+    if arg > (2**global_vars.NUM_BITS_IN_REGISTERS - 1):
         raise exceptions.ARegisterNotEnoughBits
     if arg < 0:
         raise exceptions.ARegisterNegativeInt
-    globs.PC += 1
+    global_vars.PC += 1
 
 
 def jmp(arg: int) -> None:
@@ -147,48 +147,50 @@ def jmp(arg: int) -> None:
     Opcode 6"""
     if arg < 0:
         raise exceptions.JumpToNegativeAddress
-    globs.PC = arg
+    global_vars.PC = arg
 
 
 def jc(arg: int) -> None:
     """If ``FC=1`` then ``PC=arg``; else go on
 
     Opcode 7"""
-    if globs.FLAG_C:
+    if global_vars.FLAG_C:
         if arg < 0:
             raise exceptions.JumpToNegativeAddress
-        globs.PC = arg
+        global_vars.PC = arg
     else:
-        globs.PC += 1
+        global_vars.PC += 1
 
 
 def jz(arg: int) -> None:
     """If ``FZ=1`` then ``PC=arg``; else go on
 
     Opcode 8"""
-    if globs.FLAG_Z:
+    if global_vars.FLAG_Z:
         if arg < 0:
             raise exceptions.JumpToNegativeAddress
-        globs.PC = arg
+        global_vars.PC = arg
     else:
-        globs.PC += 1
+        global_vars.PC += 1
 
 
 def out(arg: int = 0) -> None:
     """``Display = OUT = A``. Prints | PC | A (dec) | A (hex) |
 
     Opcode 14"""
-    arg = helpers.parse_arg(globs.RAM[globs.PC])
-    table = [[globs.PC, globs.A, helpers.pad_hex(hex(globs.A), 2)]]
-    print(tabulate(table, headers=["PC", "Dec", "Hex"], tablefmt=globs.table_fmt))
-    globs.PC += 1
+    arg = helpers.parse_arg(global_vars.RAM[global_vars.PC])
+    table = [[global_vars.PC, global_vars.A, helpers.pad_hex(hex(global_vars.A), 2)]]
+    print(
+        tabulate(table, headers=["PC", "Dec", "Hex"], tablefmt=global_vars.table_format)
+    )
+    global_vars.PC += 1
 
 
 def hlt(arg: int = 0) -> None:
     """Halt
 
     Opcode 15"""
-    globs.EXECUTING = False
+    global_vars.EXECUTING = False
 
 
 OPCODE_TO_INSTR_PROCEDURE = {

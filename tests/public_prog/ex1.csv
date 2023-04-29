@@ -1,4 +1,4 @@
-Address,Mnemonic,Arg,Comments
+Address,First Hexit,Second Hexit,Comments
 0,LDA,14,Load input to work with it.
 1,SUB,13,Compare X to 3. See How to evaluate flags in a SAP program in README.
 2,JZ,6,If FZ=1 then take the EQ branch and jump to address 6

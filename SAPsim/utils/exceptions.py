@@ -2,15 +2,16 @@
 
 __author__ = "Jesse Wei <jesse@cs.unc.edu>"
 
+from pathlib import Path
 import SAPsim.utils.helpers as helpers
-import SAPsim.utils.globs as globs
+import SAPsim.utils.global_vars as global_vars
 
 
 def print_debug_info() -> None:
     """When most Exceptions (not DroppedOffBottom) occur, this function is called to print the instruction that caused the Exception and program state (RAM and registers and flags)"""
-    curr_instruction = globs.RAM[globs.PC]
+    curr_instruction = global_vars.RAM[global_vars.PC]
     print(
-        f"Exception raised during execution of {globs.OPCODE_TO_MNEMONIC[helpers.parse_opcode(curr_instruction)]} {helpers.parse_arg(curr_instruction)} at address {globs.PC}"
+        f"Exception raised during execution of {global_vars.MNEMONIC_TO_OPCODE.inverse[helpers.parse_opcode(curr_instruction)]} {helpers.parse_arg(curr_instruction)} at address {global_vars.PC}"
     )
     helpers.print_RAM(dispPC=True)
     helpers.print_info()
@@ -20,7 +21,7 @@ class ARegisterNotEnoughBits(Exception):
     """The unsigned value in register A can't be stored in NUM_BITS_IN_REGISTERS bits."""
 
     def __init__(self):
-        self.message = f"The unsigned value in register A can't be stored in {globs.NUM_BITS_IN_REGISTERS} bits."
+        self.message = f"The unsigned value in register A can't be stored in {global_vars.NUM_BITS_IN_REGISTERS} bits."
         print_debug_info()
         super().__init__(self.message)
 
@@ -29,7 +30,7 @@ class BRegisterNotEnoughBits(Exception):
     """The unsigned value in register B can't be stored in NUM_BITS_IN_REGISTERS bits."""
 
     def __init__(self):
-        self.message = f"The unsigned value in register B can't be stored in {globs.NUM_BITS_IN_REGISTERS} bits."
+        self.message = f"The unsigned value in register B can't be stored in {global_vars.NUM_BITS_IN_REGISTERS} bits."
         print_debug_info()
         super().__init__(self.message)
 
@@ -39,7 +40,7 @@ class ARegisterNegativeInt(Exception):
 
     def __init__(self):
         self.message = (
-            f"There's somehow a negative number {globs.A} in unsigned register A."
+            f"There's somehow a negative number {global_vars.A} in unsigned register A."
         )
         print_debug_info()
         super().__init__(self.message)
@@ -50,7 +51,7 @@ class BRegisterNegativeInt(Exception):
 
     def __init__(self):
         self.message = (
-            f"There's somehow a negative number {globs.B} in unsigned register B."
+            f"There's somehow a negative number {global_vars.B} in unsigned register B."
         )
         print_debug_info()
         super().__init__(self.message)
@@ -73,7 +74,7 @@ class LoadFromUnmappedAddress(Exception):
     """Raised if attempting to Mem(addr), but Addr is not mapped."""
 
     def __init__(self):
-        self.message = f"Attempted to load from unmapped address {globs.PC}."
+        self.message = f"Attempted to load from unmapped address {global_vars.PC}."
         print_debug_info()
         super().__init__(self.message)
 
@@ -85,13 +86,14 @@ class JumpToNegativeAddress(Exception):
         super().__init__(self.message)
 
 
-class InvalidFileExtension(Exception):
+class FileNotCSV(Exception):
     def __init__(
         self,
-        path,
-        message=f"Invalid file extension for prog positional argument. Must be .csv",
+        path: Path,
+        message=f"Invalid filepath provided. Extension must be .csv",
     ):
         self.message = message
+        self.message += f"\nYou provided the filepath: {path}"
         super().__init__(self.message)
 
 
@@ -125,15 +127,19 @@ class DuplicateAddress(Exception):
         super().__init__(self.message)
 
 
-class MnemonicButNoArg(Exception):
+class NoSecondHexit(Exception):
     def __init__(self, address):
-        self.message = f"Address {address} of your program has a Mnemonic but no Arg!"
+        self.message = (
+            f"Address {address} of your program has a First Hexit but no Second Hexit!"
+        )
         super().__init__(self.message)
 
 
-class ArgButNoMnemonic(Exception):
+class NoFirstHexit(Exception):
     def __init__(self, address):
-        self.message = f"Address {address} of your program has an Arg but no Mnemonic!"
+        self.message = (
+            f"Address {address} of your program has an Second Hexit but no First Hexit!"
+        )
         super().__init__(self.message)
 
 
@@ -167,25 +173,19 @@ class SecondHexitGreaterThan15(Exception):
 
 class InvalidFirstHexit(Exception):
     def __init__(self, address):
-        self.message = f"The first hexit at address {address} is not valid! Must be a hexit 0 to f or a base-10 integer 0 to 15 representing a hexit. You typed one letter in this field, so I assume you meant to put a hexit here, not a Mnemonic."
+        self.message = f"The First Hexit given at address {address} is invalid. See SAP instruction set for list of supported mnemonics. The First Hexit field can also be a hexit 0 to f if representing data."
         super().__init__(self.message)
 
 
-class InvalidMnemonic(Exception):
+class InvalidSecondHexit(Exception):
     def __init__(self, address):
-        self.message = f"The mnemonic given at address {address} is invalid. See SAP instruction set for list of supported mnemonics. The mnemonic field can also be a hexit 0 to f if representing data."
-        super().__init__(self.message)
-
-
-class InvalidArg(Exception):
-    def __init__(self, address):
-        self.message = f"The arg at address {address} is invalid. It must be a hexit 0 to f or a base-10 integer 0 to 15 representing a hexit."
+        self.message = f"The Second Hexit at address {address} is invalid. It must be a hexit 0 to f or a base-10 integer 0 to 15 representing a hexit."
         super().__init__(self.message)
 
 
 class MoreThan16MappedAddresses(Exception):
     def __init__(self):
-        self.message = f"A SAP program can have at most 16 addresses! In this simulation, a skipped address doesn't count toward that count. Excluding skipped addresses, you have {len(globs.RAM)} mapped addresses."
+        self.message = f"A SAP program can have at most 16 addresses! In this simulation, a skipped address doesn't count toward that count. Excluding skipped addresses, you have {len(global_vars.RAM)} mapped addresses."
         super().__init__(self.message)
 
 

@@ -12,13 +12,9 @@
 
 ## Install
 
-Your Python version needs to be 3.9+. Check with `python --version` or `python3 --version`, if `python` doesn't work.
+`pip install SAPsim`
 
-Next, install SAPsim.
-
-```sh
-pip install SAPsim
-```
+Your Python version needs to be 3.9+. Check with `python --version`. If `python` doesn't work, try `python3`.
 
 If `pip` doesn't work, try `pip3`.
 
@@ -29,17 +25,18 @@ Write a SAP program in the format shown in [ex2.csv](https://github.com/jesse-we
 Open a Python terminal. You'll pass the path to your SAP program as an argument.
 
 ```py
-from SAPsim import run
-
-run("path/to/your/SAP/program.csv")                 # run at full speed (default)
-run("path/to/your/SAP/program.csv", debug=True)     # run in debug (step) mode
+>>> from SAPsim import run
+>>> run("path/to/your/SAP/program.csv")                 # run at full speed (default)
+...
+>>> run("path/to/your/SAP/program.csv", debug=True)     # run in debug (step) mode
+...
 ```
 
 Here's a list of [additional settings](https://SAPsim.readthedocs.io/en/latest/#settings) (e.g., table format).
 
 ## Rules
 
-It's easy to just mimic the example programs [above](#usage).
+It's easy to just mimic the [example programs](https://github.com/jesse-wei/SAPsim/tree/main/tests/public_prog).
 But if you need it, here's the list of [rules for SAPsim programs](https://SAPsim.readthedocs.io/en/latest/rules.html).
 
 ## SAP instruction set

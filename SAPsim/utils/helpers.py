@@ -5,7 +5,7 @@ __author__ = "Jesse Wei <jesse@cs.unc.edu>"
 
 from tabulate import tabulate
 from typing import Any
-import SAPsim.utils.globs as globs
+import SAPsim.utils.global_vars as global_vars
 import SAPsim.utils.exceptions as exceptions
 
 
@@ -76,7 +76,7 @@ def instruction_to_byte(instruction: str) -> int:
     if " " not in instruction:
         if len(instruction) != 3 or instruction.upper() not in {"NOP", "OUT", "HLT"}:
             raise exceptions.InstructionRequiresArg(instruction)
-        return globs.MNEMONIC_TO_OPCODE[instruction.upper()] << 4
+        return global_vars.MNEMONIC_TO_OPCODE[instruction.upper()] << 4
     space_position = instruction.find(" ")
     if len(instruction) != (space_position + 2) and len(instruction) != (
         space_position + 3
@@ -87,9 +87,9 @@ def instruction_to_byte(instruction: str) -> int:
         or int(instruction[space_position + 1 :]) >= 16
     ):
         raise exceptions.InvalidInstructionString(instruction)
-    return (globs.MNEMONIC_TO_OPCODE[instruction[:space_position].upper()] << 4) | int(
-        instruction[space_position + 1 :]
-    )
+    return (
+        global_vars.MNEMONIC_TO_OPCODE[instruction[:space_position].upper()] << 4
+    ) | int(instruction[space_position + 1 :])
 
 
 @is_documented_by(
@@ -107,47 +107,47 @@ def i2b(instruction: str) -> int:
 def print_RAM(**kwargs):
     """Pretty print the contents of RAM, sorted by address. | <PC (optional)> | Addr | Instruction | Dec | Hex | (since we can't distinguish instructions from data). Display arrow on current PC value if ``dispPC=True`` in kwargs. Set ``format=`` to set tabulate pretty-print format."""
     table = []
-    for addr in sorted(globs.RAM.keys()):
-        byte = globs.RAM[addr]
+    for addr in sorted(global_vars.RAM.keys()):
+        byte = global_vars.RAM[addr]
         opcode = parse_opcode(byte)
         arg = parse_arg(byte)
         instruction_str = (
-            (globs.OPCODE_TO_MNEMONIC[opcode] + " " + str(arg))
-            if opcode in globs.OPCODE_TO_MNEMONIC
+            (global_vars.MNEMONIC_TO_OPCODE.inverse[opcode] + " " + str(arg))
+            if opcode in global_vars.MNEMONIC_TO_OPCODE.inverse
             else "Invalid Opcode"
         )
         table_row = []
         if "dispPC" in kwargs and kwargs["dispPC"]:
-            table_row.append(">" if globs.PC == addr else "")
+            table_row.append(">" if global_vars.PC == addr else "")
         table_row.extend([addr, instruction_str, byte, pad_hex(hex(byte), 2)])
         table.append(table_row)
     headers = []
     if "dispPC" in kwargs and kwargs["dispPC"]:
         headers.append("PC")
     headers.extend(["Addr", "Instruction", "Dec", "Hex"])
-    print(tabulate(table, headers=headers, tablefmt=globs.table_fmt))
+    print(tabulate(table, headers=headers, tablefmt=global_vars.table_format))
 
 
 def print_info(**kwargs):
     """Print the values of everything in global_vars.py except RAM. Set optional parameter ``bool=True`` to print flags as ``bool`` instead of ``int``. Set ``format=`` for tabulate pretty-print format."""
     table = [
-        ["PC", globs.PC],
-        ["Reg A", globs.A],
-        ["Reg B", globs.B],
+        ["PC", global_vars.PC],
+        ["Reg A", global_vars.A],
+        ["Reg B", global_vars.B],
         [
             "FlagC",
-            globs.FLAG_C
+            global_vars.FLAG_C
             if ("bool" in kwargs and kwargs["bool"])
-            else int(globs.FLAG_C),
+            else int(global_vars.FLAG_C),
         ],
         [
             "FlagZ",
-            globs.FLAG_Z
+            global_vars.FLAG_Z
             if ("bool" in kwargs and kwargs["bool"])
-            else int(globs.FLAG_Z),
+            else int(global_vars.FLAG_Z),
         ],
     ]
-    print(tabulate(table, tablefmt=globs.table_fmt))
+    print(tabulate(table, tablefmt=global_vars.table_format))
 
 
 def pad_hex(hex: str, width: int):
@@ -165,48 +165,45 @@ def clone_dict(dict):
 
 def setup_4bit():
     """Sets up the 4-bit environment and resets global variables to default values."""
-    globs.NUM_BITS_IN_REGISTERS = 4
-    globs.MAX_UNSIGNED_VAL_IN_REGISTERS = 2**4 - 1
+    global_vars.NUM_BITS_IN_REGISTERS = 4
     reset_globals()
 
 
 def setup_8bit():
     """Sets up the 8-bit environment and resets global variables to default values."""
-    globs.NUM_BITS_IN_REGISTERS = 8
-    globs.MAX_UNSIGNED_VAL_IN_REGISTERS = 2**8 - 1
+    global_vars.NUM_BITS_IN_REGISTERS = 8
     reset_globals()
 
 
 def setup_n_bit(n: int):
     """Sets up the n-bit environment and resets global variables to default values."""
     assert n > 1
-    globs.NUM_BITS_IN_REGISTERS = n
-    globs.MAX_UNSIGNED_VAL_IN_REGISTERS = 2**n - 1
+    global_vars.NUM_BITS_IN_REGISTERS = n
     reset_globals()
 
 
 def reset_globals():
-    """Reset global variables (not ``NUM_BITS_IN_REGISTERS`` and ``MAX_UNSIGNED_VAL_IN_REGISTERS`` to default values."""
-    globs.RAM = {}
-    globs.PC = 0
-    globs.A = 0
-    globs.B = 0
-    globs.FLAG_C = False
-    globs.FLAG_Z = False
-    globs.EXECUTING = True
+    """Reset global variables (not ``NUM_BITS_IN_REGISTERS``) to default values."""
+    global_vars.RAM = {}
+    global_vars.PC = 0
+    global_vars.A = 0
+    global_vars.B = 0
+    global_vars.FLAG_C = False
+    global_vars.FLAG_Z = False
+    global_vars.EXECUTING = True
 
 
 def get_state() -> dict[str, Any]:
     """Return a dict of global variables and their values.
     Mostly used in testing functions."""
     return {
-        "RAM": globs.RAM,
-        "PC": globs.PC,
-        "A": globs.A,
-        "B": globs.B,
-        "FLAG_C": globs.FLAG_C,
-        "FLAG_Z": globs.FLAG_Z,
-        "EXECUTING": globs.EXECUTING,
+        "RAM": global_vars.RAM,
+        "PC": global_vars.PC,
+        "A": global_vars.A,
+        "B": global_vars.B,
+        "FLAG_C": global_vars.FLAG_C,
+        "FLAG_Z": global_vars.FLAG_Z,
+        "EXECUTING": global_vars.EXECUTING,
     }
 
 
@@ -214,13 +211,13 @@ def check_state_all(
     RAM, PC: int, A: int, B: int, FLAG_C: bool, FLAG_Z: bool, EXECUTING: bool
 ):
     """Compare all current state variables to expected values. Mostly used in testing functions."""
-    assert RAM == globs.RAM
-    assert PC == globs.PC
-    assert A == globs.A
-    assert B == globs.B
-    assert FLAG_C == globs.FLAG_C
-    assert FLAG_Z == globs.FLAG_Z
-    assert EXECUTING == globs.EXECUTING
+    assert RAM == global_vars.RAM
+    assert PC == global_vars.PC
+    assert A == global_vars.A
+    assert B == global_vars.B
+    assert FLAG_C == global_vars.FLAG_C
+    assert FLAG_Z == global_vars.FLAG_Z
+    assert EXECUTING == global_vars.EXECUTING
 
 
 def check_state(**kwargs):
@@ -228,16 +225,16 @@ def check_state(**kwargs):
 
     Optional parameters RAM=, PC=, A=, B=, FLAG_C=, FLAG_Z=, EXECUTING="""
     if "RAM" in kwargs:
-        assert kwargs["RAM"] == globs.RAM
+        assert kwargs["RAM"] == global_vars.RAM
     if "PC" in kwargs:
-        assert kwargs["PC"] == globs.PC
+        assert kwargs["PC"] == global_vars.PC
     if "A" in kwargs:
-        assert kwargs["A"] == globs.A
+        assert kwargs["A"] == global_vars.A
     if "B" in kwargs:
-        assert kwargs["B"] == globs.B
+        assert kwargs["B"] == global_vars.B
     if "FLAG_C" in kwargs:
-        assert kwargs["FLAG_C"] == globs.FLAG_C
+        assert kwargs["FLAG_C"] == global_vars.FLAG_C
     if "FLAG_Z" in kwargs:
-        assert kwargs["FLAG_Z"] == globs.FLAG_Z
+        assert kwargs["FLAG_Z"] == global_vars.FLAG_Z
     if "EXECUTING" in kwargs:
-        assert kwargs["EXECUTING"] == globs.EXECUTING
+        assert kwargs["EXECUTING"] == global_vars.EXECUTING

@@ -1,4 +1,4 @@
-Address,Mnemonic,Arg,Comments
+Address,First Hexit,Second Hexit,Comments
 0,LDI,6,Here's an ignored comment!
 1,OUT,9,And another!
 2,LDA,13,

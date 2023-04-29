@@ -42,7 +42,7 @@ def test_run_ex1() -> None:
     f = open(TEMP_FILE_PATH, "w")
     sys.stdout = f
     # Use plain table_fmt to avoid special characters that aren't the same on Ubuntu and Windows (unit tests)
-    run("tests/public_prog/ex1.csv", table_fmt="plain")
+    run("tests/public_prog/ex1.csv", table_format="plain")
     f.close()
 
     f2 = open(TEMP_FILE_PATH, "r")
@@ -58,7 +58,7 @@ def test_run_ex2() -> None:
     f = open(TEMP_FILE_PATH, "w")
     sys.stdout = f
     # Use plain table_fmt to avoid special characters that aren't the same on Ubuntu and Windows (unit tests)
-    run("tests/public_prog/ex2.csv", table_fmt="plain")
+    run("tests/public_prog/ex2.csv", table_format="plain")
     f.close()
 
     f2 = open(TEMP_FILE_PATH, "r")
