@@ -17,3 +17,18 @@ def run(prog_path: str, **kwargs) -> None:
 )
 def run_and_return_state(prog_path: str, **kwargs) -> dict[str, Any]:
     return execute.run_and_return_state(prog_path, **kwargs)
+
+
+def create_template() -> None:
+    r"""
+    Create blank ``template.csv`` file in SAPsim format in current directory.
+    """
+    # This will rarely be used so doesn't need to be imported at top level
+    import csv
+
+    header: list[str] = ["Address", "First Hexit", "Second Hexit", "Comments"]
+    with open("template.csv", "w") as f:
+        writer = csv.writer(f)
+        writer.writerow(header)
+        for i in range(16):
+            writer.writerow([f"{i}", "", "", ""])

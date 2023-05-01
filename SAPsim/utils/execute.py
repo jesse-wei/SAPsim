@@ -63,23 +63,28 @@ def run(prog_path: str, **kwargs) -> None:
             * Whether to run in debug mode (True) or at full speed (False)
             * Default is full speed
         * *change* (``str``) --
-            * Comma-separated list of changes to RAM
+            * Comma-separated list of hardcoded changes to RAM
             * Format: <addr>:<base-10 value>,<addr>:<base-10 value>,...
             * The value at each address will be overwritten to that base-10 value
-            * Useful for debugging programs (edit a value without changing CSV)
-            * Also useful for autograding programs (overwrite a reserved instruction/data value)
+            * Useful for debugging programs (edit a value without changing the CSV)
+            * Useful for autograding programs (overwrite a reserved instruction/data value)
         * *table_format* (``str``) --
-            * Table format
+            * Printed table format
             * Options: https://github.com/astanin/python-tabulate#table-format
             * Default value in ``global_vars`` is ``"simple_outline"``
-        * *bits* (``int``) --
-            * Number of bits in unsigned registers
-            * Default value in ``global_vars`` is 8
-        * *non_blocking* (``bool``) --
-            * If ``True``, then ``run()`` won't block on input
-            * ``input()`` won't be called in debug mode (i.e., don't have to press enter to continue execution)
-            * If this is ``True``, then debug mode will be on even if ``debug`` isn't in kwargs
-            * This is used to unit test debug mode of ``run()``
+        * The rest of the parameters are pretty much exclusively for unit testing, and you should not use these
+            * *bits* (``int``) --
+                * Number of bits in unsigned registers
+                * Default value in ``global_vars`` is 8
+            * *non_blocking* (``bool``) --
+                * This is used to unit test debug mode of ``run()``, you likely don't have a need for this
+                * If ``True``, then ``run()`` won't block on input
+                * ``input()`` won't be called in debug mode (i.e., don't have to press enter to continue execution)
+                * If this is ``True``, then debug mode will be on even if ``debug`` isn't in kwargs
+            * *no_print* (``bool``) --
+                * This is used to save computation time during unit testing
+                * If ``True``, then ``print()`` won't be called, except for error messages
+
     :return: ``None``
     """
     if not isinstance(prog_path, str):
@@ -103,6 +108,8 @@ def run(prog_path: str, **kwargs) -> None:
     if "bits" in kwargs:
         assert kwargs["bits"] > 1
         global_vars.NUM_BITS_IN_REGISTERS = kwargs["bits"]
+        # Don't need to call setup_n_bit.
+        # All it does is change NUM_BITS_IN_REGISTERS and reset globals.
     if "change" in kwargs:
         changes = kwargs["change"].split(",")
         for change in changes:
@@ -129,10 +136,11 @@ def run(prog_path: str, **kwargs) -> None:
     if "table_format" in kwargs:
         global_vars.table_format = kwargs["table_format"]
     if kwargs.get("debug") or kwargs.get("non_blocking"):
-        print(f"Initial state of simulation of {prog_path}")
-        helpers.print_RAM()
-        helpers.print_info()
-        print("Debug mode: press Enter to execute next instruction ( > ).")
+        if not kwargs.get("no_print"):
+            print(f"Initial state of simulation of {prog_path}")
+            helpers.print_RAM()
+            helpers.print_info()
+            print("Debug mode: press Enter to execute next instruction ( > ).")
         if not kwargs.get("non_blocking"):
             input()
         while global_vars.EXECUTING:
@@ -144,16 +152,18 @@ def run(prog_path: str, **kwargs) -> None:
                 execute_next()
                 break
             execute_next()
-            helpers.print_RAM()
-            helpers.print_info()
+            if not kwargs.get("no_print"):
+                helpers.print_RAM()
+                helpers.print_info()
             if not kwargs.get("non_blocking"):
                 input()
         print("Program halted.")
     else:
         execute_full_speed()
-        helpers.print_RAM()
-        helpers.print_info()
-        print("Program halted.")
+        if not kwargs.get("no_print"):
+            helpers.print_RAM()
+            helpers.print_info()
+            print("Program halted.")
 
 
 @is_documented_by(
