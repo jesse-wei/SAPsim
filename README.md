@@ -1,9 +1,11 @@
 # SAPsim
 
-![Test badge](https://github.com/jesse-wei/SAPsim/actions/workflows/tests.yml/badge.svg)
-![Docs badge](https://readthedocs.org/projects/sapsim/badge/?version=latest)
-![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)
-![Python](https://img.shields.io/badge/python-3670A0?style=plastic&logo=python&logoColor=ffdd54)
+<span>
+<a href="https://github.com/jesse-wei/SAPsim/actions/workflows/tests.yml"><img src="https://github.com/jesse-wei/SAPsim/actions/workflows/tests.yml/badge.svg"></a>
+<a href="https://sapsim.readthedocs.io/en/latest/"><img src="https://readthedocs.org/projects/sapsim/badge/?version=latest"></a>
+<a href="https://github.com/psf/black"><img src="https://img.shields.io/badge/code%20style-black-000000.svg"></a>
+<a href="https://www.python.org"><img src="https://img.shields.io/badge/python-3670A0?style=plastic&logo=python&logoColor=ffdd54"></a>
+</span>
 
 > Simulation of [SAP (Simple As Possible) computer](https://jessewei.dev/img/sap.jpg) programs from COMP311 (Computer Organization) @ [UNC](https://unc.edu).
 
