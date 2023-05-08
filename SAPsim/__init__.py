@@ -2,6 +2,7 @@ __author__ = "Jesse Wei <jesse@cs.unc.edu>"
 
 from typing import Union, Any
 from SAPsim.utils.helpers import is_documented_by
+from SAPsim.utils.global_vars import MAX_PC
 import SAPsim.utils.execute as execute
 
 
@@ -11,16 +12,21 @@ def run(prog_path: str, **kwargs) -> Union[None, dict[str, Any]]:
     return execute.run(prog_path, **kwargs)
 
 
-def create_template() -> None:
+def create_template(path: str = "template.csv") -> None:
     r"""
-    Create blank ``template.csv`` file in SAPsim format in current directory.
+    Create blank template file in SAPsim format in current directory.
+
+    :param path: Path to create template file at. Defaults to ``template.csv``.
+    :type path: str
+    :return: None
     """
     # This will rarely be used so doesn't need to be imported at top level
     import csv
 
     header: list[str] = ["Address", "First Hexit", "Second Hexit", "Comments"]
-    with open("template.csv", "w") as f:
+    with open(path, "w") as f:
         writer = csv.writer(f)
         writer.writerow(header)
-        for i in range(16):
+        for i in range(MAX_PC):
             writer.writerow([f"{i}", "", "", ""])
+    print(f"{path} successfully created.")

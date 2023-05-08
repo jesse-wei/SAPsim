@@ -4,12 +4,30 @@ __author__ = "Jesse Wei <jesse@cs.unc.edu>"
 
 from csv import DictReader
 from pathlib import Path
+from typing import Union
 import SAPsim.utils.exceptions as exceptions
 import SAPsim.utils.global_vars as global_vars
 
 
-def parse_csv(file_path: Path):
-    """Takes a ``.csv`` file path in ``template.csv`` format and parses it into ``RAM``."""
+def parse_csv(file_path: Union[Path, str]) -> None:
+    """Takes a ``.csv`` file path in SAPsim ``template.csv`` format and parses it into ``RAM``.
+
+    :param file_path: The path to the ``.csv`` file to parse.
+    :type file_path: Union[Path, str]
+    :raises RowWithNoAddress: If a row has no address.
+    :raises InvalidAddress: If a row has an invalid address.
+    :raises NegativeAddress: If a row has a negative address.
+    :raises DuplicateAddress: If a row has a duplicate address.
+    :raises NoFirstHexit: If a row has no First Hexit.
+    :raises NoSecondHexit: If a row has no Second Hexit.
+    :raises FirstHexitNegative: If a row has a negative First Hexit.
+    :raises FirstHexitGreaterThan15: If a row has a First Hexit greater than 15.
+    :raises SecondHexitNegative: If a row has a negative Second Hexit.
+    :raises SecondHexitGreaterThan15: If a row has a Second Hexit greater than 15.
+    :raises InvalidFirstHexit: If a row has an invalid First Hexit.
+    :raises InvalidSecondHexit: If a row has an invalid Second Hexit.
+    :raises MoreThan16MappedAddresses: If there are more than 16 mapped addresses.
+    :return: None"""
     prog = DictReader(open(file_path))
     num_rows = 1
     addresses = set()

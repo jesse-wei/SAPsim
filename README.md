@@ -19,7 +19,7 @@ If `python` doesn't work, try `python3`. If `pip` doesn't work, try `pip3`.
 
 ## Usage
 
-Write a SAP program in the CSV file format shown below.
+Write a SAP program in the CSV file format shown below (templates are provided in COMP311's SAP assignment).
 
 <p align="center">
     <img src="https://raw.githubusercontent.com/jesse-wei/SAPsim/main/docs/_static/ex1.jpg" alt="Screenshot of ex1.csv in Excel">
@@ -28,23 +28,33 @@ Write a SAP program in the CSV file format shown below.
     <a href="https://github.com/jesse-wei/SAPsim/blob/main/tests/public_prog/ex1.csv">ex1.csv</a>
 </p>
 
-You may edit the `.csv` file with any program (Microsoft Excel, Google Sheets, etc.), as long as you preserve the `.csv` extension. For a blank template, see [template.csv](https://github.com/jesse-wei/SAPsim/blob/main/template.csv).
+You may edit the `.csv` file with any program (Microsoft Excel, Google Sheets, etc.).
 
-Open a Python terminal. Import SAPsim's `run()` function, and pass the path to your SAP program as an argument.
+To run the SAP program, use `run()`. **Note**: There is a debug (step) mode, as shown below.
 
 ```py
 >>> from SAPsim import run
->>> run("ex1.csv")                 # Run ex1.csv at full speed (default)
+>>> run("ex1.csv")                  # Run ex1.csv at full speed (default)
 ...
->>> run("ex1.csv", debug=True)     # Run ex1.csv in debug (step) mode
+>>> run("ex1.csv", debug=True)      # Run ex1.csv in debug (step) mode
 ...
 ```
 
-**Note**: There is a debug (step) mode, as shown above.
+If you want a blank template, use `create_template()`.
+
+```py
+>>> from SAPsim import create_template
+>>> create_template()
+template.csv successfully created.
+```
 
 ## Settings
 
-Here's a list of [additional settings](https://SAPsim.readthedocs.io/en/latest/#settings) (e.g., printed table format).
+Here's a list of [additional settings](https://SAPsim.readthedocs.io/en/latest/#settings).
+
+`change` allows you to modify values in the SAP program without editing the CSV, which is convenient.
+
+`table_format` allows you to customize the appearance of the printed tables.
 
 ## Rules
 

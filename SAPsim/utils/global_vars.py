@@ -31,6 +31,8 @@ NUM_BITS_IN_REGISTERS: int = 8
 Default value is 8."""
 EXECUTING: bool = True
 """Is the program executing? Set to ``False`` by ``hlt()``"""
+MAX_PC: int = 16
+"""Max PC value."""
 
 MNEMONIC_TO_OPCODE: bidict = bidict(
     {
