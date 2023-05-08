@@ -16,7 +16,7 @@ Non-functional (e.g., formatting, documentation) dependencies listed in requirem
 setup(
     name="SAPsim",
     # Check https://pypi.org/project/SAPsim/ for latest version number
-    version="1.0.6",
+    version="1.0.7",
     description="Simulation of SAP (Simple As Possible) computer programs from COMP311 (Computer Organization) @ UNC.",
     author="Jesse Wei",
     author_email="jesse@cs.unc.edu",
