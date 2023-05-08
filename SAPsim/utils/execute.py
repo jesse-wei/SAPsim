@@ -3,7 +3,7 @@
 __author__ = "Jesse Wei <jesse@cs.unc.edu>"
 
 from pathlib import Path
-from typing import Any
+from typing import Any, Union
 import SAPsim.utils.global_vars as global_vars
 import SAPsim.utils.instructions as instructions
 import SAPsim.utils.helpers as helpers
@@ -49,7 +49,7 @@ def execute_next() -> None:
             ](helpers.parse_arg(global_vars.RAM[global_vars.PC]))
 
 
-def run(prog_path: str, **kwargs) -> None:
+def run(prog_path: str, **kwargs) -> Union[None, dict[str, Any]]:
     r"""Run given .csv program in SAPsim format.
 
     :param prog_path:
@@ -73,9 +73,9 @@ def run(prog_path: str, **kwargs) -> None:
             * Options: https://github.com/astanin/python-tabulate#table-format
             * Default value in ``global_vars`` is ``"simple_outline"``
         * The rest of the parameters are pretty much exclusively for unit testing, and you should not use these
-            * *bits* (``int``) --
-                * Number of bits in unsigned registers
-                * Default value in ``global_vars`` is 8
+            * *return_state* (``bool``) --
+                * If ``True``, then program state will be returned
+                * See ``utils.helpers.get_state()``
             * *non_blocking* (``bool``) --
                 * This is used to unit test debug mode of ``run()``, you likely don't have a need for this
                 * If ``True``, then ``run()`` won't block on input
@@ -84,8 +84,12 @@ def run(prog_path: str, **kwargs) -> None:
             * *no_print* (``bool``) --
                 * This is used to save computation time during unit testing
                 * If ``True``, then ``print()`` won't be called, except for error messages
+            * *bits* (``int``) --
+                * Number of bits in unsigned registers
+                * Default value in ``global_vars`` is 8
 
-    :return: ``None``
+    :return: ``None`` or program state if ``return_state``
+    :rtype: Union[None, dict[str, Any]]
     """
     if not isinstance(prog_path, str):
         raise TypeError("Required parameter prog_path must be a str.")
@@ -95,10 +99,14 @@ def run(prog_path: str, **kwargs) -> None:
         raise TypeError("Keyword argument change must be a str.")
     if "table_format" in kwargs and not isinstance(kwargs["table_format"], str):
         raise TypeError("Keyword argument table_format must be a str.")
-    if "bits" in kwargs and not isinstance(kwargs["bits"], int):
-        raise TypeError("Keyword argument bits must be an int.")
+    if "return_state" in kwargs and not isinstance(kwargs["return_state"], bool):
+        raise TypeError("Keyword argument return_state must be a bool.")
     if "non_blocking" in kwargs and not isinstance(kwargs["non_blocking"], bool):
         raise TypeError("Keyword argument non_blocking must be a bool.")
+    if "no_print" in kwargs and not isinstance(kwargs["no_print"], bool):
+        raise TypeError("Keyword argument no_print must be a bool.")
+    if "bits" in kwargs and not isinstance(kwargs["bits"], int):
+        raise TypeError("Keyword argument bits must be an int.")
 
     path: Path = Path(prog_path)
     if not path.suffix == ".csv":
@@ -109,7 +117,8 @@ def run(prog_path: str, **kwargs) -> None:
         assert kwargs["bits"] > 1
         global_vars.NUM_BITS_IN_REGISTERS = kwargs["bits"]
         # Don't need to call setup_n_bit.
-        # All it does is change NUM_BITS_IN_REGISTERS and reset globals.
+        # All it does is change NUM_BITS_IN_REGISTERS and reset globals, which was already done
+        # by setup_8bit().
     if "change" in kwargs:
         changes = kwargs["change"].split(",")
         for change in changes:
@@ -165,16 +174,5 @@ def run(prog_path: str, **kwargs) -> None:
             helpers.print_info()
             print("Program halted.")
 
-
-@is_documented_by(
-    run,
-    2,
-    "",
-    r"""
-    :return: ``dict`` containing program state (see ``helpers.get_state``)
-    :rtype: ``dict[str, Any]``
-    """,
-)
-def run_and_return_state(prog_path: str, **kwargs) -> dict[str, Any]:
-    run(prog_path, **kwargs)
-    return helpers.get_state()
+    if kwargs.get("return_state"):
+        return helpers.get_state()
