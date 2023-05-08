@@ -89,7 +89,7 @@ def run(prog_path: str, **kwargs) -> Union[None, dict[str, Any]]:
                 * Default value in ``global_vars`` is 8
 
     :return: ``None`` or program state if ``return_state``
-    :rtype: Union[None, dict[str, Any]]
+    :rtype: ``Union[None, dict[str, Any]]``
     """
     if not isinstance(prog_path, str):
         raise TypeError("Required parameter prog_path must be a str.")

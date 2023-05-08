@@ -69,6 +69,6 @@ In the Second Hexit column, these are allowed
 
 .. [#answer] With 8-bit unsigned registers, 0-1=255, and 255+1=0. In both cases, the numbers "wrap around". If this doesn't quite click, play with the ALU with **4-bit** registers that you implemented! It follows all the same rules; just think of its registers as unsigned for these examples.
 
-.. [#bytes] In SAPsim, every value in RAM is a byte. See the `definition of RAM <SAPsim.utils.html#SAPsim.utils.globs.RAM>`_. Therefore, SAPsim cannot tell if a row in your program is "instruction" or "data." At runtime, it interprets the byte based on context (i.e., are we executing that byte or reading the value of that byte?). The only exception to this rule occurs when the byte has an invalid opcode (byte ranging from ``0x90`` to ``0xDF``) so can't be an instruction.
+.. [#bytes] In SAPsim, every value in RAM is a byte. See the `definition of RAM <SAPsim.utils.html#SAPsim.utils.global_vars.RAM>`_. Therefore, SAPsim cannot tell if a row in your program is "instruction" or "data." At runtime, it interprets the byte based on context (i.e., are we executing that byte or reading the value of that byte?). The only exception to this rule occurs when the byte has an invalid opcode (byte ranging from ``0x90`` to ``0xDF``) so can't be an instruction.
 
 .. [#interpret] For an instruction's First Hexit field, you could technically write the Mnemonic as an opcode. SAPsim converts Mnemonics in the First Hexit column to opcodes anyway.

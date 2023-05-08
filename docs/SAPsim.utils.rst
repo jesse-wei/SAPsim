@@ -20,10 +20,10 @@ SAPsim.utils.execute module
    :undoc-members:
    :show-inheritance:
 
-SAPsim.utils.globs module
--------------------------
+SAPsim.utils.global\_vars module
+--------------------------------
 
-.. automodule:: SAPsim.utils.globs
+.. automodule:: SAPsim.utils.global_vars
    :members:
    :undoc-members:
    :show-inheritance:

@@ -53,10 +53,6 @@ html_theme = "sphinx_rtd_theme"
 html_static_path = ["_static"]
 html_favicon = "sap.ico"
 html_logo = "_static/sap.jpg"
-html_theme_options = {
-    "logo_only": True,
-    "display_version": False,
-}
 
 # Prevents __init__ from being ignored
 # Source: https://stackoverflow.com/questions/5599254/how-to-use-sphinxs-autodoc-to-document-a-classs-init-self-method
