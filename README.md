@@ -1,11 +1,9 @@
+[![tests GitHub action](https://github.com/jesse-wei/SAPsim/actions/workflows/tests.yml/badge.svg)](https://github.com/jesse-wei/SAPsim/actions/workflows/tests.yml)
+[![documentation badge](https://readthedocs.org/projects/sapsim/badge/?version=latest)](https://SAPsim.readthedocs.io/en/latest/)
+
 # SAPsim
 
-<span>
-    <a href="https://github.com/jesse-wei/SAPsim/actions/workflows/tests.yml"><img src="https://github.com/jesse-wei/SAPsim/actions/workflows/tests.yml/badge.svg"></a>
-    <a href="https://sapsim.readthedocs.io/en/latest/"><img src="https://readthedocs.org/projects/sapsim/badge/?version=latest"></a>
-</span>
-
-> Simulation of [SAP (Simple As Possible) computer](https://jessewei.dev/img/sap.jpg) programs from COMP311 (Computer Organization) @ [UNC](https://unc.edu).
+Simulation of [SAP (Simple As Possible) computer](https://jessewei.dev/img/sap.jpg) programs from COMP311 (Computer Organization) @ [UNC](https://unc.edu).
 
 <p align="center">
     <img src="https://raw.githubusercontent.com/jesse-wei/SAPsim/main/docs/_static/SAPsim_demo.gif" alt="SAPsim demo">
