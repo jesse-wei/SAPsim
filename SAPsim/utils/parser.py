@@ -1,4 +1,4 @@
-"""Parses a SAP program in the CSV format given in ``template.csv`` into ``globs.RAM``."""
+"""Parses a SAP program in the CSV format given in ``template.csv`` into ``global_vars.RAM``."""
 
 __author__ = "Jesse Wei <jesse@cs.unc.edu>"
 

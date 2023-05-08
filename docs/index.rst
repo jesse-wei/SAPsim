@@ -5,7 +5,7 @@
 
    The theme I'm using for this site has ads 😔. Use adblock.
 
-   The top half of this page is just the README from GitHub.
+   The top half of this page is just the README from `GitHub <https://github.com/jesse-wei/SAPsim>`_.
    Content unique to this site starts at the Settings heading.
 
 .. mdinclude:: ../README.md
@@ -24,6 +24,7 @@ For example, to run in debug (step) mode, use :code:`run(path, debug=True)`.
    :caption: Contents:
 
    rules
+   structure
    modules
 
 
