@@ -90,7 +90,8 @@ def run(prog_path: str, **kwargs) -> Union[None, dict[str, Any]]:
                 * If this is ``True``, then debug mode will be on even if ``debug`` isn't in kwargs
             * *no_print* (``bool``) --
                 * This is used to save computation time during unit testing
-                * If ``True``, then ``print()`` won't be called, except for error messages
+                * If ``True``, then ``print_RAM()`` and ``print_info()`` won't be called
+                * In debug mode, "Program halted." will still be printed
             * *bits* (``int``) --
                 * You probably don't have a need for this
                 * Number of bits in registers
@@ -102,8 +103,11 @@ def run(prog_path: str, **kwargs) -> Union[None, dict[str, Any]]:
     """
     if not isinstance(prog_path, str):
         raise TypeError("Required parameter prog_path must be a str.")
-    if "debug" in kwargs and not isinstance(kwargs["debug"], bool):
-        raise TypeError("Keyword argument debug must be a bool.")
+    debug: bool = False
+    if "debug" in kwargs:
+        if not isinstance(kwargs["debug"], bool):
+            raise TypeError("Keyword argument debug must be a bool.")
+        debug = kwargs["debug"]
     # Not initializing it causes some syntax warnings but better than initializing it
     change: dict[int, int]
     if "change" in kwargs:
@@ -118,8 +122,10 @@ def run(prog_path: str, **kwargs) -> Union[None, dict[str, Any]]:
         raise TypeError("Keyword argument table_format must be a str.")
     if "return_state" in kwargs and not isinstance(kwargs["return_state"], bool):
         raise TypeError("Keyword argument return_state must be a bool.")
-    if "non_blocking" in kwargs and not isinstance(kwargs["non_blocking"], bool):
-        raise TypeError("Keyword argument non_blocking must be a bool.")
+    if "non_blocking" in kwargs:
+        if not isinstance(kwargs["non_blocking"], bool):
+            raise TypeError("Keyword argument non_blocking must be a bool.")
+        debug = True
     if "no_print" in kwargs and not isinstance(kwargs["no_print"], bool):
         raise TypeError("Keyword argument no_print must be a bool.")
     if "bits" in kwargs and not isinstance(kwargs["bits"], int):
@@ -156,7 +162,7 @@ def run(prog_path: str, **kwargs) -> Union[None, dict[str, Any]]:
             )
     if "table_format" in kwargs:
         global_vars.table_format = kwargs["table_format"]
-    if kwargs.get("debug") or kwargs.get("non_blocking"):
+    if debug:
         if not kwargs.get("no_print"):
             print(f"Initial state of simulation of {prog_path}")
             helpers.print_RAM()
@@ -184,7 +190,6 @@ def run(prog_path: str, **kwargs) -> Union[None, dict[str, Any]]:
         if not kwargs.get("no_print"):
             helpers.print_RAM()
             helpers.print_info()
-            print("Program halted.")
 
     if kwargs.get("return_state"):
         return helpers.get_state()

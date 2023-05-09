@@ -36,6 +36,7 @@ extensions = [
     "sphinx_rtd_theme",
     # For parsing Markdown
     "m2r2",
+    "sphinx.ext.autosectionlabel",
 ]
 
 templates_path = ["_templates"]

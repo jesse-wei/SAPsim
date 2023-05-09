@@ -16,4 +16,3 @@ Reg A  1
 Reg B  3
 FlagC  1
 FlagZ  1
-Program halted.

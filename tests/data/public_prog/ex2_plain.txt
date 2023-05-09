@@ -15,4 +15,3 @@ Reg A  28
 Reg B  31
 FlagC   0
 FlagZ   0
-Program halted.

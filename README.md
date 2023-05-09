@@ -35,7 +35,29 @@ To run the SAP program, use `run()`. **Note**: There is a debug (step) mode, as 
 ```py
 >>> from SAPsim import run
 >>> run("ex1.csv")                  # Run ex1.csv at full speed (default)
-...
+┌──────┬────────┬───────────────┬───────┬───────┐
+│ PC   │   Addr │ Instruction   │   Dec │ Hex   │
+├──────┼────────┼───────────────┼───────┼───────┤
+│      │      0 │ LDA 14        │    30 │ 0x1e  │
+│      │      1 │ SUB 13        │    61 │ 0x3d  │
+│      │      2 │ JZ 6          │   134 │ 0x86  │
+│      │      3 │ LDI 0         │    80 │ 0x50  │
+│      │      4 │ STA 15        │    79 │ 0x4f  │
+│      │      5 │ HLT 0         │   240 │ 0xf0  │
+│      │      6 │ LDI 1         │    81 │ 0x51  │
+│      │      7 │ STA 15        │    79 │ 0x4f  │
+│ >    │      8 │ HLT 0         │   240 │ 0xf0  │
+│      │     13 │ NOP 3         │     3 │ 0x03  │
+│      │     14 │ NOP 3         │     3 │ 0x03  │
+│      │     15 │ NOP 1         │     1 │ 0x01  │
+└──────┴────────┴───────────────┴───────┴───────┘
+┌───────┬───┐
+│ PC    │ 8 │
+│ Reg A │ 1 │
+│ Reg B │ 3 │
+│ FlagC │ 1 │
+│ FlagZ │ 1 │
+└───────┴───┘
 >>> run("ex1.csv", debug=True)      # Run ex1.csv in debug (step) mode
 ...
 ```
@@ -50,11 +72,62 @@ template.csv successfully created.
 
 ## Settings
 
-Here's a list of [additional settings](https://SAPsim.readthedocs.io/en/latest/#settings).
+`change` lets you conveniently modify initial values in the SAP program without editing the CSV.
 
-`change` allows you to modify values in the SAP program without editing the CSV, which is convenient.
+```py
+>>> run("ex1.csv", change={14: 4, 13: 2})      # Change initial byte at address 14 to 4 and at 13 to 2
+┌──────┬────────┬───────────────┬───────┬───────┐
+│ PC   │   Addr │ Instruction   │   Dec │ Hex   │
+├──────┼────────┼───────────────┼───────┼───────┤
+│      │      0 │ LDA 14        │    30 │ 0x1e  │
+│      │      1 │ SUB 13        │    61 │ 0x3d  │
+│      │      2 │ JZ 6          │   134 │ 0x86  │
+│      │      3 │ LDI 0         │    80 │ 0x50  │
+│      │      4 │ STA 15        │    79 │ 0x4f  │
+│ >    │      5 │ HLT 0         │   240 │ 0xf0  │
+│      │      6 │ LDI 1         │    81 │ 0x51  │
+│      │      7 │ STA 15        │    79 │ 0x4f  │
+│      │      8 │ HLT 0         │   240 │ 0xf0  │
+│      │     13 │ NOP 2         │     2 │ 0x02  │
+│      │     14 │ NOP 4         │     4 │ 0x04  │
+│      │     15 │ NOP 0         │     0 │ 0x00  │
+└──────┴────────┴───────────────┴───────┴───────┘
+┌───────┬───┐
+│ PC    │ 5 │
+│ Reg A │ 0 │
+│ Reg B │ 2 │
+│ FlagC │ 1 │
+│ FlagZ │ 0 │
+└───────┴───┘
+```
 
-`table_format` allows you to customize the appearance of the printed tables.
+`table_format` lets you customize the appearance of the printed tables. [Options](https://github.com/astanin/python-tabulate#table-format)
+
+```py
+>>> run("ex1.csv", table_format="github")
+| PC   |   Addr | Instruction   |   Dec | Hex   |
+|------|--------|---------------|-------|-------|
+|      |      0 | LDA 14        |    30 | 0x1e  |
+|      |      1 | SUB 13        |    61 | 0x3d  |
+|      |      2 | JZ 6          |   134 | 0x86  |
+|      |      3 | LDI 0         |    80 | 0x50  |
+|      |      4 | STA 15        |    79 | 0x4f  |
+|      |      5 | HLT 0         |   240 | 0xf0  |
+|      |      6 | LDI 1         |    81 | 0x51  |
+|      |      7 | STA 15        |    79 | 0x4f  |
+| >    |      8 | HLT 0         |   240 | 0xf0  |
+|      |     13 | NOP 3         |     3 | 0x03  |
+|      |     14 | NOP 3         |     3 | 0x03  |
+|      |     15 | NOP 1         |     1 | 0x01  |
+|-------|---|
+| PC    | 8 |
+| Reg A | 1 |
+| Reg B | 3 |
+| FlagC | 1 |
+| FlagZ | 1 |
+```
+
+Here's a list of [additional settings](https://SAPsim.readthedocs.io/en/latest/#additional-settings).
 
 ## Rules
 
