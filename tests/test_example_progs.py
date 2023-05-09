@@ -1,24 +1,12 @@
 """Test example programs.
 This code should be the same (or mostly the same, in case it's updated) as the code that autogrades Lab 4.
 If you have any questions about RESERVED/RETURN VALUE, they can be answered by reading through this.
-If you don't know the test cases your program is failing, you can very easily write a function to check it yourself. It'd probably be exactly the same as what I wrote.
-"""
+If you don't know the test cases your program is failing, you can easily repurpose this code to find out."""
 
 __author__ = "Jesse Wei <jesse@cs.unc.edu>"
 
-from pathlib import Path
-from SAPsim.utils import global_vars
-from SAPsim.utils import parser
-from SAPsim.utils.execute import execute_full_speed
-from SAPsim.utils.helpers import setup_8bit
-
-
-def clone_dict(dict):
-    """Returns a deep clone of `dict`. Used to clone `RAM`."""
-    rv = {}
-    for key in dict:
-        rv[key] = dict[key]
-    return rv
+from typing import Union, Any
+from SAPsim import run_and_return_state
 
 
 def test_ex1():
@@ -26,29 +14,18 @@ def test_ex1():
     RESERVED:
         14: Input 0 to 255
     RETURN VALUE:
-        15: 1 if x == 3 else 0
+        15: 1 if X == 3 else 0
     """
-    setup_8bit()
-    parser.parse_csv(Path("tests/public_prog/ex1.csv"))
-    # Clone student's program
-    ram_copy = clone_dict(global_vars.RAM)
     for num in range(256):
-        setup_8bit()
-        global_vars.RAM = clone_dict(ram_copy)
-        # Overwrite RESERVED address with test input
-        global_vars.RAM[14] = num
-        # We've chosen not to overwrite RETURN VALUE address to a wrong value before execution, which we could have done to prevent hardcoding
-        # ex1.csv doesn't take advantage of this
-        # Is there a way to take advantage of this in your flags.csv program?
-        # global_vars.RAM[15] = 0x42
         try:
-            execute_full_speed()
+            state: dict[str, Any] = run_and_return_state(
+                "tests/public_prog/ex1.csv", change={14: num}
+            )
         except Exception:
-            # Note when an Exception occurs, the rest of the tests don't run. The break is for performance reasons.
+            # Note when an Exception occurs, the rest of the tests don't run.
             break
-        # The autograder has a tests_passed variable and adds 1 to it if the RETURN VALUE is correct
-        assert int(num == 3) == global_vars.RAM[15]
-
+        # Autograder has a tests_passed variable and adds 1 to it if the RETURN VALUE is correct.
+        assert int(num == 3) == state["RAM"][15]
     # score = tests_passed / total_tests
 
 
@@ -59,23 +36,16 @@ def test_ex2():
     RETURN VALUE:
         Register A: See ex2_rv() function
     """
-    setup_8bit()
-    parser.parse_csv(Path("tests/public_prog/ex2.csv"))
-    # Clone student's program
-    ram_copy = clone_dict(global_vars.RAM)
     for num in range(256):
-        setup_8bit()
-        global_vars.RAM = clone_dict(ram_copy)
-        # Overwrite RESERVED address with test input
-        global_vars.RAM[15] = num
         try:
-            execute_full_speed()
+            state: dict[str, Any] = run_and_return_state(
+                "tests/public_prog/ex2.csv", change={15: num}
+            )
         except Exception:
-            # Note when an Exception occurs, the rest of the tests don't run. The break is for performance reasons.
+            # Note when an Exception occurs, the rest of the tests don't run.
             break
-        # The autograder has a tests_passed variable and adds 1 to it if the RETURN VALUE is correct
-        assert ex2_rv(num) == global_vars.A
-
+        # The autograder has a tests_passed variable and adds 1 to it if the RETURN VALUE is correct.
+        assert ex2_rv(num) == state["A"]
     # score = tests_passed / total_tests
 
 

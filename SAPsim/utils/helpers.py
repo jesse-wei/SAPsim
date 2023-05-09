@@ -4,7 +4,7 @@ __author__ = "Jesse Wei <jesse@cs.unc.edu>"
 
 
 from tabulate import tabulate
-from typing import Any
+from typing import Any, Union
 import SAPsim.utils.global_vars as global_vars
 import SAPsim.utils.exceptions as exceptions
 
@@ -161,22 +161,14 @@ def clone_dict(dict):
     return rv
 
 
-def setup_4bit():
-    """Sets up the 4-bit environment and resets global variables to default values."""
-    global_vars.NUM_BITS_IN_REGISTERS = 4
-    reset_globals()
+def setup_state(bits: int = 8) -> None:
+    """Resets global variables to default values. Also, set ``global_vars.NUM_BITS_IN_REGISTERS`` to ``bits``.
 
-
-def setup_8bit():
-    """Sets up the 8-bit environment and resets global variables to default values."""
-    global_vars.NUM_BITS_IN_REGISTERS = 8
-    reset_globals()
-
-
-def setup_n_bit(n: int):
-    """Sets up the n-bit environment and resets global variables to default values."""
-    assert n > 1
-    global_vars.NUM_BITS_IN_REGISTERS = n
+    :param bits: Number of bits in registers, default 8
+    :type bits: int
+    :return: None"""
+    assert bits > 1
+    global_vars.NUM_BITS_IN_REGISTERS = bits
     reset_globals()
 
 

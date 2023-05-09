@@ -2,6 +2,7 @@
 
 __author__ = "Jesse Wei <jesse@cs.unc.edu>"
 
+import sys
 from pathlib import Path
 from typing import Any, Union
 import SAPsim.utils.global_vars as global_vars
@@ -13,7 +14,9 @@ import SAPsim.utils.parser as parser
 
 
 def execute_full_speed() -> None:
-    """Execute instructions in ``RAM`` at full speed until ``EXECUTING`` is ``False`` or ``PC > max addr``."""
+    """Execute instructions in ``RAM`` at full speed until ``EXECUTING`` is ``False`` or ``PC > max addr``.
+
+    :return: None"""
     max_addr: int = 0
     if global_vars.RAM.keys():
         max_addr = max(global_vars.RAM.keys())
@@ -34,7 +37,10 @@ def execute_full_speed() -> None:
 
 
 def execute_next() -> None:
-    """Execute a single instruction at the current ``PC`` value if ``EXECUTING``. If attempting to execute an empty address, ``PC += 1`` (i.e., doesn't skip to next filled address)."""
+    """Execute a single instruction at the current ``PC`` value if ``EXECUTING``.
+    If attempting to execute an empty address, ``PC += 1`` (i.e., doesn't skip to next filled address).
+
+    :return: None"""
     if global_vars.EXECUTING:
         if global_vars.RAM.keys() and global_vars.PC > max(global_vars.RAM.keys()):
             global_vars.EXECUTING = False
@@ -62,10 +68,9 @@ def run(prog_path: str, **kwargs) -> Union[None, dict[str, Any]]:
         * *debug* (``bool``) --
             * Whether to run in debug mode (True) or at full speed (False)
             * Default is full speed
-        * *change* (``str``) --
-            * Comma-separated list of hardcoded changes to RAM
-            * Format: <addr>:<base-10 value>,<addr>:<base-10 value>,...
-            * The value at each address will be overwritten to that base-10 value
+        * *change* (``dict[int, int]``) --
+            * dict[address, byte] of values to change in RAM
+            * The value at each address (0 to 15) will be overwritten to that byte
             * Useful for debugging programs (edit a value without changing the CSV)
             * Useful for autograding programs (overwrite a reserved instruction/data value)
         * *table_format* (``str``) --
@@ -76,6 +81,8 @@ def run(prog_path: str, **kwargs) -> Union[None, dict[str, Any]]:
             * *return_state* (``bool``) --
                 * If ``True``, then program state will be returned
                 * See ``utils.helpers.get_state()``
+                * Will probably cause type warnings since the return type is ``Union[None, dict[str, Any]]``
+                * To avoid type warnings, use ``run_and_return_state``
             * *non_blocking* (``bool``) --
                 * This is used to unit test debug mode of ``run()``, you likely don't have a need for this
                 * If ``True``, then ``run()`` won't block on input
@@ -87,6 +94,7 @@ def run(prog_path: str, **kwargs) -> Union[None, dict[str, Any]]:
             * *bits* (``int``) --
                 * Number of bits in unsigned registers
                 * Default value in ``global_vars`` is 8
+                * 8 is also the maximum value since everything in RAM should fit in a byte
 
     :return: ``None`` or program state if ``return_state``
     :rtype: ``Union[None, dict[str, Any]]``
@@ -95,8 +103,16 @@ def run(prog_path: str, **kwargs) -> Union[None, dict[str, Any]]:
         raise TypeError("Required parameter prog_path must be a str.")
     if "debug" in kwargs and not isinstance(kwargs["debug"], bool):
         raise TypeError("Keyword argument debug must be a bool.")
-    if "change" in kwargs and not isinstance(kwargs["change"], str):
-        raise TypeError("Keyword argument change must be a str.")
+    # Not initializing it causes some syntax warnings but better than initializing it
+    change: dict[int, int]
+    if "change" in kwargs:
+        change = kwargs["change"]
+        if not isinstance(change, dict):
+            raise TypeError("Keyword argument change must be a dict[int, int].")
+        if not all(isinstance(key, int) for key in change.keys()) or not all(
+            isinstance(value, int) for value in change.values()
+        ):
+            raise TypeError("Keyword argument change must be a dict[int, int].")
     if "table_format" in kwargs and not isinstance(kwargs["table_format"], str):
         raise TypeError("Keyword argument table_format must be a str.")
     if "return_state" in kwargs and not isinstance(kwargs["return_state"], bool):
@@ -111,37 +127,32 @@ def run(prog_path: str, **kwargs) -> Union[None, dict[str, Any]]:
     path: Path = Path(prog_path)
     if not path.suffix == ".csv":
         raise exceptions.FileNotCSV(path)
-    helpers.setup_8bit()
     parser.parse_csv(path)
     if "bits" in kwargs:
-        assert kwargs["bits"] > 1
+        assert kwargs["bits"] > 1 and kwargs["bits"] < 8
         global_vars.NUM_BITS_IN_REGISTERS = kwargs["bits"]
-        # Don't need to call setup_n_bit.
-        # All it does is change NUM_BITS_IN_REGISTERS and reset globals, which was already done
-        # by setup_8bit().
+        # Don't need to call setup.
+        # All it does is change NUM_BITS_IN_REGISTERS and reset globals, which was already done by parse_csv.
+    unmapped_addrs_changed: list[int] = []
     if "change" in kwargs:
-        changes = kwargs["change"].split(",")
-        for change in changes:
-            if change.count(":") != 1:
-                print(
-                    "Invalid syntax for change parameter, correct format is <addr>:<base-10 value>, <addr>:<base-10 value>, ..."
-                )
-                exit(1)
-            change = change.strip()
-            colon_position = change.find(":")
-            addr = int(change[:colon_position])
+        for addr in change:
             if addr not in global_vars.RAM:
-                print(
-                    f"You can apply a change only to an address that's already mapped (not skipped). Address {addr} is not mapped."
-                )
-                exit(1)
-            value = int(change[colon_position + 1 :])
-            if value < 0 or value > (2**global_vars.NUM_BITS_IN_REGISTERS - 1):
-                print(
-                    f"Invalid base-10 value for change: {value}. Negative or overflows registers."
-                )
-                exit(1)
-            global_vars.RAM[addr] = value
+                unmapped_addrs_changed.append(int(addr))
+            if addr < 0:
+                raise exceptions.ChangeAddressNegative(addr)
+            if addr > global_vars.MAX_PC:
+                raise exceptions.ChangeAddressGreaterThan15(addr)
+            if (
+                change[addr] < 0
+                or change[addr] > 2**global_vars.NUM_BITS_IN_REGISTERS - 1
+            ):
+                raise exceptions.ChangeValueInvalid(change[addr])
+            global_vars.RAM[addr] = change[addr]
+        if unmapped_addrs_changed:
+            print(
+                f"WARNING: You attempted to change the following address(es) not mapped in the CSV: {', '.join(list(map(str, unmapped_addrs_changed)))}.\nThis is likely unintentional, but they are now mapped, and the program will continue.",
+                file=sys.stderr,
+            )
     if "table_format" in kwargs:
         global_vars.table_format = kwargs["table_format"]
     if kwargs.get("debug") or kwargs.get("non_blocking"):
@@ -176,3 +187,27 @@ def run(prog_path: str, **kwargs) -> Union[None, dict[str, Any]]:
 
     if kwargs.get("return_state"):
         return helpers.get_state()
+
+
+@is_documented_by(
+    run,
+    2,
+    "",
+    r"""
+    :return: ``dict`` containing program state (see ``helpers.get_state``)
+    :rtype: ``dict[str, Any]``
+    """,
+)
+def run_and_return_state(prog_path: str, **kwargs: Any) -> dict[str, Any]:
+    if (
+        "return_state" in kwargs
+        and isinstance(kwargs["return_state"], bool)
+        and not kwargs["return_state"]
+    ):
+        print(
+            "You called run_and_return_state but set return_state to False????",
+            file=sys.stderr,
+        )
+        exit(1)
+    run(prog_path, **kwargs)
+    return helpers.get_state()

@@ -1,4 +1,6 @@
 scripts/
+tests/stdout
+tests/stderr
 # Always keep this gitignored in public repo. They're not stored locally, but just in case...
 tests/prog
 tests/prog/

@@ -7,10 +7,19 @@ from pathlib import Path
 from typing import Union
 import SAPsim.utils.exceptions as exceptions
 import SAPsim.utils.global_vars as global_vars
+from SAPsim.utils.helpers import setup_state
 
 
 def parse_csv(file_path: Union[Path, str]) -> None:
     """Takes a ``.csv`` file path in SAPsim ``template.csv`` format and parses it into ``RAM``.
+
+    Calls ``setup_state()`` if ``file_path`` is valid.
+
+    If an address is skipped (not in the ``.csv`` file), it is not mapped in ``RAM``.
+    If an address is mapped but First Hexit and Second Hexit are blank, a ``NOP 0`` (0x00) is inserted.
+
+    The reasoning here is that if an addr is skipped completely in the CSV, it shouldn't show up in RAM.
+    If an addr is mapped but First Hexit and Second Hexit are blank, it should show up in RAM (as ``NOP 0``).
 
     :param file_path: The path to the ``.csv`` file to parse.
     :type file_path: Union[Path, str]
@@ -28,7 +37,8 @@ def parse_csv(file_path: Union[Path, str]) -> None:
     :raises InvalidSecondHexit: If a row has an invalid Second Hexit.
     :raises MoreThan16MappedAddresses: If there are more than 16 mapped addresses.
     :return: None"""
-    prog = DictReader(open(file_path))
+    prog = DictReader(open(file_path, "r"))
+    setup_state()
     num_rows = 1
     addresses = set()
 
@@ -52,7 +62,8 @@ def parse_csv(file_path: Union[Path, str]) -> None:
             raise exceptions.DuplicateAddress(address)
         addresses.add(address)
 
-        # If there's an Address and no First Hexit and no Second Hexit in a row, insert a NOP 0 and continue parsing
+        # If there's an Address and no First Hexit and no Second Hexit in a row
+        # insert a NOP 0 at that address and continue parsing
         if not row["First Hexit"] and not row["Second Hexit"]:
             global_vars.RAM[address] = 0x00
             continue

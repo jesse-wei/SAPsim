@@ -28,11 +28,11 @@ However, it makes more sense in the simulation to set it to False by default."""
 # This affects how FLAG_C, FLAG_Z, and result register work
 NUM_BITS_IN_REGISTERS: int = 8
 """This variable is the #bits in registers and affects how ``add``, ``sub``, ``ldi``, and ``lda`` work.
-Default value is 8."""
+Default value is 8. Max value is 8 since everything in RAM needs to fit in a byte."""
 EXECUTING: bool = True
 """Is the program executing? Set to ``False`` by ``hlt()``"""
-MAX_PC: int = 16
-"""Max PC value."""
+MAX_PC: int = 15
+"""Max PC value. 2**4-1"""
 
 MNEMONIC_TO_OPCODE: bidict = bidict(
     {

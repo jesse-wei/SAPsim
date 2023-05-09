@@ -1,3 +1,7 @@
+"""Simulation of SAP (Simple As Possible) computer programs from COMP311 (Computer Organization) @ UNC.
+
+Defines ``run()`` and ``create_template()``."""
+
 __author__ = "Jesse Wei <jesse@cs.unc.edu>"
 
 from typing import Union, Any
@@ -10,6 +14,14 @@ import SAPsim.utils.execute as execute
 @is_documented_by(execute.run, 0, "", execute.run.__doc__)
 def run(prog_path: str, **kwargs) -> Union[None, dict[str, Any]]:
     return execute.run(prog_path, **kwargs)
+
+
+# Weird glitch, passing in the function doesn't actually get its docstring? Just append then
+@is_documented_by(
+    execute.run_and_return_state, 0, "", execute.run_and_return_state.__doc__
+)
+def run_and_return_state(prog_path: str, **kwargs) -> dict[str, Any]:
+    return execute.run_and_return_state(prog_path, **kwargs)
 
 
 def create_template(path: str = "template.csv") -> None:
@@ -27,6 +39,6 @@ def create_template(path: str = "template.csv") -> None:
     with open(path, "w") as f:
         writer = csv.writer(f)
         writer.writerow(header)
-        for i in range(MAX_PC):
+        for i in range(MAX_PC + 1):
             writer.writerow([f"{i}", "", "", ""])
     print(f"{path} successfully created.")

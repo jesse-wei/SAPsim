@@ -10,11 +10,11 @@ from SAPsim.utils.exceptions import (
     ARegisterNotEnoughBits,
     LoadFromUnmappedAddress,
 )
-from SAPsim.utils.helpers import setup_4bit
+from SAPsim.utils.helpers import setup_state
 
 
 def test_nop():
-    setup_4bit()
+    setup_state(4)
     global_vars.RAM[0] = 0x00
     global_vars.RAM[1] = 0x01
     global_vars.RAM[2] = 0x02
@@ -28,7 +28,7 @@ def test_nop():
 
 
 def test_lda():
-    setup_4bit()
+    setup_state(4)
     global_vars.RAM[0] = 0x1F
     global_vars.RAM[1] = 0x1E
     global_vars.RAM[14] = 0x3
@@ -40,7 +40,7 @@ def test_lda():
 
 
 def test_lda_raises_ARegisterOverflow():
-    setup_4bit()
+    setup_state(4)
     global_vars.RAM[0] = 0x1F
     global_vars.RAM[15] = 0x10
     try:
@@ -51,7 +51,7 @@ def test_lda_raises_ARegisterOverflow():
 
 
 def test_lda_from_unmapped_addr():
-    setup_4bit()
+    setup_state(4)
     global_vars.RAM[0] = 0x1F
     try:
         execute_next()
@@ -61,7 +61,7 @@ def test_lda_from_unmapped_addr():
 
 
 def test_add():
-    setup_4bit()
+    setup_state(4)
     global_vars.RAM[0] = 0x2F
     global_vars.RAM[1] = 0x2E
     global_vars.RAM[14] = 0xF
@@ -82,7 +82,7 @@ def test_add():
 
 
 def test_add_from_unmapped_addr():
-    setup_4bit()
+    setup_state(4)
     global_vars.RAM[0] = 0x2F
     try:
         execute_next()
@@ -92,7 +92,7 @@ def test_add_from_unmapped_addr():
 
 
 def test_sub():
-    setup_4bit()
+    setup_state(4)
     global_vars.RAM[0] = 0x3F
     global_vars.RAM[1] = 0x3E
     global_vars.RAM[14] = 0x1
@@ -106,7 +106,7 @@ def test_sub():
 
 
 def test_sta_to_unmapped_addr():
-    setup_4bit()
+    setup_state(4)
     global_vars.RAM[0] = 0x2F
     global_vars.RAM[1] = 0x4E
     global_vars.RAM[15] = 0xF
@@ -123,7 +123,7 @@ def test_sta_to_unmapped_addr():
 
 
 def test_sta_overwrites_addr():
-    setup_4bit()
+    setup_state(4)
     global_vars.RAM[0] = 0x2E
     global_vars.RAM[1] = 0x4F
     global_vars.RAM[14] = 2
@@ -137,14 +137,14 @@ def test_sta_overwrites_addr():
 
 
 def test_ldi():
-    setup_4bit()
+    setup_state(4)
     global_vars.RAM[0] = 0x59
     execute_next()
     check_state_all({0: 0x59}, 1, 9, 0, False, False, True)
 
 
 def test_ldi_overwrites_A():
-    setup_4bit()
+    setup_state(4)
     global_vars.A = 15
     global_vars.RAM[0] = 0x55
     execute_next()
@@ -152,7 +152,7 @@ def test_ldi_overwrites_A():
 
 
 def test_ldi_doesnt_modify_flags():
-    setup_4bit()
+    setup_state(4)
     global_vars.RAM[0] = 0x5A
     global_vars.FLAG_C = True
     global_vars.FLAG_Z = True
@@ -161,14 +161,14 @@ def test_ldi_doesnt_modify_flags():
 
 
 def test_jmp():
-    setup_4bit()
+    setup_state(4)
     global_vars.RAM[0] = 0x67
     execute_next()
     check_state_all({0: 0x67}, 7, 0, 0, False, False, True)
 
 
 def test_jmp_executes_instruction():
-    setup_4bit()
+    setup_state(4)
     global_vars.RAM[0] = 0x64
     global_vars.RAM[4] = 0x55
     global_vars.RAM[5] = 0x47
@@ -188,7 +188,7 @@ def test_jmp_executes_instruction():
 
 
 def test_hlt():
-    setup_4bit()
+    setup_state(4)
     global_vars.RAM[0] = 0xFF
     global_vars.RAM[15] = 0x10
     execute_next()

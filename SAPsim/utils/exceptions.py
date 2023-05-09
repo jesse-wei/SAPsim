@@ -171,6 +171,23 @@ class SecondHexitGreaterThan15(Exception):
         super().__init__(self.message)
 
 
+class ChangeAddressNegative(Exception):
+    def __init__(self, addr: int):
+        self.message = f"Changed address(es) can't be negative. You provided {addr}."
+        super().__init__(self.message)
+
+
+class ChangeAddressGreaterThan15(Exception):
+    def __init__(self, addr: int):
+        self.message = f"Changed address(es) can't be greater than {global_vars.MAX_PC}. You provided {addr}."
+        super().__init__(self.message)
+
+
+class ChangeValueInvalid(Exception):
+    def __init__(self, value: int):
+        self.message = f"Changed value must fit in NUM_BITS_IN_REGISTERS (0 to {2**global_vars.NUM_BITS_IN_REGISTERS-1}). You provided {value}."
+
+
 class InvalidFirstHexit(Exception):
     def __init__(self, address):
         self.message = f"The First Hexit given at address {address} is invalid. See SAP instruction set for list of supported mnemonics. The First Hexit field can also be a hexit 0 to f if representing data."
