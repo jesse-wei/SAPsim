@@ -92,7 +92,8 @@ def run(prog_path: str, **kwargs) -> Union[None, dict[str, Any]]:
                 * This is used to save computation time during unit testing
                 * If ``True``, then ``print()`` won't be called, except for error messages
             * *bits* (``int``) --
-                * Number of bits in unsigned registers
+                * You probably don't have a need for this
+                * Number of bits in registers
                 * Default value in ``global_vars`` is 8
                 * 8 is also the maximum value since everything in RAM should fit in a byte
 

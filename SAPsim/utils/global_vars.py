@@ -6,7 +6,7 @@ __author__ = "Jesse Wei <jesse@cs.unc.edu>"
 
 from bidict import bidict
 
-RAM = {}
+RAM: dict[int, int] = {}
 """``dict[int, int]`` mapping ``PC``:``byte``, where ``byte`` can be instruction or data (indistinguishable, mostly)"""
 PC: int = 0
 """Program counter that indexes into ``RAM``, default value 0"""
@@ -50,12 +50,12 @@ MNEMONIC_TO_OPCODE: bidict = bidict(
     }
 )
 
-"""Bidirectional dictionary mapping ``str mnemonic : int opcode``.
+"""Bidirectional mapping ``str mnemonic : int opcode``.
 
 Use ``MNEMONIC_TO_OPCODE.inverse[opcode]`` to get mnemonic from opcode.
 
 All mnemonics in this dict are in all caps."""
 
 table_format: str = "simple_outline"
-"""Tabulate ``table_fmt`` arg to customize pretty-printing. Defaults to ``simple_outline``, see all options: https://github.com/astanin/python-tabulate#table-
-                        format"""
+"""Tabulate ``table_fmt`` kwarg to customize pretty-printing. Defaults to ``simple_outline``,
+see all options: https://github.com/astanin/python-tabulate#table-format"""

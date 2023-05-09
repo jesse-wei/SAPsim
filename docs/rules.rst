@@ -15,10 +15,10 @@ Specifications
 ##############
 
 - All SAP programs fit in 16 addresses (0 to 15) because the program counter (``PC``) is 4-bit. [#technicality_pc]_
-- Initial values are ``{PC: 0, Register A: 0, Register B: 0, FlagC: 0, FlagZ: 0, Executing: 1}``. [#technicality]_
-- ``A`` and ``B`` registers are unsigned and 8-bit by default.
+- Initial state of a SAP program is ``{PC: 0, Register A: 0, Register B: 0, FlagC: 0, FlagZ: 0, Executing: 1}``. [#technicality]_ [#get_state]_
+- ``A`` and ``B`` registers are 8-bit by default. [#bits_in_registers]_ The bit patterns are always interpreted as unsigned integers by SAPsim.
 
-  - With 8-bit unsigned registers, what would 0-1 be? What about 255+1? See this footnote for the answer. [#answer]_
+  - If the registers are interpreted as unsigned, what would 0-1 be? What about 255+1? See this footnote for the answer. [#answer]_
 
 General
 #######
@@ -52,7 +52,7 @@ In the First Hexit column, these are allowed
 * Hexit ``0`` to ``F``
 * Double digit base-10 integer ``10`` to ``15`` representing a hexit
 
-    * However, this shouldn't be necessary
+  * However, this shouldn't be necessary
 
 In the Second Hexit column, these are allowed
 
@@ -67,7 +67,11 @@ In the Second Hexit column, these are allowed
 
 .. [#technicality] In the ALU lab, the initial value of FlagZ was 1, but it's initialized to 0 here.
 
-.. [#answer] With 8-bit unsigned registers, 0-1=255, and 255+1=0. In both cases, the numbers "wrap around". If this doesn't quite click, play with the ALU with **4-bit** registers that you implemented! It follows all the same rules; just think of its registers as unsigned for these examples.
+.. [#get_state] `get_state() <SAPsim.utils.html#SAPsim.utils.helpers.get_state>`_
+
+.. [#bits_in_registers] `run() <SAPsim.html#SAPsim.run>`_ allows you to configure the number of bits in registers. You should never need to change this value, however. During autograding, ``NUM_BITS_IN_REGISTERS`` is always 8.
+
+.. [#answer] If interpreting 8-bit register values as unsigned integers, 0-1=255, and 255+1=0. In both cases, the numbers "wrap around". If this doesn't quite click, play with the ALU with **4-bit** registers that you implemented! It follows all the same rules; just interpret the registers' bit patterns as unsigned integers for these examples.
 
 .. [#bytes] In SAPsim, every value in RAM is a byte. See the `definition of RAM <SAPsim.utils.html#SAPsim.utils.global_vars.RAM>`_. Therefore, SAPsim cannot tell if a row in your program is "instruction" or "data." At runtime, it interprets the byte based on context (i.e., are we executing that byte or reading the value of that byte?). The only exception to this rule occurs when the byte has an invalid opcode (byte ranging from ``0x90`` to ``0xDF``) so can't be an instruction.
 
