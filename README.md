@@ -1,5 +1,7 @@
 [![tests GitHub action](https://github.com/jesse-wei/SAPsim/actions/workflows/tests.yml/badge.svg)](https://github.com/jesse-wei/SAPsim/actions/workflows/tests.yml)
+[![codecov](https://codecov.io/github/jesse-wei/SAPsim/branch/main/graph/badge.svg?token=RS7QI9QVKU)](https://codecov.io/github/jesse-wei/SAPsim)
 [![documentation badge](https://readthedocs.org/projects/sapsim/badge/?version=latest)](https://SAPsim.readthedocs.io/en/latest/)
+[![PyPI version](https://badge.fury.io/py/SAPsim.svg)](https://pypi.org/project/SAPsim/)
 
 # SAPsim
 
