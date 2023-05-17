@@ -101,7 +101,7 @@ template.csv successfully created.
 └───────┴───┘
 ```
 
-`table_format` lets you customize the appearance of the printed tables. [Options](https://github.com/astanin/python-tabulate#table-format)
+`table_format` lets you customize the appearance of the printed tables. [Options](https://github.com/astanin/python-tabulate#table-format).
 
 ```py
 >>> run("ex1.csv", table_format="github")

@@ -1,3 +1,5 @@
+htmlcov/
+.coverage
 scripts/
 tests/stdout
 tests/stderr
