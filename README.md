@@ -1,9 +1,4 @@
-[![tests GitHub action](https://github.com/jesse-wei/SAPsim/actions/workflows/tests.yml/badge.svg)](https://github.com/jesse-wei/SAPsim/actions/workflows/tests.yml)
-[![codecov](https://codecov.io/github/jesse-wei/SAPsim/branch/main/graph/badge.svg?token=RS7QI9QVKU)](https://codecov.io/github/jesse-wei/SAPsim)
-[![documentation badge](https://readthedocs.org/projects/sapsim/badge/?version=latest)](https://SAPsim.readthedocs.io/en/latest/)
-[![PyPI version](https://badge.fury.io/py/SAPsim.svg)](https://pypi.org/project/SAPsim/)
-
-# SAPsim
+# SAPsim [![Python 3.9+ badge](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/) [![PyPI version badge](https://badge.fury.io/py/SAPsim.svg)](https://pypi.org/project/SAPsim/) [![tests GitHub action badge](https://github.com/jesse-wei/SAPsim/actions/workflows/tests.yml/badge.svg)](https://github.com/jesse-wei/SAPsim/actions/workflows/tests.yml) [![codecov badge](https://codecov.io/github/jesse-wei/SAPsim/branch/main/graph/badge.svg?token=RS7QI9QVKU)](https://codecov.io/github/jesse-wei/SAPsim) [![documentation badge](https://readthedocs.org/projects/sapsim/badge/?version=latest)](https://SAPsim.readthedocs.io/en/latest/)
 
 Simulation of SAP (Simple-As-Possible computer) programs from COMP311 (Computer Organization) @ [UNC](https://unc.edu).
 
