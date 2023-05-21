@@ -1,4 +1,6 @@
-# SAPsim [![Python 3.9+ badge](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/) [![PyPI version badge](https://badge.fury.io/py/SAPsim.svg)](https://pypi.org/project/SAPsim/) [![tests GitHub action badge](https://github.com/jesse-wei/SAPsim/actions/workflows/tests.yml/badge.svg)](https://github.com/jesse-wei/SAPsim/actions/workflows/tests.yml) [![codecov badge](https://codecov.io/github/jesse-wei/SAPsim/branch/main/graph/badge.svg?token=RS7QI9QVKU)](https://codecov.io/github/jesse-wei/SAPsim) [![documentation badge](https://readthedocs.org/projects/sapsim/badge/?version=latest)](https://SAPsim.readthedocs.io/en/latest/)
+[![Python 3.9+ badge](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/) [![PyPI version badge](https://badge.fury.io/py/SAPsim.svg)](https://pypi.org/project/SAPsim/) [![tests GitHub action badge](https://github.com/jesse-wei/SAPsim/actions/workflows/tests.yml/badge.svg)](https://github.com/jesse-wei/SAPsim/actions/workflows/tests.yml) [![codecov badge](https://codecov.io/github/jesse-wei/SAPsim/branch/main/graph/badge.svg?token=RS7QI9QVKU)](https://codecov.io/github/jesse-wei/SAPsim) [![documentation badge](https://readthedocs.org/projects/sapsim/badge/?version=latest)](https://SAPsim.readthedocs.io/en/latest/)
+
+# SAPsim
 
 Simulation of SAP (Simple-As-Possible computer) programs from COMP311 (Computer Organization) @ [UNC](https://unc.edu).
 
@@ -27,7 +29,7 @@ Write a SAP program in the CSV file format shown below (templates are provided i
 
 You may edit the `.csv` file with any program (Microsoft Excel, Google Sheets, etc.).
 
-To run the SAP program, use `run()`. **Note**: There is a debug (step) mode, as shown below.
+To run the SAP program, open a Python terminal and use `run()`. **Note**: There is a debug (step) mode, as shown below.
 
 ```py
 >>> from SAPsim import run
@@ -56,10 +58,13 @@ To run the SAP program, use `run()`. **Note**: There is a debug (step) mode, as 
 │ FlagZ │ 1 │
 └───────┴───┘
 >>> run("ex1.csv", debug=True)      # Run ex1.csv in debug (step) mode
+Initial state of simulation of tests/public_prog/ex1.csv
+...
+Debug mode: press Enter to execute next instruction ( > ).
 ...
 ```
 
-If you want a blank template, use `create_template()`.
+For a blank template, use `create_template()`.
 
 ```py
 >>> from SAPsim import create_template
