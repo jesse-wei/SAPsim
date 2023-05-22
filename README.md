@@ -129,7 +129,7 @@ template.csv successfully created.
 | FlagZ | 1 |
 ```
 
-Here's a list of [additional settings](https://SAPsim.readthedocs.io/en/latest/#additional-settings).
+Additional settings (that you probably won't need) are described in the [documentation](https://sapsim.readthedocs.io/en/latest/settings.html).
 
 ## Rules
 
