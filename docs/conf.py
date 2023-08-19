@@ -34,9 +34,8 @@ extensions = [
     "sphinx.ext.viewcode",
     "sphinx.ext.autodoc",
     "sphinx_rtd_theme",
-    # For parsing Markdown
-    "m2r2",
     "sphinx.ext.autosectionlabel",
+    "myst_parser"
 ]
 
 templates_path = ["_templates"]
@@ -47,7 +46,6 @@ source_suffix = [".rst", ".md", ".markdown"]
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
-# Good themes: sphinx_rtd_theme (has ads), python_docs_theme, alabaster
 html_theme = "sphinx_rtd_theme"
 
 # Source: https://stackoverflow.com/questions/59215996/how-to-add-a-logo-to-my-readthedocs-logo-rendering-at-0px-wide

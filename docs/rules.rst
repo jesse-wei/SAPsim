@@ -15,7 +15,7 @@ Specifications
 ##############
 
 - All SAP programs fit in 16 addresses (0 to 15) because the program counter (``PC``) is 4-bit. [#technicality_pc]_
-- Initial state of a SAP program is ``{PC: 0, Register A: 0, Register B: 0, FlagC: 0, FlagZ: 0, Executing: 1}``. [#technicality]_ [#get_state]_
+- The initial state of a SAP program is ``{PC: 0, Register A: 0, Register B: 0, FlagC: 0, FlagZ: 0, Executing: 1}``. [#technicality]_ [#get_state]_
 - ``A`` and ``B`` registers are 8-bit by default. [#bits_in_registers]_ The bit patterns are always interpreted as unsigned integers by SAPsim.
 
   - If the registers are interpreted as unsigned, what would 0-1 be? What about 255+1? See this footnote for the answer. [#answer]_
@@ -27,7 +27,7 @@ General
 
   - An instruction's First Hexit is its 2 or 3 letter Mnemonic. An instruction's Second Hexit is its Arg.
 
-    - For an instruction, the Arg can be represented in base-10 or base-16.
+    - An instruction's Arg can be represented in base-10 or base-16.
     - For example, ``JC 15`` could also be written as ``JC F``.
 
   - All data must fit in a byte.
@@ -51,8 +51,6 @@ In the First Hexit column, these are allowed
 * Two or three letter Mnemonic [#interpret]_
 * Hexit ``0`` to ``F``
 * Double digit base-10 integer ``10`` to ``15`` representing a hexit
-
-  * However, this shouldn't be necessary
 
 In the Second Hexit column, these are allowed
 

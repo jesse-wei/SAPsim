@@ -1,11 +1,11 @@
 """Test example programs.
-This code should be the same (or mostly the same, in case it's updated) as the code that autogrades Lab 4.
+This code is pretty much the same as the code that autogrades Lab 4.
 If you have any questions about RESERVED/RETURN VALUE, they can be answered by reading through this.
-If you don't know the test cases your program is failing, you can easily repurpose this code to find out."""
+If you don't know the test cases your program is failing, you could easily repurpose this code to find out."""
 
 __author__ = "Jesse Wei <jesse@cs.unc.edu>"
 
-from typing import Union, Any
+from typing import Any
 from SAPsim import run_and_return_state
 
 
@@ -51,7 +51,7 @@ def test_ex2():
 
 def ex2_rv(X):
     """Helper function for testing ex2.csv. Just the example pseudocode to be replicated.
-    Can make it not use a loop and instead use an if < 16 and then a mod operation but I don't have time for that.
+    Could make it not use a loop and instead use an if < 16 and then a mod operation but I don't have time for that.
     """
     while X >= 31:
         X = X - 3

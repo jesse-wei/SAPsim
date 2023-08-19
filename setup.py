@@ -3,15 +3,14 @@ try:
 except ImportError:
     from distutils.core import setup
 
-# Don't need to install pathlib because pathlib is in the standard library in 3.4+
 install_requires: list[str] = [
     "setuptools",
     "tabulate",
     "bidict",
 ]
-"""All required (i.e., for functionality) dependencies that are installed when running `pip install SAPsim`.
+"""All required functional dependencies that are installed when running `pip install SAPsim`.
 
-Non-functional (e.g., formatting, documentation) dependencies listed in requirements.txt."""
+Non-functional (e.g., formatting, documentation) dependencies are listed in requirements.txt."""
 
 setup(
     name="SAPsim",

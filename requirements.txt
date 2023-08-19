@@ -5,7 +5,7 @@ sphinx
 sphinx_rtd_theme
 alabaster
 python-docs-theme
-m2r2
+myst_parser
 black
 pre-commit
 build

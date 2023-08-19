@@ -97,7 +97,7 @@ def test_create_template() -> None:
 
 def write_run_stdout_stderr(prog_path: str, **kwargs) -> Union[None, dict[str, Any]]:
     """Write the ``stdout`` and ``stderr`` outputs of ``run(prog_path, **kwargs)`` to
-    ``STDOUT_FILE`` and ``STDERR_FILE``, respectively..
+    ``STDOUT_FILE`` and ``STDERR_FILE``, respectively.
 
     :param prog_path: Path to program to run
     :type prog_path: str
@@ -123,7 +123,6 @@ def file_match(file1: str, file2: str) -> bool:
     :type file2: str
     :return: True if identical, False otherwise
     :rtype: bool"""
-
     command: str = "diff -sbBd " + file1 + " " + file2
     proc = subprocess.run(command, capture_output=True, shell=True)
     return "identical" in proc.stdout.decode("utf-8")
