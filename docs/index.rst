@@ -6,7 +6,8 @@
    This page is just the README from `GitHub <https://github.com/jesse-wei/SAPsim>`_.
    For content unique to this site, see the sidebar.
 
-.. mdinclude:: ../README.md
+.. include:: ../README.md
+   :parser: myst_parser.sphinx_
 
 .. toctree::
    :maxdepth: 2

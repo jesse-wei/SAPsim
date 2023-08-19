@@ -14,11 +14,9 @@ Simulation of SAP (Simple-As-Possible computer) programs from COMP311 (Computer 
 
 Your Python version needs to be 3.9+. Check with `python --version`.
 
-If `python` doesn't work, try `python3`. If `pip` doesn't work, try `pip3`.
-
 ## Usage
 
-Write a SAP program in the CSV file format shown below (templates are provided in COMP311's SAP assignment).
+Write a SAP program in the CSV file format shown below. Templates are provided in COMP311's SAP programming assignment. Some commented example programs are in [public_prog/](https://github.com/jesse-wei/SAPsim/tree/main/tests/public_prog).
 
 <p align="center">
     <img src="https://raw.githubusercontent.com/jesse-wei/SAPsim/main/docs/_static/ex1.jpg" alt="Screenshot of ex1.csv in Excel">
@@ -29,7 +27,7 @@ Write a SAP program in the CSV file format shown below (templates are provided i
 
 You may edit the `.csv` file with any program (Microsoft Excel, Google Sheets, etc.).
 
-To run the SAP program, open a Python terminal and use `run()`. **Note**: There is a debug (step) mode, as shown below.
+To run the SAP program, open a Python terminal and use `SAPsim.run()`. **Note**: There is a debug (step) mode that runs one instruction at a time, as shown below. The default behavior is to run at full speed.
 
 ```py
 >>> from SAPsim import run
@@ -64,17 +62,9 @@ Debug mode: press Enter to execute next instruction ( > ).
 ...
 ```
 
-For a blank template, use `create_template()`.
-
-```py
->>> from SAPsim import create_template
->>> create_template()
-template.csv successfully created.
-```
-
 ## Settings
 
-`change` lets you conveniently modify initial values in the SAP program without editing the CSV.
+The `change` parameter lets you conveniently modify values in the SAP program without editing the CSV.
 
 ```py
 >>> run("ex1.csv", change={14: 4, 13: 2})      # Change initial byte at address 14 to 4 and at 13 to 2
@@ -140,6 +130,8 @@ It's easy to just mimic the [example programs](https://github.com/jesse-wei/SAPs
 <p align="center">
     <img src="https://raw.githubusercontent.com/jesse-wei/SAPsim/main/docs/_static/sap_instruction_set.jpg" alt="SAP instruction set">
 </p>
+
+The COMP 311 slides explain each instruction in detail.
 
 ## Documentation
 

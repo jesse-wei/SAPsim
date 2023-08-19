@@ -1,10 +1,8 @@
 # Example SAP programs
 
-`ex1.csv` and `ex2.csv` are not graded. They're complete example programs with comments that implement the pseudocode here.
+`ex1.csv` and `ex2.csv` are commented example programs that implement the pseudocode below.
 
 You can, of course, run them with any input (0 to 255) by modifying what's at the address RESERVED for input.
-
-Pay attention to the comments about branching after `JC` or `JZ` in the SAP programs. Read [How to evaluate flags in a SAP program](../README.md#how-to-evaluate-flags-in-a-sap-program) if you don't yet understand the rules for flag setting.
 
 ## [ex1](ex1.csv)
 

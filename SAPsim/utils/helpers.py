@@ -4,7 +4,7 @@ __author__ = "Jesse Wei <jesse@cs.unc.edu>"
 
 
 from tabulate import tabulate
-from typing import Any, Union
+from typing import Any
 import SAPsim.utils.global_vars as global_vars
 import SAPsim.utils.exceptions as exceptions
 

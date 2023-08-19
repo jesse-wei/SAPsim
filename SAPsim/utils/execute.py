@@ -93,7 +93,7 @@ def run(prog_path: str, **kwargs) -> Union[None, dict[str, Any]]:
                 * If ``True``, then ``print_RAM()`` and ``print_info()`` won't be called
                 * In debug mode, "Program halted." will still be printed
             * *bits* (``int``) --
-                * You probably don't have a need for this
+                * You should not modify this
                 * Number of bits in registers
                 * Default value in ``global_vars`` is 8
                 * 8 is also the maximum value since everything in RAM should fit in a byte

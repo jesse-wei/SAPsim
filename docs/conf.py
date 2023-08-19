@@ -4,7 +4,7 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
 
 #########################################
-# THIS IS IMPORTANT!
+# THIS IS IMPORTANT! probably...
 import os
 import sys
 
@@ -35,7 +35,7 @@ extensions = [
     "sphinx.ext.autodoc",
     "sphinx_rtd_theme",
     "sphinx.ext.autosectionlabel",
-    "myst_parser"
+    "myst_parser",
 ]
 
 templates_path = ["_templates"]
