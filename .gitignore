@@ -24,3 +24,4 @@ sim.spec
 docs/_build
 scripts/
 SAPsim.egg-info
+build/

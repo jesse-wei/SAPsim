@@ -1,17 +1,14 @@
 .. role:: raw-html(raw)
     :format: html
 
-.. note::
+SAPsim
+======
 
-   This page is just the README from `GitHub <https://github.com/jesse-wei/SAPsim>`_.
-   For content unique to this site, see the sidebar.
-
-.. include:: ../README.md
-   :parser: myst_parser.sphinx_
+Project information and installation instructions are in the `GitHub README <https://github.com/jesse-wei/SAPsim>`_.
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+   :maxdepth: 1
+   :caption: Contents
 
    rules
    settings

@@ -2,7 +2,7 @@
 
 ```{topic} Overview
 
-These are the rules that SAPsim programs must follow.
+These are the rules for SAPsim programs.
 ```
 
 ```{contents}

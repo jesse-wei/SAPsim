@@ -54,6 +54,7 @@ html_favicon = "sap.ico"
 html_logo = "_static/sap.jpg"
 
 # Prevents __init__ from being ignored
+# Use this, for example, when you want to document custom Exception __init__ docstrings
 # Source: https://stackoverflow.com/questions/5599254/how-to-use-sphinxs-autodoc-to-document-a-classs-init-self-method
 # def skip(app, what, name, obj, would_skip, options):
 #     if name == "__init__":
