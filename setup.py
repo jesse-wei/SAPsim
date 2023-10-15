@@ -15,7 +15,7 @@ Non-functional (e.g., testing, formatting, documentation) dependencies are liste
 setup(
     name="SAPsim",
     # Check https://pypi.org/project/SAPsim/ for latest version number
-    version="1.1.0",
+    version="1.1.1",
     description="Simulation of SAP (Simple As Possible) computer programs from COMP 311 (Computer Organization) @ UNC.",
     author="Jesse Wei",
     author_email="jesse@cs.unc.edu",
