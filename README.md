@@ -12,24 +12,28 @@ Simulation of SAP (Simple-As-Possible computer) programs from COMP 311 (Computer
 
 `pip install SAPsim`
 
-Python 3.9+ is required. If your `pip` command doesn't work, use `pip3` (and consider aliasing `pip` to `pip3`).
+Python 3.9+ is required. If your `pip` command doesn't work, use `pip3`[^alias].
+
+[^alias]: Consider aliasing `pip` to `pip3`.
 
 ## Usage
 
-Write a SAP program in a CSV file in the format shown below. Two commented example programs are in [public_prog/](https://github.com/jesse-wei/SAPsim/tree/main/tests/public_prog), and an empty template is in [template.csv](template.csv).
+Write a SAP program in a CSV file using the format shown below.
 
 <p align="center">
-    <img src="https://raw.githubusercontent.com/jesse-wei/SAPsim/main/docs/_static/ex1.jpg" alt="Screenshot of ex1.csv in Excel">
+    <img src="docs/_static/ex1.jpg" alt="Screenshot of ex1.csv in VSCode Edit CSV">
 </p>
 <p align="center">
-    <a href="https://github.com/jesse-wei/SAPsim/blob/main/tests/public_prog/ex1.csv">ex1.csv</a>
+    <em><a href="https://github.com/jesse-wei/SAPsim/blob/main/tests/public_prog/ex1.csv">ex1.csv</a></em>
 </p>
+
+Two commented example programs are in [public_prog/](https://github.com/jesse-wei/SAPsim/tree/main/tests/public_prog). Also, there's an empty template file [here](docs/_static/template.csv). Lastly, I recommend editing the CSV using VSCode's [Edit csv](https://marketplace.visualstudio.com/items?itemName=janisdd.vscode-edit-csv) extension or Excel.
 
 To run the SAP program, open a Python terminal and use `SAPsim.run()`.
 
 ```py
 >>> from SAPsim import run
->>> run("ex1.csv")                  # Run ex1.csv at full speed (default)
+>>> run("ex1.csv")                  # Run at full speed (default)
 ┌──────┬────────┬───────────────┬───────┬───────┐
 │ PC   │   Addr │ Instruction   │   Dec │ Hex   │
 ├──────┼────────┼───────────────┼───────┼───────┤
@@ -53,14 +57,14 @@ To run the SAP program, open a Python terminal and use `SAPsim.run()`.
 │ FlagC │ 1 │
 │ FlagZ │ 1 │
 └───────┴───┘
->>> run("ex1.csv", debug=True)      # Run ex1.csv in debug (step) mode
+>>> run("ex1.csv", debug=True)      # Run in debug (step) mode
 Initial state of simulation of tests/public_prog/ex1.csv
 ...
 Debug mode: press Enter to execute next instruction ( > ).
 ...
 ```
 
-**Note**: There is a debug (step) mode that runs one instruction at a time, as shown above. The default behavior is to run at full speed.
+**Note**: There is a debug (step) mode that runs an instruction each time you press Enter, as shown above. The default behavior is to run at full speed.
 
 ### SAP instruction set
 

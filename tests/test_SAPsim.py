@@ -90,7 +90,7 @@ def test_run_change_input_validation() -> None:
 
 def test_create_template() -> None:
     create_template(STDOUT_FILE)
-    assert file_match(STDOUT_FILE, "template.csv")
+    assert file_match(STDOUT_FILE, "docs/_static/template.csv")
     # Test no Exception thrown
     parser.parse_csv(STDOUT_FILE)
 
