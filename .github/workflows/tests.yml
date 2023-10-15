@@ -25,3 +25,5 @@ jobs:
         run: tox
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v3
+      - name: Test pip install
+        run: pip install SAPsim

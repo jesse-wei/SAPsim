@@ -21,8 +21,6 @@ SAPsim
 ├── pyproject.toml          Python project configuration
 ├── requirements.txt        Developer dependencies (e.g., testing, formatting, documentation), contains all functional dependencies from setup.py
 ├── setup.py                Python package configuration, lists all necessary dependencies installed during pip installation
-├── testdist                Script for testing package before PyPI release
-├── template.csv            Blank SAPsim CSV template
 ├── tests                   Tests
 └── tox.ini                 Tox config file; tox is used for running tests in different OS and Python environments
 ```

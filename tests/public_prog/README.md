@@ -8,20 +8,17 @@ You can, of course, run them with any input (0 to 255) by modifying what's at th
 
 ```c
 uint8_t X = input()     // input() is a RESERVED data value (0 to 255) at address 14
-if (X == 3) {
+if (X == 3)
     return 1;           // Return at address 15, then halt
-} else {
+else
     return 0;           // Return at address 15, then halt
-}
 ```
 
 ## [ex2](ex2.csv)
 
 ```c
 uint8_t X = input()     // input() is a RESERVED data value (0 to 255) at address 15
-while (X >= 31) {
+while (X >= 31)
     X = X - 3;
-}
 return X;               // Load into Register A, then halt
-
 ```
