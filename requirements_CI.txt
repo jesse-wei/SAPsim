@@ -1,9 +1,0 @@
-# These dependencies are used in GitHub CI tox tests (see tox.ini and .github/workflows/tests.yml)
-
-# Source: https://stackoverflow.com/a/49684835
--e .
-
-# Additional dependencies specifically for testing
-tox
-pytest
-pytest-cov

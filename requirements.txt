@@ -1,6 +1,14 @@
 # Source: https://stackoverflow.com/a/49684835
+# installs dependencies from ./setup.py, and the package itself,
+# in editable mode
 -e .
 
+# Testing
+tox
+pytest
+pytest-cov
+
+# Non-functional
 sphinx
 sphinx_rtd_theme
 myst_parser

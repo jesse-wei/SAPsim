@@ -19,8 +19,7 @@ SAPsim
 ├── SAPsim                  Source code
 ├── docs                    Documentation
 ├── pyproject.toml          Python project configuration
-├── requirements.txt        Developer dependencies, contains all dependencies from setup.py
-├── requirements_CI.txt     GitHub Actions CI dependencies, contains all dependencies from setup.py
+├── requirements.txt        Developer dependencies (e.g., testing, formatting, documentation), contains all functional dependencies from setup.py
 ├── setup.py                Python package configuration, lists all necessary dependencies installed during pip installation
 ├── testdist                Script for testing package before PyPI release
 ├── template.csv            Blank SAPsim CSV template

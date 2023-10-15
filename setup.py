@@ -10,7 +10,7 @@ install_requires: list[str] = [
 ]
 """All required functional dependencies that are installed when running `pip install SAPsim`.
 
-Non-functional (e.g., formatting, documentation) dependencies are listed in requirements.txt."""
+Non-functional (e.g., testing, formatting, documentation) dependencies are listed in requirements.txt."""
 
 setup(
     name="SAPsim",
