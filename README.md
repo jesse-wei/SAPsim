@@ -2,7 +2,7 @@
 
 # SAPsim
 
-Simulation of SAP (Simple-As-Possible computer) programs from COMP311 (Computer Organization) @ [UNC](https://unc.edu).
+Simulation of SAP (Simple-As-Possible computer) programs from COMP 311 (Computer Organization) @ [UNC](https://unc.edu).
 
 <p align="center">
     <img src="https://raw.githubusercontent.com/jesse-wei/SAPsim/main/docs/_static/SAPsim_demo.gif" alt="SAPsim demo">
@@ -12,11 +12,11 @@ Simulation of SAP (Simple-As-Possible computer) programs from COMP311 (Computer 
 
 `pip install SAPsim`
 
-Your Python version needs to be 3.9+. Check with `python --version`.
+Python 3.9+ is required. If your `pip` command doesn't work, use `pip3` (and consider aliasing `pip` to `pip3`).
 
 ## Usage
 
-Write a SAP program in the CSV file format shown below. Templates are provided in COMP311's SAP programming assignment. Some commented example programs are in [public_prog/](https://github.com/jesse-wei/SAPsim/tree/main/tests/public_prog).
+Write a SAP program in a CSV file in the format shown below. Two commented example programs are in [public_prog/](https://github.com/jesse-wei/SAPsim/tree/main/tests/public_prog), and an empty template is in [template.csv](template.csv).
 
 <p align="center">
     <img src="https://raw.githubusercontent.com/jesse-wei/SAPsim/main/docs/_static/ex1.jpg" alt="Screenshot of ex1.csv in Excel">
@@ -25,9 +25,7 @@ Write a SAP program in the CSV file format shown below. Templates are provided i
     <a href="https://github.com/jesse-wei/SAPsim/blob/main/tests/public_prog/ex1.csv">ex1.csv</a>
 </p>
 
-You may edit the `.csv` file with any program (Microsoft Excel, Google Sheets, etc.).
-
-To run the SAP program, open a Python terminal and use `SAPsim.run()`. **Note**: There is a debug (step) mode that runs one instruction at a time, as shown below. The default behavior is to run at full speed.
+To run the SAP program, open a Python terminal and use `SAPsim.run()`.
 
 ```py
 >>> from SAPsim import run
@@ -62,9 +60,43 @@ Debug mode: press Enter to execute next instruction ( > ).
 ...
 ```
 
+**Note**: There is a debug (step) mode that runs one instruction at a time, as shown above. The default behavior is to run at full speed.
+
+### SAP instruction set
+
+<p align="center">
+    <img src="https://raw.githubusercontent.com/jesse-wei/SAPsim/main/docs/_static/sap_instruction_set.jpg" alt="SAP instruction set">
+</p>
+
 ## Settings
 
-The `change` parameter lets you conveniently modify values in the SAP program without editing the CSV.
+To customize table appearance, use `table_format`. [Options](https://github.com/astanin/python-tabulate#table-format).
+
+```py
+>>> run("ex1.csv", table_format="github")
+| PC   |   Addr | Instruction   |   Dec | Hex   |
+|------|--------|---------------|-------|-------|
+|      |      0 | LDA 14        |    30 | 0x1e  |
+|      |      1 | SUB 13        |    61 | 0x3d  |
+|      |      2 | JZ 6          |   134 | 0x86  |
+|      |      3 | LDI 0         |    80 | 0x50  |
+|      |      4 | STA 15        |    79 | 0x4f  |
+|      |      5 | HLT 0         |   240 | 0xf0  |
+|      |      6 | LDI 1         |    81 | 0x51  |
+|      |      7 | STA 15        |    79 | 0x4f  |
+| >    |      8 | HLT 0         |   240 | 0xf0  |
+|      |     13 | NOP 3         |     3 | 0x03  |
+|      |     14 | NOP 3         |     3 | 0x03  |
+|      |     15 | NOP 1         |     1 | 0x01  |
+|-------|---|
+| PC    | 8 |
+| Reg A | 1 |
+| Reg B | 3 |
+| FlagC | 1 |
+| FlagZ | 1 |
+```
+
+To modify values in the SAP program without editing the CSV, use the `change` keyword argument.
 
 ```py
 >>> run("ex1.csv", change={14: 4, 13: 2})      # Change initial byte at address 14 to 4 and at 13 to 2
@@ -93,45 +125,9 @@ The `change` parameter lets you conveniently modify values in the SAP program wi
 └───────┴───┘
 ```
 
-`table_format` lets you customize the appearance of the printed tables. [Options](https://github.com/astanin/python-tabulate#table-format).
-
-```py
->>> run("ex1.csv", table_format="github")
-| PC   |   Addr | Instruction   |   Dec | Hex   |
-|------|--------|---------------|-------|-------|
-|      |      0 | LDA 14        |    30 | 0x1e  |
-|      |      1 | SUB 13        |    61 | 0x3d  |
-|      |      2 | JZ 6          |   134 | 0x86  |
-|      |      3 | LDI 0         |    80 | 0x50  |
-|      |      4 | STA 15        |    79 | 0x4f  |
-|      |      5 | HLT 0         |   240 | 0xf0  |
-|      |      6 | LDI 1         |    81 | 0x51  |
-|      |      7 | STA 15        |    79 | 0x4f  |
-| >    |      8 | HLT 0         |   240 | 0xf0  |
-|      |     13 | NOP 3         |     3 | 0x03  |
-|      |     14 | NOP 3         |     3 | 0x03  |
-|      |     15 | NOP 1         |     1 | 0x01  |
-|-------|---|
-| PC    | 8 |
-| Reg A | 1 |
-| Reg B | 3 |
-| FlagC | 1 |
-| FlagZ | 1 |
-```
-
-Additional settings (that you probably won't need) are described in the [documentation](https://sapsim.readthedocs.io/en/latest/settings.html).
-
 ## Rules
 
-It's easy to just mimic the [example programs](https://github.com/jesse-wei/SAPsim/tree/main/tests/public_prog), but if you need it, here's the list of [rules for SAPsim programs](https://SAPsim.readthedocs.io/en/latest/rules.html).
-
-## SAP instruction set
-
-<p align="center">
-    <img src="https://raw.githubusercontent.com/jesse-wei/SAPsim/main/docs/_static/sap_instruction_set.jpg" alt="SAP instruction set">
-</p>
-
-The COMP 311 slides explain each instruction in detail.
+It's easy to just mimic the [example programs](https://github.com/jesse-wei/SAPsim/tree/main/tests/public_prog), but if you need it, here are the [rules for SAPsim programs](https://SAPsim.readthedocs.io/en/latest/rules.html).
 
 ## Documentation
 

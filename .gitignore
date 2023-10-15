@@ -25,3 +25,5 @@ docs/_build
 scripts/
 SAPsim.egg-info
 build/
+pyvenv.cfg
+.vscode/

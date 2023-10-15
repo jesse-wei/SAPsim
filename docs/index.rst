@@ -4,7 +4,9 @@
 SAPsim
 ======
 
-Project information and installation instructions are in the `GitHub README <https://github.com/jesse-wei/SAPsim>`_.
+Project information is in the `GitHub README <https://github.com/jesse-wei/SAPsim>`_.
+
+Install with ``pip install SAPsim``
 
 .. toctree::
    :maxdepth: 1

@@ -3,8 +3,6 @@
 
 sphinx
 sphinx_rtd_theme
-alabaster
-python-docs-theme
 myst_parser
 black
 pre-commit
