@@ -12,11 +12,9 @@ Simulation of SAP (Simple-As-Possible computer) programs from COMP 311 (Computer
 
 `pip install SAPsim`
 
-If you get `pip not found`, use `pip3` instead[^alias].
+If you get `pip not found`, use `pip3` instead[^alias]. Python 3.9+ is required.
 
-[^alias]: Consider [aliasing `pip` to `pip3`](https://stackoverflow.com/a/44455078).
-
-Python 3.9+ and pip are required.
+[^alias]: Consider [aliasing `pip` to `pip3`](https://stackoverflow.com/a/44455078) and similar for `python`.
 
 ## Usage
 
@@ -29,7 +27,7 @@ In a CSV file, write a SAP program in this format ([template](https://github.com
     <em><a href="https://github.com/jesse-wei/SAPsim/blob/main/tests/public_prog/ex1.csv">ex1.csv</a></em>
 </p>
 
-In a Python shell, use `SAPsim.run` to run the program.
+In a Python shell, use `SAPsim.run` to run the program. If you successfully installed SAPsim earlier but get an `ImportError`, run Python with `python3` instead of `python` (or vice versa).
 
 ```py
 ❯ python
