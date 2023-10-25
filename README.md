@@ -14,7 +14,7 @@ Simulation of SAP (Simple-As-Possible computer) programs from COMP 311 (Computer
 
 If you get `pip not found`, use `pip3` instead[^alias]. Python 3.9+ is required.
 
-[^alias]: Consider [aliasing `pip` to `pip3`](https://stackoverflow.com/a/44455078) and similar for `python`.
+[^alias]: Consider [aliasing `pip` to `pip3`](https://stackoverflow.com/a/44455078) and similar for `python`. Also consider using `pyenv`. [Relevant XKCD](https://opensource.com/sites/default/files/uploads/python_environment_xkcd.png)
 
 ## Usage
 
