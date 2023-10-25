@@ -4,7 +4,7 @@ on:
   schedule:
     # https://jasonet.co/posts/scheduled-actions/#the-cron-syntax
     # Run every 3 months
-    - cron: "* * * */3 *"
+    - cron: "1 1 1 */3 1"
   workflow_dispatch:
 
 jobs:
