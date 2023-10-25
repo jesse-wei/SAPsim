@@ -1,7 +1,7 @@
 # Project structure
 
 ```{topic} Overview
-This page describes the high-level structure of the codebase. Most descriptions are paraphrased from the docstrings of the files.
+This page describes the structure of the codebase. Most descriptions of files are paraphrased from the docstrings of the files.
 ```
 
 ```{contents}
@@ -9,6 +9,10 @@ This page describes the high-level structure of the codebase. Most descriptions 
 depth: 2
 ---
 ```
+
+## Diagram
+
+![Code structure](_static/structure.svg)
 
 ## Top-level
 
@@ -39,7 +43,3 @@ SAPsim
     ├── instructions.py     SAP instruction implementation
     └── parser.py           Parses a SAP program in SAPsim CSV format into global_vars.RAM
 ```
-
-## Tree
-
-These diagrams were generated using [tree](https://en.wikipedia.org/wiki/Tree_(command)). Irrelevant files were removed.

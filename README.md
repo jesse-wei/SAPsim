@@ -27,7 +27,7 @@ In a CSV file, write a SAP program in this format ([template](https://github.com
     <em><a href="https://github.com/jesse-wei/SAPsim/blob/main/tests/public_prog/ex1.csv">ex1.csv</a></em>
 </p>
 
-In a Python shell, use `SAPsim.run` to run the program. If you successfully installed SAPsim earlier but get an `ImportError`, run Python with `python3` instead of `python` (or vice versa).
+In a Python shell, import `SAPsim` and use `SAPsim.run` to run the program.
 
 ```py
 ❯ python
@@ -65,7 +65,9 @@ Debug mode: press Enter to execute next instruction ( > ).
 
 <p align="center"><em>SAPsim running in Python terminal</em></p>
 
-**Note**: There is a debug (step) mode that runs one instruction at a time, as shown above. The default behavior is to run at full speed.
+**Debug mode**: There is a debug (step) mode that runs one instruction at a time, as shown above. The default behavior is to run at full speed.
+
+If you successfully installed SAPsim earlier (check with `pip show SAPsim`) but get an `ImportError` when importing SAPsim, run Python with `python3` instead of `python` (or vice versa).
 
 I recommend editing the CSV in VSCode or Excel. I recommend the VSCode extensions [Edit CSV](https://marketplace.visualstudio.com/items?itemName=janisdd.vscode-edit-csv) (Excel-like editing) and [Rainbow CSV](https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv) (adds color to columns).
 
@@ -119,3 +121,11 @@ It's easy to just mimic the [example programs](https://github.com/jesse-wei/SAPs
 ## Documentation
 
 [https://SAPsim.readthedocs.io](https://SAPsim.readthedocs.io/en/latest/)
+
+## Code structure
+
+<div align="center">
+
+![Code structure](docs/_static/structure.svg)
+
+</div>
