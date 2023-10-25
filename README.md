@@ -67,7 +67,7 @@ Debug mode: press Enter to execute next instruction ( > ).
 
 **Debug mode**: There is a debug (step) mode that runs one instruction at a time, as shown above. The default behavior is to run at full speed.
 
-If you successfully installed SAPsim earlier (check with `pip show SAPsim`) but get an `ImportError` when importing SAPsim, run Python with `python3` instead of `python` (or vice versa).
+If you successfully installed SAPsim earlier (check with `pip show SAPsim`) but get a `ModuleNotFoundError` when importing SAPsim, run Python with `python3` instead of `python` (or vice versa).
 
 I recommend editing the CSV in VSCode or Excel. I recommend the VSCode extensions [Edit CSV](https://marketplace.visualstudio.com/items?itemName=janisdd.vscode-edit-csv) (Excel-like editing) and [Rainbow CSV](https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv) (adds color to columns).
 
