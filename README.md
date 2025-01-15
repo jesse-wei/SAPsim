@@ -12,13 +12,15 @@ Simulation of SAP (Simple-As-Possible computer) programs from COMP 311 (Computer
 
 `pip install SAPsim`
 
-If you get `pip not found`, use `pip3` instead[^alias]. Python 3.9+ is required.
+If you get the error `pip not found`, use `pip3` instead[^alias]. Similarly, for later commands that use `python`, you'll need to use `python3` instead.
+
+Python 3.9+ is required.
 
 [^alias]: Consider [aliasing `pip` to `pip3`](https://stackoverflow.com/a/44455078) and similar for `python`. Also consider using `pyenv`. [Relevant XKCD](https://opensource.com/sites/default/files/uploads/python_environment_xkcd.png)
 
 ## Usage
 
-In a CSV file, write a SAP program in this format ([template](https://github.com/jesse-wei/SAPsim/blob/main/docs/_static/template.csv)):
+In a `.csv` file, write a SAP program in this format (use these exact column names):
 
 <p align="center">
     <img src="https://raw.githubusercontent.com/jesse-wei/SAPsim/main/docs/_static/ex1.jpg" alt="Screenshot of ex1.csv in VSCode Edit CSV">
@@ -65,13 +67,11 @@ Debug mode: press Enter to execute next instruction ( > ).
 
 <p align="center"><em>SAPsim running in Python terminal</em></p>
 
-**Debug mode**: There is a debug (step) mode that runs one instruction at a time, as shown above. The default behavior is to run at full speed.
+**Debug mode**: There is a debug (step) mode that runs one instruction at a time, as shown above. By default, the program is run at full speed.
 
-If you successfully installed SAPsim earlier (check with `pip show SAPsim`) but get a `ModuleNotFoundError` when importing SAPsim, run Python with `python3` instead of `python` (or vice versa).
+I recommend editing the CSV in VSCode or Excel. If you use VSCode, I recommend the extensions [Edit CSV](https://marketplace.visualstudio.com/items?itemName=janisdd.vscode-edit-csv) (Excel-like editing) and [Rainbow CSV](https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv) (adds color to columns).
 
-I recommend editing the CSV in VSCode or Excel. I recommend the VSCode extensions [Edit CSV](https://marketplace.visualstudio.com/items?itemName=janisdd.vscode-edit-csv) (Excel-like editing) and [Rainbow CSV](https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv) (adds color to columns).
-
-Lastly, there are two commented example programs [here](https://github.com/jesse-wei/SAPsim/tree/main/tests/public_prog).
+Lastly, here's a [blank template](https://github.com/jesse-wei/SAPsim/blob/main/docs/_static/template.csv) that includes only the column names and addresses 0-15 and [two commented example programs](https://github.com/jesse-wei/SAPsim/tree/main/tests/public_prog).
 
 ### SAP instruction set
 
