@@ -14,7 +14,6 @@ Install with ``pip install SAPsim``
 
    rules
    settings
-   structure
    modules
 
 

@@ -121,11 +121,3 @@ It's easy to just mimic the [example programs](https://github.com/jesse-wei/SAPs
 ## Documentation
 
 [https://SAPsim.readthedocs.io](https://SAPsim.readthedocs.io/en/latest/)
-
-## Code structure
-
-<div align="center">
-
-![Code structure](docs/_static/structure.svg)
-
-</div>
