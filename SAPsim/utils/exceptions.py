@@ -103,9 +103,9 @@ class RowWithNoAddress(Exception):
         super().__init__(self.message)
 
 
-class NegativeAddress(Exception):
+class AddressOutOfRange(Exception):
     def __init__(self, row):
-        self.message = f"There's a negative address in row {row} of your program!"
+        self.message = f"In row {row} of your program, the address is not between 0 and {global_vars.MAX_PC}, inclusive."
         super().__init__(self.message)
 
 
@@ -126,48 +126,9 @@ class DuplicateAddress(Exception):
         self.message = f"Address {address} is duplicated in your program!"
         super().__init__(self.message)
 
-
-class NoSecondHexit(Exception):
+class InvalidInstructionOrData(Exception):
     def __init__(self, address):
-        self.message = (
-            f"Address {address} of your program has a First Hexit but no Second Hexit!"
-        )
-        super().__init__(self.message)
-
-
-class NoFirstHexit(Exception):
-    def __init__(self, address):
-        self.message = (
-            f"Address {address} of your program has an Second Hexit but no First Hexit!"
-        )
-        super().__init__(self.message)
-
-
-class FirstHexitNegative(Exception):
-    def __init__(self, address):
-        self.message = (
-            f"The first hexit at address {address} of your program must be positive!"
-        )
-        super().__init__(self.message)
-
-
-class FirstHexitGreaterThan15(Exception):
-    def __init__(self, address):
-        self.message = f"The first hexit at address {address} of your program must be less than 16!"
-        super().__init__(self.message)
-
-
-class SecondHexitNegative(Exception):
-    def __init__(self, address):
-        self.message = (
-            f"The second hexit at address {address} of your program must be positive!"
-        )
-        super().__init__(self.message)
-
-
-class SecondHexitGreaterThan15(Exception):
-    def __init__(self, address):
-        self.message = f"The second hexit at address {address} of your program must be less than 16!"
+        self.message = f"At address {address}, the instruction/data is invalid. It must contain 0 spaces (for data) or 1 space (for an instruction)."
         super().__init__(self.message)
 
 
@@ -186,18 +147,6 @@ class ChangeAddressGreaterThan15(Exception):
 class ChangeValueInvalid(Exception):
     def __init__(self, value: int):
         self.message = f"Changed value must fit in NUM_BITS_IN_REGISTERS (0 to {2**global_vars.NUM_BITS_IN_REGISTERS-1}). You provided {value}."
-
-
-class InvalidFirstHexit(Exception):
-    def __init__(self, address):
-        self.message = f"The First Hexit given at address {address} is invalid. See SAP instruction set for list of supported mnemonics. The First Hexit field can also be a hexit 0 to f if representing data."
-        super().__init__(self.message)
-
-
-class InvalidSecondHexit(Exception):
-    def __init__(self, address):
-        self.message = f"The Second Hexit at address {address} is invalid. It must be a hexit 0 to f or a base-10 integer 0 to 15 representing a hexit."
-        super().__init__(self.message)
 
 
 class MoreThan16MappedAddresses(Exception):

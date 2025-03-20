@@ -16,10 +16,7 @@ def parse_csv(file_path: Union[Path, str]) -> None:
     Calls ``setup_state()`` if ``file_path`` is valid.
 
     If an address is skipped (not in the ``.csv`` file), it is not mapped in ``RAM``.
-    If an address is mapped but First Hexit and Second Hexit are blank, a ``NOP 0`` (0x00) is inserted.
-
-    The reasoning here is that if an addr is skipped completely in the CSV, it shouldn't show up in RAM.
-    If an addr is mapped but First Hexit and Second Hexit are blank, it should show up in RAM (as ``NOP 0``).
+    If an address is mapped but Instruction/Data is blank, a ``NOP 0`` (0x00) is inserted at that address.
 
     :param file_path: The path to the ``.csv`` file to parse.
     :type file_path: Union[Path, str]
@@ -54,24 +51,27 @@ def parse_csv(file_path: Union[Path, str]) -> None:
                 address = int(row["Address"], 16)
             except ValueError:
                 raise exceptions.InvalidAddress(num_rows)
-        if address < 0:
-            raise exceptions.NegativeAddress(num_rows)
+        if address < 0 or address > global_vars.MAX_PC:
+            raise exceptions.AddressOutOfRange(num_rows)
         num_rows += 1
 
         if address in addresses:
             raise exceptions.DuplicateAddress(address)
         addresses.add(address)
 
-        # If there's an Address and no First Hexit and no Second Hexit in a row
+        # If there's an Address but no Instruction/Data in a row
         # insert a NOP 0 at that address and continue parsing
-        if not row["First Hexit"] and not row["Second Hexit"]:
+        if not row["Instruction/Data"]:
             global_vars.RAM[address] = 0x00
             continue
-        # But if there's an Address and either only an First Hexit or only an Second Hexit, exception
-        elif row["First Hexit"] and not row["Second Hexit"]:
-            raise exceptions.NoSecondHexit(address)
-        elif not row["First Hexit"] and row["Second Hexit"]:
-            raise exceptions.NoFirstHexit(address)
+
+        instruction_or_data: str = row["Instruction/Data"].strip()
+        num_spaces: int = instruction_or_data.count(" ")
+        if num_spaces > 1:
+            raise exceptions.InvalidInstructionOrData(address)
+        elif num_spaces == 1:
+            instruction_or_data_split: list[str] = instruction_or_data.split(" ")
+            mnemonic: str = instruction_or_data
 
         first_hexit = 0
         # Need to determine if the field is a base-10 int or one-letter hexit str or First Hexit str.
